@@ -14,6 +14,9 @@ https://ironcad.fun/download/ironcad-addin-sample-cs/develop_prepare_cs/
   C:\Program Files (x86)\Microsoft Visual Studio 14.0\SDK\Bootstrapper\Packagesに\
   フォルダごとコピーしてください。
 
+## 【ビルド時の注意事項】
+1.ソリューションの構成はx64|Debugで行ってください。
+
 ## 【インストール時の注意事項】
 setup.exeを右クリックして[管理者として実行]でインストールしてください。\
 ※管理者として実行をしない場合、インストールユーザ以外でicWebブラウザが使用できない可能性があります。
