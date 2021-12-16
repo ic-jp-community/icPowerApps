@@ -270,7 +270,8 @@ namespace ICApiAddin.icPowerApps
                     return;
                 }
                 string url = toolStripTextBoxUrl.Text;
-                if (url.StartsWith("https://") == false)
+                if ((url.StartsWith("https://") != true) &&
+                    (url.StartsWith("file://") != true))
                 {
                     url = "https://www.google.com/search?q=" + url;
                 }

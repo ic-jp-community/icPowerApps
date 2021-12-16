@@ -111,12 +111,19 @@
     <Compile Include="ConvertImage.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="DataGridViewCheckBoxWithText.cs" />
     <Compile Include="EventHandler\Event_AppEvents.cs" />
     <Compile Include="EventHandler\Event_DocEvents.cs" />
     <Compile Include="EventHandler\Event_DocHandleEvents.cs" />
     <Compile Include="EventHandler\Event_DocSelectionEvents.cs" />
     <Compile Include="EventHandler\Event_ICAddInUtils.cs" />
     <Compile Include="EventHandler\Event_MouseEvents.cs" />
+    <Compile Include="Form_CustomPropertyManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_CustomPropertyManager.designer.cs">
+      <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="icapiCommon.cs" />
     <Compile Include="icPowerAppsTEST.cs">
       <SubType>Form</SubType>
@@ -130,6 +137,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="scaleReziser.cs" />
     <Compile Include="UserControlIroncadSettings.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -142,11 +150,23 @@
     <Compile Include="UserControlIroncadRepair.Designer.cs">
       <DependentUpon>UserControlIroncadRepair.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserControlSystemInformation.cs">
+    <Compile Include="UserControlSuppressManager_ChangeHeaderNameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControlSuppressManager_ChangeHeaderNameForm.Designer.cs">
+      <DependentUpon>UserControlSuppressManager_ChangeHeaderNameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="_UserControlSceneTreeBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserControlSystemInformation.Designer.cs">
-      <DependentUpon>UserControlSystemInformation.cs</DependentUpon>
+    <Compile Include="_UserControlSceneTreeBase.Designer.cs">
+      <DependentUpon>_UserControlSceneTreeBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlSuppressManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlSuppressManager.Designer.cs">
+      <DependentUpon>UserControlSuppressManager.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControlUpdateList.cs">
       <SubType>UserControl</SubType>
@@ -162,6 +182,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Form_CustomPropertyManager.en.resx">
+      <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_CustomPropertyManager.resx">
+      <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="icPowerAppsTEST.resx">
       <DependentUpon>icPowerAppsTEST.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,8 +201,14 @@
     <EmbeddedResource Include="UserControlIroncadRepair.resx">
       <DependentUpon>UserControlIroncadRepair.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControlSystemInformation.resx">
-      <DependentUpon>UserControlSystemInformation.cs</DependentUpon>
+    <EmbeddedResource Include="UserControlSuppressManager_ChangeHeaderNameForm.resx">
+      <DependentUpon>UserControlSuppressManager_ChangeHeaderNameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="_UserControlSceneTreeBase.resx">
+      <DependentUpon>_UserControlSceneTreeBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlSuppressManager.resx">
+      <DependentUpon>UserControlSuppressManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlUpdateList.resx">
       <DependentUpon>UserControlUpdateList.cs</DependentUpon>
@@ -216,11 +248,68 @@
     <EmbeddedResource Include="Icons\icon_webBrowserBookmark.png" />
     <EmbeddedResource Include="Icons\icon_webBrowserABC.png" />
     <EmbeddedResource Include="Icons\icon_webBrowserUserGuide.png" />
-    <None Include="Icons\icon_icPowerApps_l.png" />
-    <None Include="Icons\icon_icPowerApps_s.png" />
+    <EmbeddedResource Include="Icons\icon_icPowerApps_l.png" />
+    <EmbeddedResource Include="Icons\icon_icPowerApps_s.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ExternDLL\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Assembly.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\ImageNone.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkAssembly.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkedPartsSheet.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkedProfile.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkedSheetMetal.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkedWire.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkParts.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Parts.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\PartsSheet.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Profile.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Scene.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\sheetMetal.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Wire.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_icSuppressManager_l.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_icSuppressManager_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_CustomPropertyManager_l.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_CustomPropertyManager_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_reload.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

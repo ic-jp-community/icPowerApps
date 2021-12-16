@@ -1,7 +1,13 @@
-﻿using System;
+﻿using AdvancedDataGridView;
+using ICApiAddin.icPowerApps.Properties;
+using interop.ICApiIronCAD;
+using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -549,5 +555,819 @@ namespace ICApiAddin.icPowerApps
             return copyResult;
         }
 
+        /// <summary>
+        /// アセンブリ/パーツのツリー表示用の画像を取得する
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="imageList"></param>
+        public static void getImageListAssemblyParts(Size size, ref ImageList imageList)
+        {
+            imageList = new ImageList();
+            imageList.Images.Add(Resources.ImageNone);
+            imageList.Images.Add(Resources.Assembly);
+            imageList.Images.Add(Resources.LinkAssembly);
+            imageList.Images.Add(Resources.Parts);
+            imageList.Images.Add(Resources.LinkParts);
+            imageList.Images.Add(Resources.Scene);
+            imageList.Images.Add(Resources.Profile);
+            imageList.Images.Add(Resources.LinkedProfile);
+            imageList.Images.Add(Resources.Wire);
+            imageList.Images.Add(Resources.LinkedWire);
+            imageList.Images.Add(Resources.SheetMetal);
+            imageList.Images.Add(Resources.LinkedSheetMetal);
+            imageList.Images.Add(Resources.PartsSheet);
+            imageList.Images.Add(Resources.LinkedPartsSheet);
+            imageList.ImageSize = size;
+            imageList.ColorDepth = ColorDepth.Depth32Bit;
+        }
+
+        /// <summary>
+        /// どの機能のTreeGridViewを作成するか
+        /// </summary>
+        public enum CREATE_TREE_MODE
+        {
+            CHECK_IN = 0,
+            CHECKOUT_SELECT,
+            INPUT_CUSTOM_PROP,
+            SCENEFILE_MANAGEMENT
+        }
+
+        public static void ExpandTreeGridViewTreeNodes(ref TreeGridNodeCollection nodes)
+        {
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].Expand();
+                TreeGridNodeCollection childNodes = nodes[i].Nodes;
+                ExpandTreeGridViewTreeNodes(ref childNodes);
+            }
+        }
+
+        /// <summary>
+        /// シーンファイルのツリー表示を作成する(TreeGridView用) 再帰処理
+        /// </summary>
+        /// <param name="mode">表示する対象</param>
+        /// <param name="nodeHeight">各ノードの高さ</param>
+        /// <param name="currElem">現在のアセンブリ/パーツ Element</param>
+        /// <param name="currNode">現在のノード</param>
+        /// <param name="currDepth">現在の深さ</param>
+        /// <returns></returns>
+        public static bool GetSceneTreeInfo(CREATE_TREE_MODE mode, int nodeHeight, IZElement currElem, ref TreeGridNode currNode, ref int currDepth)
+        {
+            try
+            {
+                if ((currElem.Type != eZElementType.Z_ELEMENT_PART) &&
+                    (currElem.Type != eZElementType.Z_ELEMENT_ASSEMBLY) &&
+                    //                    (elem.Type != eZElementType.Z_ELEMENT_WIRE) &&
+                    //                    (elem.Type != eZElementType.Z_ELEMENT_PROFILE) &&
+                    (currElem.Type != eZElementType.Z_ELEMENT_SHEETMETAL_PART) &&
+                    (currElem.Type != eZElementType.Z_ELEMENT_UNKNOWN))
+                {
+
+                    return false;
+                }
+                ZArray childs = currElem.GetChildrenZArray();
+                int count = 0;
+                childs.Count(out count);
+                for (int i = 0; i < count; i++)
+                {
+                    object obj;
+                    IZElement childElem;
+                    childs.Get(i, out obj);
+                    childElem = obj as IZElement;
+                    if ((childElem.Type == eZElementType.Z_ELEMENT_PART) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_ASSEMBLY) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_WIRE) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_PROFILE) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_SHEETMETAL_PART))
+                    {
+                        /* パーツ/アセンブリの情報 */
+                        IZDoc doc = childElem.OwningDoc;
+                        IZSceneDoc scene = doc as IZSceneDoc;
+                        string dataType = string.Empty;
+                        bool link = false;
+                        string linkStr = string.Empty;
+                        string dispName = string.Empty;
+                        switch (childElem.Type)
+                        {
+                            case eZElementType.Z_ELEMENT_ASSEMBLY:
+                                IZAssembly asm = childElem as IZAssembly;
+                                linkStr = asm.GetExternallyLinkedInfo(out link);
+                                dataType = GetInnerDataType(childElem.Type, link, eZBodyType.Z_BODY_EMPTY);
+                                break;
+                            case eZElementType.Z_ELEMENT_PART:
+                            case eZElementType.Z_ELEMENT_WIRE:
+                            case eZElementType.Z_ELEMENT_PROFILE:
+                            case eZElementType.Z_ELEMENT_SHEETMETAL_PART:
+                                IZPart part = childElem as IZPart;
+                                eZBodyType body = eZBodyType.Z_BODY_EMPTY;
+                                linkStr = part.GetExternallyLinkedInfo(out link);
+                                if (childElem.Type == eZElementType.Z_ELEMENT_PART)
+                                {
+                                    part.GetBodyType(ref body);
+                                }
+                                dataType = GetInnerDataType(childElem.Type, link, body);
+                                break;
+                            default:
+                                break;
+                        }
+                        dispName = childElem.Name;
+
+                        TreeGridNode childNode = null;
+                        switch (mode)
+                        {
+                            case CREATE_TREE_MODE.CHECK_IN:
+                                /* ★データの順序変更は本メソッド使用箇所のデザイナのColumn順番も変更する必要あり */
+                                childNode = currNode.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                childNode.Cells[0].Tag = childElem;
+                                break;
+                            case CREATE_TREE_MODE.CHECKOUT_SELECT:
+                                childNode = currNode.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                break;
+                            case CREATE_TREE_MODE.INPUT_CUSTOM_PROP:
+                                childNode = currNode.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth,linkStr);
+                                break;
+                            case CREATE_TREE_MODE.SCENEFILE_MANAGEMENT:
+                                childNode = currNode.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        childNode.ImageIndex = getImageIndexAssemblyParts(dataType);
+                        childNode.Height = (int)(nodeHeight * ScaleReziser.getScalingFactor());
+                        currDepth++;
+                        GetSceneTreeInfo(mode, nodeHeight, childElem, ref childNode, ref currDepth);
+                        currDepth--;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            return true;
+        }
+
+        public const string SCENE_DATATYPE_ASSEMBLY = "ASSEMBLY";
+        public const string SCENE_DATATYPE_PART = "PARTS";
+        public const string SCENE_DATATYPE_PART_SOLID = "PARTS_SOLID";
+        public const string SCENE_DATATYPE_PART_SHEET = "PARTS_SHEET";
+        public const string SCENE_DATATYPE_PART_UNKNOWN = "PARTS_UNKNOWN";
+        public const string SCENE_DATATYPE_PART_WIRE = "PARTS_WIRE";
+        public const string SCENE_DATATYPE_PART_EMPTY = "PARTS_EMPTY";
+        public const string SCENE_DATATYPE_WIRE = "WIRE";
+        public const string SCENE_DATATYPE_PROFILE = "PROFILE";
+        public const string SCENE_DATATYPE_SHEETMETAL_PART = "SHEETMETAL_PARTS";
+        public const string SCENE_DATATYPE_LINKED_ASSEMBLY = "LINKED_ASSEMBLY";
+        public const string SCENE_DATATYPE_LINKED_PART = "LINKED_PARTS";
+        public const string SCENE_DATATYPE_LINKED_PART_SOLID = "LINKED_PARTS_SOLID";
+        public const string SCENE_DATATYPE_LINKED_PART_SHEET = "LINKED_PARTS_SHEET";
+        public const string SCENE_DATATYPE_LINKED_PART_UNKNOWN = "LINKED_PARTS_UNKNOWN";
+        public const string SCENE_DATATYPE_LINKED_PART_WIRE = "LINKED_PARTS_WIRE";
+        public const string SCENE_DATATYPE_LINKED_PART_EMPTY = "LINKED_PARTS_EMPTY";
+        public const string SCENE_DATATYPE_LINKED_WIRE = "LINKED_WIRE";
+        public const string SCENE_DATATYPE_LINKED_PROFILE = "LINKED_PROFILE";
+        public const string SCENE_DATATYPE_LINKED_SHEETMETAL_PART = "LINKED_SHEETMETAL_PARTS";
+        public const string SCENE_DATATYPE_SCENE = "SCENE";
+        public const string SCENE_DATATYPE_FILE = "FILE";
+
+        /// <summary>
+        /// element種類からicVaultのデータ種類を取得する
+        /// </summary>
+        /// <param name="elemType">elementの種類</param>
+        /// <param name="isLinked">外部リンク有無 true;外部リンクあり false:外部リンクなし</param>
+        /// <param name="body">elementのボディー種別</param>
+        /// <returns></returns>
+        public static string GetInnerDataType(eZElementType elemType, bool isLinked, eZBodyType body)
+        {
+            string dataType = string.Empty;
+            switch (elemType)
+            {
+                case eZElementType.Z_ELEMENT_PART:
+                    if (isLinked == true)
+                    {
+                        dataType = SCENE_DATATYPE_LINKED_PART;
+                        switch (body)
+                        {
+                            case eZBodyType.Z_BODY_SHEET:
+                                dataType = SCENE_DATATYPE_LINKED_PART_SHEET;
+                                break;
+                            case eZBodyType.Z_BODY_SOLID:
+                                dataType = SCENE_DATATYPE_LINKED_PART_SOLID;
+                                break;
+                            case eZBodyType.Z_BODY_WIRE:
+                                dataType = SCENE_DATATYPE_LINKED_PART_WIRE;
+                                break;
+                            case eZBodyType.Z_BODY_EMPTY:
+                                dataType = SCENE_DATATYPE_LINKED_PART_EMPTY;
+                                break;
+                            case eZBodyType.Z_BODY_UNKNOWN:
+                                dataType = SCENE_DATATYPE_LINKED_PART_UNKNOWN;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        dataType = SCENE_DATATYPE_PART;
+                        switch (body)
+                        {
+                            case eZBodyType.Z_BODY_SHEET:
+                                dataType = SCENE_DATATYPE_PART_SHEET;
+                                break;
+                            case eZBodyType.Z_BODY_SOLID:
+                                dataType = SCENE_DATATYPE_PART_SOLID;
+                                break;
+                            case eZBodyType.Z_BODY_WIRE:
+                                dataType = SCENE_DATATYPE_PART_WIRE;
+                                break;
+                            case eZBodyType.Z_BODY_EMPTY:
+                                dataType = SCENE_DATATYPE_PART_EMPTY;
+                                break;
+                            case eZBodyType.Z_BODY_UNKNOWN:
+                                dataType = SCENE_DATATYPE_PART_UNKNOWN;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    break;
+                case eZElementType.Z_ELEMENT_ASSEMBLY:
+                    if (isLinked == true)
+                    {
+                        dataType = SCENE_DATATYPE_LINKED_ASSEMBLY;
+                    }
+                    else
+                    {
+                        dataType = SCENE_DATATYPE_ASSEMBLY;
+                    }
+                    break;
+                case eZElementType.Z_ELEMENT_WIRE:
+                    if (isLinked == true)
+                    {
+                        dataType = SCENE_DATATYPE_LINKED_WIRE;
+                    }
+                    else
+                    {
+                        dataType = SCENE_DATATYPE_WIRE;
+                    }
+                    break;
+                case eZElementType.Z_ELEMENT_PROFILE:
+                    if (isLinked == true)
+                    {
+                        dataType = SCENE_DATATYPE_LINKED_PROFILE;
+                    }
+                    else
+                    {
+                        dataType = SCENE_DATATYPE_PROFILE;
+                    }
+                    break;
+                case eZElementType.Z_ELEMENT_SHEETMETAL_PART:
+                    if (isLinked == true)
+                    {
+                        dataType = SCENE_DATATYPE_LINKED_SHEETMETAL_PART;
+                    }
+                    else
+                    {
+                        dataType = SCENE_DATATYPE_SHEETMETAL_PART;
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return dataType;
+        }
+
+
+        /// <summary>
+        /// アセンブリ/パーツ種別からツリー用の画像Indexを取得する
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <returns></returns>
+        public static int getImageIndexAssemblyParts(string dataType)
+        {
+            int index = 0;
+            switch (dataType)
+            {
+                case SCENE_DATATYPE_ASSEMBLY:
+                    index = 1;
+                    break;
+                case SCENE_DATATYPE_LINKED_ASSEMBLY:
+                    index = 2;
+                    break;
+                case SCENE_DATATYPE_PART:
+                case SCENE_DATATYPE_PART_EMPTY:
+                case SCENE_DATATYPE_PART_UNKNOWN:
+                case SCENE_DATATYPE_PART_SOLID:
+                    index = 3;
+                    break;
+                case SCENE_DATATYPE_LINKED_PART:
+                case SCENE_DATATYPE_LINKED_PART_EMPTY:
+                case SCENE_DATATYPE_LINKED_PART_UNKNOWN:
+                case SCENE_DATATYPE_LINKED_PART_SOLID:
+                    index = 4;
+                    break;
+                case SCENE_DATATYPE_SCENE:
+                    index = 5;
+                    break;
+                case SCENE_DATATYPE_PROFILE:
+                    index = 6;
+                    break;
+                case SCENE_DATATYPE_LINKED_PROFILE:
+                    index = 7;
+                    break;
+                case SCENE_DATATYPE_WIRE:
+                    index = 8;
+                    break;
+                case SCENE_DATATYPE_LINKED_WIRE:
+                    index = 9;
+                    break;
+                case SCENE_DATATYPE_SHEETMETAL_PART:
+                    index = 10;
+                    break;
+                case SCENE_DATATYPE_LINKED_SHEETMETAL_PART:
+                    index = 11;
+                    break;
+                case SCENE_DATATYPE_PART_SHEET:
+                    index = 12;
+                    break;
+                case SCENE_DATATYPE_LINKED_PART_SHEET:
+                    index = 13;
+                    break;
+                default:
+                    index = 0;
+                    break;
+            }
+            return index;
+        }
+
+        #region カスタムプロパティ関連
+
+        [Serializable]
+        public class CustomProperty
+        {
+            public string name;
+            public object value;
+            public bool scopeIsShared;
+            public CustomProperty(string name, object value, bool shared)
+            {
+                this.name = name;
+                this.value = value;
+                this.scopeIsShared = shared;
+            }
+        }
+        /// <summary>
+        /// カスタムプロパティを取得する
+        /// </summary>
+        /// <param name="element">パーツ/アセンブリのElement</param>
+        /// <param name="customPropeties">カスラムプロパティ</param>
+        public static void GetCustomProperties(IZElement element, ref List<CustomProperty> customPropeties)
+        {
+            /* elementチェック */
+            if (element == null)
+            {
+                return;
+            }
+
+            /* カスタムプロパティの情報 */
+            IZCustomPropMgr propMgr = element.CustomPropMgr[true];
+            if (propMgr.Count != 0)
+            {
+                for (int j = 0; j < propMgr.Count; j++)
+                {
+                    string name = string.Empty;
+                    object value = null;
+                    propMgr.GetAt(j, out name, out value);
+                    customPropeties.Add(new CustomProperty(name, value, true));
+                }
+            }
+            /* カスタムプロパティの情報 */
+            propMgr = element.CustomPropMgr[false];
+            if (propMgr.Count != 0)
+            {
+                for (int j = 0; j < propMgr.Count; j++)
+                {
+                    string name = string.Empty;
+                    object value = null;
+                    propMgr.GetAt(j, out name, out value);
+                    customPropeties.Add(new CustomProperty(name, value, false));
+                }
+            }
+        }
+
+        /// <summary>
+        /// カスタムプロパティを編集(新規/削除/変更)する   値がnullだと:削除 
+        /// </summary>
+        /// <param name="element">パーツ/アセンブリのElement</param>
+        /// <param name="name">名前</param>
+        /// <param name="value">値</param>
+        /// <param name="isShared">true:すべてのリンクインタンスに適用  false:このパーツ アセンブリのみ</param>
+        public static void EditCustomProperty(IZElement element, string name, object value, bool isShared)
+        {
+            /* カスタムプロパティの情報 すべてのリンクインスタンス */
+            IZCustomPropMgr propMgr = element.CustomPropMgr[isShared];
+            int count = propMgr.Count;
+            bool targetPropFoundFlag = false;
+            for (int i = 0; i < count; i++)
+            {
+                string currName = string.Empty;
+                object currValue = string.Empty;
+                propMgr.GetAt(i, out currName, out currValue);
+                if (string.Equals(currName, name) == true)
+                {
+                    targetPropFoundFlag = true;
+                    break;
+                }
+            }
+
+            if (value == null)
+            {
+                /* すべてのリンクインタンスから削除 */
+                if (targetPropFoundFlag == true)
+                {
+                    propMgr.RemoveByName(name);
+                }
+            }
+            else
+            {
+                /* すべてのリンクインスタンスとして扱う  */
+                if (targetPropFoundFlag == true)
+                {
+                    /* 現在の値を変更 */
+                    propMgr.SetValueByName(name, value);
+                }
+                else
+                {
+                    propMgr.AddCustomProp(name, value, true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 当該Elementのカスタムプロパティをすべて削除する 
+        /// </summary>
+        /// <param name="element">パーツ/アセンブリのElement</param>
+        public static void DeleteCustomProperty(IZElement element, string name, bool isShared)
+        {
+            /* elementチェック */
+            if (element == null)
+            {
+                return;
+            }
+            EditCustomProperty(element, name, null, isShared);
+        }
+
+        /// <summary>
+        /// 当該Elementのカスタムプロパティをすべて削除する 
+        /// </summary>
+        /// <param name="element">パーツ/アセンブリのElement</param>
+        public static void DeleteAllCustomProperties(IZElement element)
+        {
+            /* elementチェック */
+            if (element == null)
+            {
+                return;
+            }
+
+            /* カスタムプロパティの情報をすべて削除する */
+            DeleteCustomProperties(element, true);
+            DeleteCustomProperties(element, false);
+        }
+
+        /// <summary>
+        /// 当該Elementのカスタムプロパティをすべて削除する 
+        /// </summary>
+        /// <param name="element">パーツ/アセンブリのElement</param>
+        /// <param name="isShared">true:すべてのリンクインスタンス  false:このパーツ/アセンブリのみ</param>
+        public static void DeleteCustomProperties(IZElement element, bool isShared)
+        {
+            /* elementチェック */
+            if (element == null)
+            {
+                return;
+            }
+
+            /* カスタムプロパティの情報をすべて削除する */
+            List<string> allPropName = new List<string>();
+            IZCustomPropMgr propMgr = element.CustomPropMgr[isShared];
+            int count = propMgr.Count;
+            for (int i = 0; i < count; i++)
+            {
+                string currName = string.Empty;
+                object currValue = string.Empty;
+                propMgr.GetAt(i, out currName, out currValue);
+                allPropName.Add(currName);
+            }
+            foreach (string name in allPropName)
+            {
+                propMgr.RemoveByName(name);
+            }
+        }
+
+        /// <summary>
+        /// カスタムプロパティの範囲設定(bool isShard)から設定名を取得する
+        /// </summary>
+        /// <param name="isShared">範囲設定 true:すべてのリンクインスタンス  false:このパーツ/アセンブリのみ</param>
+        /// <returns></returns>
+        public static string convertIsSharedBoolToString(bool isShared)
+        {
+            string isSharedStr = string.Empty;
+            if (isShared == true)
+            {
+                isSharedStr = "すべてのリンク インスタンス";
+            }
+            else
+            {
+                isSharedStr = "このパーツ/アセンブリのみ";
+            }
+            return isSharedStr;
+        }
+
+        /// <summary>
+        /// カスタムプロパティの範囲設定名(string)から設定値を取得する
+        /// </summary>
+        /// <param name="isSharedStr">範囲設定名</param>
+        /// <returns></returns>
+        public static bool getIsSharedStringToBool(string isSharedStr)
+        {
+            bool isSharedBool = true;
+            if (string.Equals(isSharedStr, "すべてのリンク インスタンス") == true)
+            {
+                isSharedBool = true;
+            }
+            else
+            {
+                isSharedBool = false;
+            }
+            return isSharedBool;
+        }
+
+        /// <summary>
+        /// カスタムプロパティのデータ型設定(DataType)を文字列に変換する
+        /// </summary>
+        /// <param name="dataType">データ型</param>
+        /// <returns></returns>
+        public static string getCustomPropertyDataTypeString(Type dataType)
+        {
+            string dataTypeStr = string.Empty;
+            if (dataType == typeof(DateTime))
+            {
+                dataTypeStr = "日付";
+            }
+            else if (dataType == typeof(bool))
+            {
+                dataTypeStr = "はい/いいえ (True/False)";
+            }
+            else if (dataType == typeof(double))
+            {
+                dataTypeStr = "数値";
+            }
+            else if (dataType == typeof(string))
+            {
+                dataTypeStr = "テキスト";
+            }
+            return dataTypeStr;
+        }
+
+        public static string boolScopeToStringScope(bool scopeIsShared)
+        {
+            string retStr = string.Empty;
+            if (scopeIsShared == true)
+            {
+                retStr = "すべてのリンクインスタンス";
+            }
+            else
+            {
+                retStr = "このパーツ/アセンブリのみ";
+            }
+            return retStr;
+        }
+
+        public static string convertCustomPropertyDbDataTypeToDataType(string dbDataType)
+        {
+            DateTime dummyData_DateTime = DateTime.Now;
+            bool dummyData_Bool = true;
+            Double dummyData_Number = 0.0;
+            string dummyData_Text = string.Empty;
+
+            string dataTypeName = string.Empty;
+
+            if (string.Equals(dbDataType, dummyData_DateTime.GetType().FullName) == true)
+            {
+                dataTypeName = Resources.CustomPropertiesDataType_Date;
+            }
+            else if (string.Equals(dbDataType, dummyData_Bool.GetType().FullName) == true)
+            {
+                dataTypeName = Resources.CustomPropertiesDataType_YesOrNo;
+            }
+            else if (string.Equals(dbDataType, dummyData_Number.GetType().FullName) == true)
+            {
+                dataTypeName = Resources.CustomPropertiesDataType_Number;
+            }
+            else if (string.Equals(dbDataType, dummyData_Text.GetType().FullName) == true)
+            {
+                dataTypeName = Resources.CustomPropertiesDataType_Text;
+            }
+            return dataTypeName;
+        }
+        #endregion
+
+        #region DataGridView/TreeGridViewのアクセス関連
+        /// <summary>
+        /// treeGridViewの値を取得する
+        /// </summary>
+        /// <param name="tgv"></param>
+        /// <param name="rowIndex"></param>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
+        public static string treeGridViewRowsValueGet(TreeGridView tgv, int rowIndex, int columnIndex)
+        {
+            string retStr = string.Empty;
+            if (rowIndex >= tgv.Rows.Count)
+            {
+                return retStr;
+            }
+            if (tgv.Rows[rowIndex].Cells[columnIndex].Value == null)
+            {
+                return retStr;
+            }
+            retStr = tgv.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+            return retStr;
+        }
+        public static string treeGridViewRowsValueGet(TreeGridView tgv, int rowIndex, string columnStr)
+        {
+            string retStr = string.Empty;
+            if (rowIndex >= tgv.Rows.Count)
+            {
+                return retStr;
+            }
+            if (tgv.Rows[rowIndex].Cells[columnStr].Value == null)
+            {
+                return retStr;
+            }
+            retStr = tgv.Rows[rowIndex].Cells[columnStr].Value.ToString();
+            return retStr;
+        }
+        public static string treeGridViewNodesValueGet(TreeGridView tree, int nodeIndex, string columnStr)
+        {
+            string retStr = string.Empty;
+            if (nodeIndex >= tree.Nodes.Count)
+            {
+                return retStr;
+            }
+            if (tree.Nodes[nodeIndex].Cells[columnStr].Value == null)
+            {
+                return retStr;
+            }
+            retStr = tree.Nodes[nodeIndex].Cells[columnStr].Value.ToString();
+            return retStr;
+        }
+
+        public static string dataRowValueGet(DataRow dr, string columnName)
+        {
+            string retStr = string.Empty;
+            try
+            {
+                if (dr[columnName] != null)
+                {
+                    retStr = dr[columnName].ToString();
+                }
+            }
+            catch
+            {
+
+            }
+
+            return retStr;
+        }
+        public static bool dataRowBoolValueGet(DataRow dr, string columnName)
+        {
+            bool retValue = false;
+            try
+            {
+                if (dr[columnName] != null)
+                {
+                    bool.TryParse(dr[columnName].ToString(), out retValue);
+                }
+            }
+            catch
+            {
+
+            }
+            return retValue;
+
+        }
+        public static bool treeGridViewBoolValueGet(TreeGridView tgv, int rowIndex, string columnName)
+        {
+            bool retValue = false;
+            if (rowIndex >= tgv.Rows.Count)
+            {
+                return false;
+            }
+            if (tgv.Rows[rowIndex].Cells[columnName].Value == null)
+            {
+                return false;
+            }
+            bool.TryParse(tgv.Rows[rowIndex].Cells[columnName].Value.ToString(), out retValue);
+            return retValue;
+        }
+
+        public static bool treeGridViewCheckStringBoolValueGet(TreeGridView tgv, int rowIndex, string columnName, string checkStringTrue)
+        {
+            bool retValue = false;
+            if (rowIndex >= tgv.Rows.Count)
+            {
+                return false;
+            }
+            if (tgv.Rows[rowIndex].Cells[columnName].Value == null)
+            {
+                return false;
+            }
+            if (string.Equals(checkStringTrue, tgv.Rows[rowIndex].Cells[columnName].Value.ToString()) == true)
+            {
+                retValue = true;
+            }
+            else
+            {
+                retValue = false;
+            }
+            return retValue;
+        }
+
+        public static string treeGridViewValueGet(TreeGridView tgv, int rowIndex, string columnName)
+        {
+            string retStr = string.Empty;
+            if (rowIndex >= tgv.Rows.Count)
+            {
+                return retStr;
+            }
+            if (tgv.Rows[rowIndex].Cells[columnName].Value == null)
+            {
+                return retStr;
+            }
+            retStr = tgv.Rows[rowIndex].Cells[columnName].Value.ToString();
+            return retStr;
+
+        }
+        public static string dataGridViewValueGet(DataGridView dgv, int rowIndex, int columnIndex)
+        {
+            string retStr = string.Empty;
+            if ((rowIndex >= dgv.Rows.Count) || (columnIndex > dgv.Columns.Count))
+            {
+                return retStr;
+            }
+
+            if (dgv.Rows[rowIndex].Cells[columnIndex].Value == null)
+            {
+                return retStr;
+            }
+            retStr = dgv.Rows[rowIndex].Cells[columnIndex].Value.ToString();
+            return retStr;
+
+        }
+        public static string dataGridViewValueGet(DataGridView dgv, int rowIndex, string columnName)
+        {
+            string retStr = string.Empty;
+            if (rowIndex >= dgv.Rows.Count)
+            {
+                return retStr;
+            }
+            if (dgv.Columns.Contains(columnName) == false)
+            {
+                return retStr;
+            }
+            if (dgv.Rows[rowIndex].Cells[columnName].Value == null)
+            {
+                return retStr;
+            }
+            retStr = dgv.Rows[rowIndex].Cells[columnName].Value.ToString();
+            return retStr;
+
+        }
+        public static bool dataGridViewBoolValueGet(DataGridView dgv, int rowIndex, string columnName)
+        {
+            bool retValue = false;
+            if (rowIndex >= dgv.Rows.Count)
+            {
+                return false;
+            }
+            if (dgv.Columns.Contains(columnName) == false)
+            {
+                return false;
+            }
+            if (dgv.Rows[rowIndex].Cells[columnName].Value == null)
+            {
+                return false;
+            }
+            bool ret = bool.TryParse(dgv.Rows[rowIndex].Cells[columnName].Value.ToString(), out retValue);
+            if (ret == false)
+            {
+                retValue = false;
+            }
+            return retValue;
+
+        }
+        #endregion DataGridView/TreeGridViewのアクセス関連
     }
 }

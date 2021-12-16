@@ -33,11 +33,13 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabelTop = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonIcWebBrowser = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSuppressManager = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelTitle = new System.Windows.Forms.TableLayoutPanel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelFunction = new System.Windows.Forms.Panel();
-            this.toolStripButtonIcWebBrowser = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCustomPropertyManager = new System.Windows.Forms.ToolStripButton();
             this.toolStripFunction.SuspendLayout();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanelTitle.SuspendLayout();
@@ -53,22 +55,24 @@
             this.toolStripSeparator2,
             this.toolStripLabelTop,
             this.toolStripSeparator1,
-            this.toolStripButtonIcWebBrowser});
+            this.toolStripButtonIcWebBrowser,
+            this.toolStripButtonSuppressManager,
+            this.toolStripButtonCustomPropertyManager});
             this.toolStripFunction.Location = new System.Drawing.Point(0, 0);
             this.toolStripFunction.Name = "toolStripFunction";
-            this.toolStripFunction.Size = new System.Drawing.Size(188, 781);
+            this.toolStripFunction.Size = new System.Drawing.Size(279, 781);
             this.toolStripFunction.TabIndex = 8;
             this.toolStripFunction.Text = "toolStrip1";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(276, 6);
             // 
             // toolStripLabelTop
             // 
             this.toolStripLabelTop.Name = "toolStripLabelTop";
-            this.toolStripLabelTop.Size = new System.Drawing.Size(185, 28);
+            this.toolStripLabelTop.Size = new System.Drawing.Size(276, 28);
             this.toolStripLabelTop.Text = "機能を選択";
             this.toolStripLabelTop.Click += new System.EventHandler(this.toolStripLabelTop_Click);
             // 
@@ -76,7 +80,28 @@
             // 
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 7);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(276, 6);
+            // 
+            // toolStripButtonIcWebBrowser
+            // 
+            this.toolStripButtonIcWebBrowser.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.toolStripButtonIcWebBrowser.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_icWebBrowser_l;
+            this.toolStripButtonIcWebBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonIcWebBrowser.Margin = new System.Windows.Forms.Padding(7, 1, 0, 2);
+            this.toolStripButtonIcWebBrowser.Name = "toolStripButtonIcWebBrowser";
+            this.toolStripButtonIcWebBrowser.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.toolStripButtonIcWebBrowser.Size = new System.Drawing.Size(269, 46);
+            this.toolStripButtonIcWebBrowser.Text = "icWebBrowser";
+            this.toolStripButtonIcWebBrowser.Click += new System.EventHandler(this.toolStripButtonIcWebBrowser_Click);
+            // 
+            // toolStripButtonSuppressManager
+            // 
+            this.toolStripButtonSuppressManager.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_icSuppressManager_l;
+            this.toolStripButtonSuppressManager.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSuppressManager.Name = "toolStripButtonSuppressManager";
+            this.toolStripButtonSuppressManager.Size = new System.Drawing.Size(276, 36);
+            this.toolStripButtonSuppressManager.Text = "SuppressManager";
+            this.toolStripButtonSuppressManager.Click += new System.EventHandler(this.toolStripButtonSuppressManager_Click);
             // 
             // tableLayoutPanelBase
             // 
@@ -86,13 +111,13 @@
             this.tableLayoutPanelBase.Controls.Add(this.tableLayoutPanelTitle, 0, 0);
             this.tableLayoutPanelBase.Controls.Add(this.panelFunction, 0, 1);
             this.tableLayoutPanelBase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelBase.Location = new System.Drawing.Point(188, 0);
+            this.tableLayoutPanelBase.Location = new System.Drawing.Point(279, 0);
             this.tableLayoutPanelBase.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanelBase.Name = "tableLayoutPanelBase";
             this.tableLayoutPanelBase.RowCount = 2;
             this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelBase.Size = new System.Drawing.Size(1079, 781);
+            this.tableLayoutPanelBase.Size = new System.Drawing.Size(988, 781);
             this.tableLayoutPanelBase.TabIndex = 9;
             // 
             // tableLayoutPanelTitle
@@ -109,7 +134,7 @@
             this.tableLayoutPanelTitle.RowCount = 1;
             this.tableLayoutPanelTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanelTitle.Size = new System.Drawing.Size(1079, 38);
+            this.tableLayoutPanelTitle.Size = new System.Drawing.Size(988, 38);
             this.tableLayoutPanelTitle.TabIndex = 8;
             // 
             // labelTitle
@@ -133,20 +158,17 @@
             this.panelFunction.Location = new System.Drawing.Point(0, 38);
             this.panelFunction.Margin = new System.Windows.Forms.Padding(0);
             this.panelFunction.Name = "panelFunction";
-            this.panelFunction.Size = new System.Drawing.Size(1079, 743);
+            this.panelFunction.Size = new System.Drawing.Size(988, 743);
             this.panelFunction.TabIndex = 10;
             // 
-            // toolStripButtonIcWebBrowser
+            // toolStripButtonCustomPropertyManager
             // 
-            this.toolStripButtonIcWebBrowser.Font = new System.Drawing.Font("メイリオ", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.toolStripButtonIcWebBrowser.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_icWebBrowser_l;
-            this.toolStripButtonIcWebBrowser.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonIcWebBrowser.Margin = new System.Windows.Forms.Padding(7, 1, 0, 2);
-            this.toolStripButtonIcWebBrowser.Name = "toolStripButtonIcWebBrowser";
-            this.toolStripButtonIcWebBrowser.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.toolStripButtonIcWebBrowser.Size = new System.Drawing.Size(178, 46);
-            this.toolStripButtonIcWebBrowser.Text = "icWebブラウザ";
-            this.toolStripButtonIcWebBrowser.Click += new System.EventHandler(this.toolStripButtonIcWebBrowser_Click);
+            this.toolStripButtonCustomPropertyManager.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_CustomPropertyManager_l;
+            this.toolStripButtonCustomPropertyManager.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCustomPropertyManager.Name = "toolStripButtonCustomPropertyManager";
+            this.toolStripButtonCustomPropertyManager.Size = new System.Drawing.Size(276, 36);
+            this.toolStripButtonCustomPropertyManager.Text = "CustomPropertyManager";
+            this.toolStripButtonCustomPropertyManager.Click += new System.EventHandler(this.toolStripButtonCustomPropertyManager_Click);
             // 
             // icPowerAppsTEST
             // 
@@ -182,5 +204,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelTop;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTitle;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSuppressManager;
+        private System.Windows.Forms.ToolStripButton toolStripButtonCustomPropertyManager;
     }
 }

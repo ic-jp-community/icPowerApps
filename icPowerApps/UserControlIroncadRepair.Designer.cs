@@ -117,11 +117,11 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(3, 55);
+            this.tabControl1.Location = new System.Drawing.Point(3, 59);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(972, 711);
+            this.tabControl1.Size = new System.Drawing.Size(972, 707);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -131,7 +131,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage1.Size = new System.Drawing.Size(964, 679);
+            this.tabPage1.Size = new System.Drawing.Size(964, 675);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "データのクリーンアップ";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -153,7 +153,7 @@
             this.tableLayoutPanelTabPage1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTabPage1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTabPage1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelTabPage1.Size = new System.Drawing.Size(958, 671);
+            this.tableLayoutPanelTabPage1.Size = new System.Drawing.Size(958, 667);
             this.tableLayoutPanelTabPage1.TabIndex = 0;
             // 
             // groupBox2
@@ -161,10 +161,10 @@
             this.groupBox2.AutoSize = true;
             this.groupBox2.Controls.Add(this.tableLayoutPanel5);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 310);
+            this.groupBox2.Location = new System.Drawing.Point(3, 308);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 15, 3, 3);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(952, 277);
+            this.groupBox2.Size = new System.Drawing.Size(952, 275);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "アンインストール後のデータ削除";
@@ -186,7 +186,7 @@
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(946, 251);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(946, 249);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // textBoxUninstallDelete
@@ -198,7 +198,7 @@
             this.textBoxUninstallDelete.Name = "textBoxUninstallDelete";
             this.textBoxUninstallDelete.ReadOnly = true;
             this.textBoxUninstallDelete.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxUninstallDelete.Size = new System.Drawing.Size(940, 128);
+            this.textBoxUninstallDelete.Size = new System.Drawing.Size(940, 126);
             this.textBoxUninstallDelete.TabIndex = 3;
             // 
             // tableLayoutPanel7
@@ -211,7 +211,7 @@
             this.tableLayoutPanel7.Controls.Add(this.buttonUninstallDelete, 0, 0);
             this.tableLayoutPanel7.Controls.Add(this.label2, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel7.Location = new System.Drawing.Point(15, 215);
+            this.tableLayoutPanel7.Location = new System.Drawing.Point(15, 213);
             this.tableLayoutPanel7.Margin = new System.Windows.Forms.Padding(15, 0, 0, 0);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 1;
@@ -326,7 +326,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(952, 289);
+            this.groupBox1.Size = new System.Drawing.Size(952, 287);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "ユーザーデータの削除";
@@ -348,13 +348,13 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(946, 263);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(946, 261);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // buttonWorkDelete
             // 
             this.buttonWorkDelete.AutoSize = true;
-            this.buttonWorkDelete.Location = new System.Drawing.Point(15, 230);
+            this.buttonWorkDelete.Location = new System.Drawing.Point(15, 228);
             this.buttonWorkDelete.Margin = new System.Windows.Forms.Padding(15, 3, 3, 3);
             this.buttonWorkDelete.Name = "buttonWorkDelete";
             this.buttonWorkDelete.Size = new System.Drawing.Size(75, 30);
@@ -372,7 +372,7 @@
             this.textBoxWorkDelete.Name = "textBoxWorkDelete";
             this.textBoxWorkDelete.ReadOnly = true;
             this.textBoxWorkDelete.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxWorkDelete.Size = new System.Drawing.Size(940, 99);
+            this.textBoxWorkDelete.Size = new System.Drawing.Size(940, 97);
             this.textBoxWorkDelete.TabIndex = 2;
             // 
             // label4
@@ -565,7 +565,7 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(972, 31);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(972, 35);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // comboBoxIroncadVersion
@@ -584,7 +584,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(230, 31);
+            this.label1.Size = new System.Drawing.Size(230, 35);
             this.label1.TabIndex = 1;
             this.label1.Text = "修復するIRONCADバージョンの選択";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

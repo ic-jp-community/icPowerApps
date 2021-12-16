@@ -53,7 +53,7 @@ namespace ICApiAddin.icPowerApps
         /// <param name="title"></param>
         public void showUserControl(UserControl userControl, string title)
         {
-            bool closeResult = closeUserControl();
+            bool closeResult = closeControl();
             if(closeResult == false)
             {
                 MessageBox.Show("現在処理中のため他の機能へ移動できません。しばらくお待ちください。");
@@ -69,40 +69,71 @@ namespace ICApiAddin.icPowerApps
         }
 
         /// <summary>
-        /// ユーザーコントロールを閉じる
+        /// Formを表示する
+        /// </summary>
+        /// <param name="frm"></param>
+        public void showFormControl(Form frm)
+        {
+            bool closeResult = closeControl();
+            if (closeResult == false)
+            {
+                MessageBox.Show("現在処理中のため他の機能へ移動できません。しばらくお待ちください。");
+                return;
+            }
+            frm.TopLevel = false;
+            panelFunction.Controls.Add(frm);
+            frm.ControlBox = false;
+            frm.Show();
+            frm.BringToFront();
+            frm.FormBorderStyle = FormBorderStyle.None;
+            labelTitle.Text = frm.Text;
+            frm.Width = panelFunction.Width;
+            frm.Height = panelFunction.Height;
+        }
+
+        /// <summary>
+        /// ユーザーコントロール/Formを閉じる
         /// </summary>
         /// <returns></returns>
-        public bool closeUserControl()
+        public bool closeControl()
         {
             bool closeResult = true;
             foreach (Control c in panelFunction.Controls)
             {
                 UserControl userControl = c as UserControl;
-                if(userControl == null)
+                Form formControl = c as Form;
+                if ((userControl == null) || (formControl == null))
                 {
                     continue;
                 }
-                /* タグデータがある場合は処理中かどうかチェックする */
-                UserControlTagData tagData = null;
-                if (userControl.Tag != null)
+                if(userControl != null)
                 {
-                    try
+                    /* タグデータがある場合は処理中かどうかチェックする */
+                    UserControlTagData tagData = null;
+                    if (userControl.Tag != null)
                     {
-                        tagData = (UserControlTagData)userControl.Tag;
-                        if(tagData.canNotClose == true)
+                        try
                         {
-                            /* 処理中なので閉じれない */
-                            closeResult = false;
-                            break;
+                            tagData = (UserControlTagData)userControl.Tag;
+                            if (tagData.canNotClose == true)
+                            {
+                                /* 処理中なので閉じれない */
+                                closeResult = false;
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
                         }
                     }
-                    catch(Exception ex)
-                    {
-                    }
+                    userControl.Dispose();
                 }
-                userControl.Dispose();
+                if(formControl != null)
+                {
+                    formControl.Close();
+                }
                 labelTitle.Text = string.Empty;
-                this.panelFunction.Controls.Remove(userControl);
+                this.panelFunction.Controls.Remove(c);
             }
             return closeResult;
         }
@@ -115,7 +146,7 @@ namespace ICApiAddin.icPowerApps
         /// <param name="e"></param>
         private void toolStripLabelTop_Click(object sender, EventArgs e)
         {
-            closeUserControl();
+            closeControl();
             this.labelTitle.Text = "左メニューから機能を選択してください。";
         }
 
@@ -130,6 +161,17 @@ namespace ICApiAddin.icPowerApps
             UserControlWebBrowser userControl = new UserControlWebBrowser(true, false);
             showUserControl(userControl, "Browser");
         }
-        
+
+        private void toolStripButtonSuppressManager_Click(object sender, EventArgs e)
+        {
+            UserControlSuppressManager userControl = new UserControlSuppressManager(this._ironcadApp);
+            showUserControl(userControl, UserControlSuppressManager.title);
+        }
+
+        private void toolStripButtonCustomPropertyManager_Click(object sender, EventArgs e)
+        {
+            Form_CustomPropertyManager form = new Form_CustomPropertyManager(this._ironcadApp);
+            showFormControl(form);
+        }
     }
 }

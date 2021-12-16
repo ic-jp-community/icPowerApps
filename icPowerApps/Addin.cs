@@ -20,6 +20,8 @@ namespace ICApiAddin.icPowerApps
         private ZAddinSite m_izAddinSite;
         private ZCommandHandler m_buttonIcPowerAppsTestApp;
         private ZCommandHandler m_buttonIcWebBrowser;
+        private ZCommandHandler m_buttonSuppressManager;
+        private ZCommandHandler m_buttonCustomPropertyManager;
         #endregion
 
         //Constractor
@@ -64,6 +66,18 @@ namespace ICApiAddin.icPowerApps
                     m_buttonIcWebBrowser = piAddinSite.CreateCommandHandler("icWebBrowser", "icWebブラウザ", "icWebブラウザ", "ブラウザを表示します。", oImageSmallBrowser, oImageLargeBrowser);
                     m_buttonIcWebBrowser.Enabled = true;
 
+
+                    stdole.IPictureDisp oImageSmallSuppress = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icSuppressManager_s);
+                    stdole.IPictureDisp oImageLargeSuppress = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icSuppressManager_l);
+                    m_buttonSuppressManager = piAddinSite.CreateCommandHandler("icSuppressManager", "抑制マネージャ", "抑制マネージャ", "抑制マネージャを表示します。", oImageSmallSuppress, oImageLargeSuppress);
+                    m_buttonSuppressManager.Enabled = true;
+
+                    stdole.IPictureDisp oImageSmallCustomProperty = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_CustomPropertyManager_s);
+                    stdole.IPictureDisp oImageLargeCustomProperty = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_CustomPropertyManager_l);
+                    m_buttonCustomPropertyManager = piAddinSite.CreateCommandHandler("icCustomPropertyManager", "カスタムプロパティ マネージャ", "カスタムプロパティ マネージャ", "カスタムプロパティ マネージャを表示します。", oImageSmallCustomProperty, oImageLargeCustomProperty);
+                    m_buttonCustomPropertyManager.Enabled = true;
+
+
                     //Control bar
                     ZControlBar cControlBar;
                     ZEnvironmentMgr cEnvMgr = this.IronCADApp.EnvironmentMgr;
@@ -78,10 +92,14 @@ namespace ICApiAddin.icPowerApps
                     cControls = cControlBar.Controls;
                     cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonIcPowerAppsTestApp.ControlDescriptor, null);
                     cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonIcWebBrowser.ControlDescriptor, null);
+                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonSuppressManager.ControlDescriptor, null);
+                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonCustomPropertyManager.ControlDescriptor, null);
 
                     //Add button to RibbonBar
                     cRibbonBar.AddButton2(m_buttonIcPowerAppsTestApp.ControlDescriptor, true);
                     cRibbonBar.AddButton2(m_buttonIcWebBrowser.ControlDescriptor, true);
+                    cRibbonBar.AddButton2(m_buttonSuppressManager.ControlDescriptor, true);
+                    cRibbonBar.AddButton2(m_buttonCustomPropertyManager.ControlDescriptor, true);
                     //                    cRibbonBar.AddButton2(m_buttonForm.ControlDescriptor, false);
 
                     /************************************************************
@@ -96,7 +114,12 @@ namespace ICApiAddin.icPowerApps
 
                     m_buttonIcWebBrowser.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonIcWebBrowser_OnClick);
                     m_buttonIcWebBrowser.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonIcWebBrowser_OnUpdate);
-                    
+
+                    m_buttonSuppressManager.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonSuppressManager_OnClick);
+                    m_buttonSuppressManager.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonSuppressManager_OnUpdate);
+
+                    m_buttonCustomPropertyManager.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonCustomPropertyManager_OnClick);
+                    m_buttonCustomPropertyManager.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonCustomPropertyManager_OnUpdate);
 
                     //Register App Events
                 }
@@ -151,6 +174,14 @@ namespace ICApiAddin.icPowerApps
         private void m_buttonIcWebBrowser_OnUpdate()
         {
             m_buttonIcWebBrowser.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+        }
+        private void m_buttonSuppressManager_OnUpdate()
+        {
+            m_buttonSuppressManager.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+        }
+        private void m_buttonCustomPropertyManager_OnUpdate()
+        {
+            m_buttonCustomPropertyManager.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
         }
         private void m_buttonForm_OnClick()
         {
@@ -212,6 +243,35 @@ namespace ICApiAddin.icPowerApps
                 SetWindowPos(dockingBarHWnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
             }
             dockingBar.ShowControlBar(1, 1, 1);
+        }
+
+        private void m_buttonSuppressManager_OnClick()
+        {
+            IZAddinSite addinSite = m_izAddinSite;
+            IZDockingBar dockingBar;
+            IZEnvironmentMgr envMgr = GetEnvironmentMgr();
+            IZEnvironment env = envMgr.ActiveEnvironment;
+            uint dockPosition = AFX_IDW_DOCKBAR_RIGHT;
+            int left, top, right, bottom;
+
+            /* DockingBarの追加 */
+            dockingBar = env.AddDockingBar((ZAddinSite)addinSite, 1, "抑制マネージャ", dockPosition);
+            dockingBar.GetClientRect(out left, out top, out right, out bottom);
+
+            /* ユーザコントロールをDockingBarにマッピング */
+            UserControlSuppressManager uc = new UserControlSuppressManager(IronCADApp);
+            uc.SetBounds(left, top, right - left, bottom - top);
+            IntPtr cwnd = HwndToCwnd(uc.Handle);
+            dockingBar.SetSubWindow((ulong)cwnd);
+            dockingBar.ShowControlBar(1, 1, 1);
+        }
+
+        private void m_buttonCustomPropertyManager_OnClick()
+        {
+            IZDoc doc = GetActiveDoc();
+            IZEnvironmentMgr iZEnvMgr = GetEnvironmentMgr();
+            Form_CustomPropertyManager frm = new Form_CustomPropertyManager(this.IronCADApp);
+            frm.ShowDialog();
         }
 
         private IZDoc GetActiveDoc()

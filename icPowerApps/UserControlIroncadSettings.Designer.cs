@@ -89,7 +89,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(3, 52);
+            this.tabControl1.Location = new System.Drawing.Point(3, 55);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -99,11 +99,11 @@
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.tableLayoutPanelTabPage1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Location = new System.Drawing.Point(4, 28);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.tabPage1.Size = new System.Drawing.Size(915, 679);
+            this.tabPage1.Size = new System.Drawing.Size(915, 675);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "設定";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -124,7 +124,7 @@
             this.tableLayoutPanelTabPage1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTabPage1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanelTabPage1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelTabPage1.Size = new System.Drawing.Size(909, 671);
+            this.tableLayoutPanelTabPage1.Size = new System.Drawing.Size(909, 667);
             this.tableLayoutPanelTabPage1.TabIndex = 0;
             // 
             // groupBox1
@@ -135,7 +135,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(10, 10, 3, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox1.Size = new System.Drawing.Size(418, 108);
+            this.groupBox1.Size = new System.Drawing.Size(441, 116);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "言語設定";
@@ -147,11 +147,11 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(10, 26);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(10, 30);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(398, 72);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(421, 76);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -173,7 +173,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 6F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(392, 66);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(415, 70);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // label2
@@ -182,7 +182,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(3, 3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(94, 15);
+            this.label2.Size = new System.Drawing.Size(117, 19);
             this.label2.TabIndex = 0;
             this.label2.Text = "現在の言語設定:";
             // 
@@ -190,16 +190,16 @@
             // 
             this.comboBoxSetLanguage.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.comboBoxSetLanguage.FormattingEnabled = true;
-            this.comboBoxSetLanguage.Location = new System.Drawing.Point(104, 37);
+            this.comboBoxSetLanguage.Location = new System.Drawing.Point(127, 39);
             this.comboBoxSetLanguage.Margin = new System.Windows.Forms.Padding(4);
             this.comboBoxSetLanguage.Name = "comboBoxSetLanguage";
-            this.comboBoxSetLanguage.Size = new System.Drawing.Size(192, 23);
+            this.comboBoxSetLanguage.Size = new System.Drawing.Size(192, 27);
             this.comboBoxSetLanguage.TabIndex = 2;
             // 
             // buttonSetLanguage
             // 
             this.buttonSetLanguage.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.buttonSetLanguage.Location = new System.Drawing.Point(304, 32);
+            this.buttonSetLanguage.Location = new System.Drawing.Point(327, 36);
             this.buttonSetLanguage.Margin = new System.Windows.Forms.Padding(4);
             this.buttonSetLanguage.Name = "buttonSetLanguage";
             this.buttonSetLanguage.Size = new System.Drawing.Size(84, 30);
@@ -213,19 +213,19 @@
             this.textBoxCurrLang.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.textBoxCurrLang.BackColor = System.Drawing.Color.WhiteSmoke;
             this.textBoxCurrLang.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBoxCurrLang.Location = new System.Drawing.Point(103, 3);
+            this.textBoxCurrLang.Location = new System.Drawing.Point(126, 3);
             this.textBoxCurrLang.Name = "textBoxCurrLang";
             this.textBoxCurrLang.ReadOnly = true;
-            this.textBoxCurrLang.Size = new System.Drawing.Size(193, 16);
+            this.textBoxCurrLang.Size = new System.Drawing.Size(193, 20);
             this.textBoxCurrLang.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 39);
+            this.label3.Location = new System.Drawing.Point(3, 41);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 15);
+            this.label3.Size = new System.Drawing.Size(113, 19);
             this.label3.TabIndex = 8;
             this.label3.Text = "新しい言語設定:";
             // 
@@ -244,16 +244,16 @@
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(925, 28);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(925, 31);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // comboBoxIroncadVersion
             // 
             this.comboBoxIroncadVersion.FormattingEnabled = true;
-            this.comboBoxIroncadVersion.Location = new System.Drawing.Point(151, 4);
+            this.comboBoxIroncadVersion.Location = new System.Drawing.Point(185, 4);
             this.comboBoxIroncadVersion.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.comboBoxIroncadVersion.Name = "comboBoxIroncadVersion";
-            this.comboBoxIroncadVersion.Size = new System.Drawing.Size(245, 23);
+            this.comboBoxIroncadVersion.Size = new System.Drawing.Size(245, 27);
             this.comboBoxIroncadVersion.TabIndex = 0;
             this.comboBoxIroncadVersion.TextChanged += new System.EventHandler(this.comboBoxIroncadVersion_TextChanged);
             // 
@@ -263,14 +263,14 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 28);
+            this.label1.Size = new System.Drawing.Size(176, 31);
             this.label1.TabIndex = 1;
             this.label1.Text = "IRONCADバージョンの選択";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // UserControlIroncadSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.tableLayoutPanelBase);

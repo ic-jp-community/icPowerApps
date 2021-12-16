@@ -63,9 +63,93 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap Assembly {
+            get {
+                object obj = ResourceManager.GetObject("Assembly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   日付 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CustomPropertiesDataType_Date {
+            get {
+                return ResourceManager.GetString("CustomPropertiesDataType_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   数値 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CustomPropertiesDataType_Number {
+            get {
+                return ResourceManager.GetString("CustomPropertiesDataType_Number", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   テキスト に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CustomPropertiesDataType_Text {
+            get {
+                return ResourceManager.GetString("CustomPropertiesDataType_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   はい/いいえ (True/False) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CustomPropertiesDataType_YesOrNo {
+            get {
+                return ResourceManager.GetString("CustomPropertiesDataType_YesOrNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   いいえ (False) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CustomPropertiesDataType_YesOrNo_No {
+            get {
+                return ResourceManager.GetString("CustomPropertiesDataType_YesOrNo_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   はい (True) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string CustomPropertiesDataType_YesOrNo_Yes {
+            get {
+                return ResourceManager.GetString("CustomPropertiesDataType_YesOrNo_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_All_Ironcad {
             get {
                 object obj = ResourceManager.GetObject("icon_All_Ironcad", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_CustomPropertyManager_l {
+            get {
+                object obj = ResourceManager.GetObject("icon_CustomPropertyManager_l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_CustomPropertyManager_s {
+            get {
+                object obj = ResourceManager.GetObject("icon_CustomPropertyManager_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,6 +177,26 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_icSuppressManager_l {
+            get {
+                object obj = ResourceManager.GetObject("icon_icSuppressManager_l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_icSuppressManager_s {
+            get {
+                object obj = ResourceManager.GetObject("icon_icSuppressManager_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_icWebBrowser_l {
             get {
                 object obj = ResourceManager.GetObject("icon_icWebBrowser_l", resourceCulture);
@@ -106,6 +210,16 @@ namespace ICApiAddin.icPowerApps.Properties {
         internal static System.Drawing.Bitmap icon_icWebBrowser_s {
             get {
                 object obj = ResourceManager.GetObject("icon_icWebBrowser_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_reload {
+            get {
+                object obj = ResourceManager.GetObject("icon_reload", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +310,136 @@ namespace ICApiAddin.icPowerApps.Properties {
         internal static System.Drawing.Bitmap icon_webBrowserUserGuide {
             get {
                 object obj = ResourceManager.GetObject("icon_webBrowserUserGuide", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap ImageNone {
+            get {
+                object obj = ResourceManager.GetObject("ImageNone", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkAssembly {
+            get {
+                object obj = ResourceManager.GetObject("LinkAssembly", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkedPartsSheet {
+            get {
+                object obj = ResourceManager.GetObject("LinkedPartsSheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkedProfile {
+            get {
+                object obj = ResourceManager.GetObject("LinkedProfile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkedSheetMetal {
+            get {
+                object obj = ResourceManager.GetObject("LinkedSheetMetal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkedWire {
+            get {
+                object obj = ResourceManager.GetObject("LinkedWire", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkParts {
+            get {
+                object obj = ResourceManager.GetObject("LinkParts", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Parts {
+            get {
+                object obj = ResourceManager.GetObject("Parts", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap PartsSheet {
+            get {
+                object obj = ResourceManager.GetObject("PartsSheet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Profile {
+            get {
+                object obj = ResourceManager.GetObject("Profile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Scene {
+            get {
+                object obj = ResourceManager.GetObject("Scene", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap SheetMetal {
+            get {
+                object obj = ResourceManager.GetObject("SheetMetal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Wire {
+            get {
+                object obj = ResourceManager.GetObject("Wire", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

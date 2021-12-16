@@ -160,4 +160,79 @@
   <data name="icon_icPowerApps_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\icon_icPowerApps_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Assembly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Assembly.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ImageNone" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\ImageNone.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkAssembly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LinkAssembly.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkedPartsSheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LinkedPartsSheet.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkedProfile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LinkedProfile.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkedSheetMetal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LinkedSheetMetal.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkedWire" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LinkedWire.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LinkParts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\LinkParts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Parts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Parts.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="PartsSheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\PartsSheet.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Profile" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Profile.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Scene" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Scene.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="SheetMetal" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\SheetMetal.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Wire" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\Wire.bmp;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_icSuppressManager_l" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_icSuppressManager_l.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_icSuppressManager_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_icSuppressManager_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="CustomPropertiesDataType_Date" xml:space="preserve">
+    <value>日付</value>
+  </data>
+  <data name="CustomPropertiesDataType_Number" xml:space="preserve">
+    <value>数値</value>
+  </data>
+  <data name="CustomPropertiesDataType_Text" xml:space="preserve">
+    <value>テキスト</value>
+  </data>
+  <data name="CustomPropertiesDataType_YesOrNo" xml:space="preserve">
+    <value>はい/いいえ (True/False)</value>
+  </data>
+  <data name="CustomPropertiesDataType_YesOrNo_No" xml:space="preserve">
+    <value>いいえ (False)</value>
+  </data>
+  <data name="CustomPropertiesDataType_YesOrNo_Yes" xml:space="preserve">
+    <value>はい (True)</value>
+  </data>
+  <data name="icon_CustomPropertyManager_l" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_CustomPropertyManager_l.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_CustomPropertyManager_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_CustomPropertyManager_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_reload" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_reload.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
