@@ -182,9 +182,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form_CustomPropertyManager.en.resx">
-      <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form_CustomPropertyManager.resx">
       <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
     </EmbeddedResource>
