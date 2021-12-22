@@ -216,10 +216,10 @@
             // 
             this.comboBoxSuppress.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.comboBoxSuppress.FormattingEnabled = true;
-            this.comboBoxSuppress.Location = new System.Drawing.Point(3, 5);
+            this.comboBoxSuppress.Location = new System.Drawing.Point(3, 9);
             this.comboBoxSuppress.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxSuppress.Name = "comboBoxSuppress";
-            this.comboBoxSuppress.Size = new System.Drawing.Size(227, 27);
+            this.comboBoxSuppress.Size = new System.Drawing.Size(227, 23);
             this.comboBoxSuppress.TabIndex = 3;
             // 
             // tableLayoutPanel5
@@ -292,7 +292,7 @@
             this.SystemName.ReadOnly = true;
             this.SystemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.SystemName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SystemName.Width = 86;
+            this.SystemName.Width = 73;
             // 
             // id
             // 
@@ -348,7 +348,7 @@
             // 
             // UserControlSuppressManager
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.White;

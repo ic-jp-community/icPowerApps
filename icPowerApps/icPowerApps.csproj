@@ -308,6 +308,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Icons\icon_reload.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_webBrowserOpenFolder.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Windows Kits\10\bin\x64\mt.exe" -managedassemblyname:$(TargetFileName) -nodependency -out:$(TargetFileName).manifest

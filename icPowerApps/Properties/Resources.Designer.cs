@@ -297,6 +297,16 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_webBrowserOpenFolder {
+            get {
+                object obj = ResourceManager.GetObject("icon_webBrowserOpenFolder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_webBrowserReload {
             get {
                 object obj = ResourceManager.GetObject("icon_webBrowserReload", resourceCulture);

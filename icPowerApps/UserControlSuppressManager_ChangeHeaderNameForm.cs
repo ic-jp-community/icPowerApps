@@ -28,11 +28,6 @@ namespace ICApiAddin.icPowerApps
         private void buttonOK_Click(object sender, EventArgs e)
         {
             string changeHeaderText = textBoxHeaderName.Text;
-            DialogResult dret = MessageBox.Show("ヘッダ名を変更しますがよろしいですか？", "確認", MessageBoxButtons.YesNo);
-            if (dret != DialogResult.Yes)
-            {
-                return;
-            }
             this._returnIsChange = true;
             this._returnChangeHeaderText = changeHeaderText;
             this.Close();

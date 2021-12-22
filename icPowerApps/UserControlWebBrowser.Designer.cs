@@ -43,6 +43,7 @@
             this.toolStripSplitButtonFavorite = new System.Windows.Forms.ToolStripSplitButton();
             this.toolStripButtonUserGuide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonABC = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonOpenLocalFile = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.webView2Main)).BeginInit();
@@ -57,11 +58,10 @@
             this.tableLayoutPanelBase.Controls.Add(this.tableLayoutPanel1, 0, 0);
             this.tableLayoutPanelBase.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanelBase.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanelBase.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanelBase.Name = "tableLayoutPanelBase";
             this.tableLayoutPanelBase.RowCount = 1;
             this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelBase.Size = new System.Drawing.Size(743, 653);
+            this.tableLayoutPanelBase.Size = new System.Drawing.Size(557, 529);
             this.tableLayoutPanelBase.TabIndex = 0;
             // 
             // tableLayoutPanel1
@@ -72,14 +72,13 @@
             this.tableLayoutPanel1.Controls.Add(this.webView2Main, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.toolStripHeader, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(4, 4);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(735, 645);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(551, 523);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // webView2Main
@@ -87,10 +86,9 @@
             this.webView2Main.CreationProperties = null;
             this.webView2Main.DefaultBackgroundColor = System.Drawing.Color.White;
             this.webView2Main.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.webView2Main.Location = new System.Drawing.Point(4, 41);
-            this.webView2Main.Margin = new System.Windows.Forms.Padding(4);
+            this.webView2Main.Location = new System.Drawing.Point(3, 40);
             this.webView2Main.Name = "webView2Main";
-            this.webView2Main.Size = new System.Drawing.Size(727, 600);
+            this.webView2Main.Size = new System.Drawing.Size(545, 480);
             this.webView2Main.TabIndex = 1;
             this.webView2Main.ZoomFactor = 1D;
             // 
@@ -109,11 +107,12 @@
             this.toolStripButtonUrlGo,
             this.toolStripSeparator2,
             this.toolStripSplitButtonFavorite,
+            this.toolStripButtonOpenLocalFile,
             this.toolStripButtonUserGuide,
             this.toolStripButtonABC});
             this.toolStripHeader.Location = new System.Drawing.Point(0, 0);
             this.toolStripHeader.Name = "toolStripHeader";
-            this.toolStripHeader.Size = new System.Drawing.Size(735, 37);
+            this.toolStripHeader.Size = new System.Drawing.Size(551, 37);
             this.toolStripHeader.TabIndex = 0;
             this.toolStripHeader.Text = "toolStrip1";
             // 
@@ -175,7 +174,7 @@
             this.toolStripTextBoxUrl.AutoSize = false;
             this.toolStripTextBoxUrl.Margin = new System.Windows.Forms.Padding(1, 0, 0, 0);
             this.toolStripTextBoxUrl.Name = "toolStripTextBoxUrl";
-            this.toolStripTextBoxUrl.Size = new System.Drawing.Size(100, 27);
+            this.toolStripTextBoxUrl.Size = new System.Drawing.Size(76, 23);
             this.toolStripTextBoxUrl.KeyUp += new System.Windows.Forms.KeyEventHandler(this.toolStripTextBoxUrl_KeyUp);
             // 
             // toolStripButtonUrlGo
@@ -203,7 +202,7 @@
             this.toolStripSplitButtonFavorite.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripSplitButtonFavorite.Name = "toolStripSplitButtonFavorite";
             this.toolStripSplitButtonFavorite.Padding = new System.Windows.Forms.Padding(3);
-            this.toolStripSplitButtonFavorite.Size = new System.Drawing.Size(45, 34);
+            this.toolStripSplitButtonFavorite.Size = new System.Drawing.Size(42, 34);
             this.toolStripSplitButtonFavorite.Text = "お気に入り";
             this.toolStripSplitButtonFavorite.ButtonClick += new System.EventHandler(this.toolStripSplitButtonFavorite_ButtonClick);
             // 
@@ -229,15 +228,26 @@
             this.toolStripButtonABC.Text = "ABC for IronCAD";
             this.toolStripButtonABC.Click += new System.EventHandler(this.toolStripButtonABC_Click);
             // 
+            // toolStripButtonOpenLocalFile
+            // 
+            this.toolStripButtonOpenLocalFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonOpenLocalFile.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_webBrowserOpenFolder;
+            this.toolStripButtonOpenLocalFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonOpenLocalFile.Name = "toolStripButtonOpenLocalFile";
+            this.toolStripButtonOpenLocalFile.Padding = new System.Windows.Forms.Padding(3);
+            this.toolStripButtonOpenLocalFile.Size = new System.Drawing.Size(30, 34);
+            this.toolStripButtonOpenLocalFile.Text = "ファイルを開く";
+            this.toolStripButtonOpenLocalFile.Click += new System.EventHandler(this.toolStripButtonOpenLocalFile_Click);
+            // 
             // UserControlWebBrowser
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AllowDrop = true;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanelBase);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UserControlWebBrowser";
-            this.Size = new System.Drawing.Size(743, 653);
+            this.Size = new System.Drawing.Size(557, 529);
             this.Load += new System.EventHandler(this.UserControlWebBrowser_Load);
             this.Resize += new System.EventHandler(this.UserControlWebBrowser_Resize);
             this.tableLayoutPanelBase.ResumeLayout(false);
@@ -269,5 +279,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonUserGuide;
         private System.Windows.Forms.ToolStripButton toolStripButtonABC;
+        private System.Windows.Forms.ToolStripButton toolStripButtonOpenLocalFile;
     }
 }

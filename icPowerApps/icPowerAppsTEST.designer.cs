@@ -35,11 +35,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonIcWebBrowser = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSuppressManager = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonCustomPropertyManager = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelTitle = new System.Windows.Forms.TableLayoutPanel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelFunction = new System.Windows.Forms.Panel();
-            this.toolStripButtonCustomPropertyManager = new System.Windows.Forms.ToolStripButton();
             this.toolStripFunction.SuspendLayout();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanelTitle.SuspendLayout();
@@ -103,6 +103,15 @@
             this.toolStripButtonSuppressManager.Text = "SuppressManager";
             this.toolStripButtonSuppressManager.Click += new System.EventHandler(this.toolStripButtonSuppressManager_Click);
             // 
+            // toolStripButtonCustomPropertyManager
+            // 
+            this.toolStripButtonCustomPropertyManager.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_CustomPropertyManager_l;
+            this.toolStripButtonCustomPropertyManager.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonCustomPropertyManager.Name = "toolStripButtonCustomPropertyManager";
+            this.toolStripButtonCustomPropertyManager.Size = new System.Drawing.Size(276, 36);
+            this.toolStripButtonCustomPropertyManager.Text = "CustomPropertyManager";
+            this.toolStripButtonCustomPropertyManager.Click += new System.EventHandler(this.toolStripButtonCustomPropertyManager_Click);
+            // 
             // tableLayoutPanelBase
             // 
             this.tableLayoutPanelBase.AutoSize = true;
@@ -153,6 +162,7 @@
             // 
             // panelFunction
             // 
+            this.panelFunction.AllowDrop = true;
             this.panelFunction.AutoSize = true;
             this.panelFunction.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelFunction.Location = new System.Drawing.Point(0, 38);
@@ -161,17 +171,9 @@
             this.panelFunction.Size = new System.Drawing.Size(988, 743);
             this.panelFunction.TabIndex = 10;
             // 
-            // toolStripButtonCustomPropertyManager
-            // 
-            this.toolStripButtonCustomPropertyManager.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_CustomPropertyManager_l;
-            this.toolStripButtonCustomPropertyManager.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonCustomPropertyManager.Name = "toolStripButtonCustomPropertyManager";
-            this.toolStripButtonCustomPropertyManager.Size = new System.Drawing.Size(276, 36);
-            this.toolStripButtonCustomPropertyManager.Text = "CustomPropertyManager";
-            this.toolStripButtonCustomPropertyManager.Click += new System.EventHandler(this.toolStripButtonCustomPropertyManager_Click);
-            // 
             // icPowerAppsTEST
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1267, 781);

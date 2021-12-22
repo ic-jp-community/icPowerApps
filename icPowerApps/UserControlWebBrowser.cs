@@ -532,7 +532,7 @@ namespace ICApiAddin.icPowerApps
             int headerWidth = this.toolStripHeader.Width;
             int allHeaderButtonsWidth = this.toolStripButtonBack.Width + this.toolStripButtonPrevious.Width + this.toolStripButtonReload.Width +
                                         this.toolStripButtonHome.Width + this.toolStripButtonUrlGo.Width + this.toolStripSplitButtonFavorite.Width +
-                                        this.toolStripButtonUserGuide.Width + this.toolStripButtonABC.Width +
+                                         this.toolStripButtonOpenLocalFile.Width + this.toolStripButtonUserGuide.Width + this.toolStripButtonABC.Width +
                                         textboxUrlMinWidth + 70;
             if(headerWidth > allHeaderButtonsWidth)
             {
@@ -607,6 +607,24 @@ namespace ICApiAddin.icPowerApps
         private void ReloadFavorite_Click(object sender, EventArgs e)
         {
             InitializeFavorite();
+        }
+
+
+        /// <summary>
+        /// ローカルファイルを開くのボタン
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripButtonOpenLocalFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.RestoreDirectory = true;
+            DialogResult dret = ofd.ShowDialog();
+            if (dret == DialogResult.OK)
+            {
+                string filePathWeb = string.Concat(@"file://", ofd.FileName);
+                webView2Main.CoreWebView2.Navigate(filePathWeb);
+            }
         }
         #endregion イベント
     }
