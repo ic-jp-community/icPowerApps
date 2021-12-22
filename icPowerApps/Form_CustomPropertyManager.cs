@@ -1407,7 +1407,6 @@ namespace ICApiAddin.icPowerApps
                 MessageBox.Show("読み込みに失敗しました。");
                 return;
             }
-            MessageBox.Show("カスタムプロパティのテンプレート設定を読み込ました。");
         }
 
 
@@ -1440,6 +1439,7 @@ namespace ICApiAddin.icPowerApps
 
             if (File.Exists(filePath) != true)
             {
+                dt = customPropertyTemplate;
                 return false;
             }
 
