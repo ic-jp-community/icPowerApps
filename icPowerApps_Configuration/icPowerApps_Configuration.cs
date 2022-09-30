@@ -51,7 +51,11 @@ namespace icPowerApps_Configuration
                 Addin.ADDIN_GUID,
                 Addin.ADDIN_APP_NAME,
                 Addin.ADDIN_APP_DESCRIPTION);
-            if ((ret1 != true) && (ret2 != true))
+            bool ret3 = AddConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
+                Addin.ADDIN_GUID,
+                Addin.ADDIN_APP_NAME,
+                Addin.ADDIN_APP_DESCRIPTION);
+            if ((ret1 != true) && (ret2 != true) && (ret3 != true))
             {
                 TopMostMessageBox.Show("IRONCADが見つかりませんでした。\n(インストールは続行されます)");
             }
@@ -76,7 +80,9 @@ namespace icPowerApps_Configuration
                                         Addin.ADDIN_GUID);
                 delnum +=  DeleteConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
                                         Addin.ADDIN_GUID);
-                if(delnum == 0)
+                delnum += DeleteConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
+                                        Addin.ADDIN_GUID);
+                if (delnum == 0)
                 {
                     break;
                 }
