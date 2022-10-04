@@ -106,7 +106,7 @@ namespace ICApiAddin.icPowerApps
             setProgressBar(true);
             icapiCommon.enableDataGridViewDoubleBuffer(treeGridViewScene);
             ScaleReziser.InitializeFormControlScale(this, true, false, true, false, false);
-            await ReloadAssemblyPartsCustomProperties();
+            ReloadAssemblyPartsCustomProperties();
             setProgressBar(false);
         }
 
@@ -165,7 +165,7 @@ namespace ICApiAddin.icPowerApps
         /// <summary>
         /// 表示しているデータをリロードする
         /// </summary>
-        private async Task<bool> ReloadAssemblyPartsCustomProperties()
+        private void ReloadAssemblyPartsCustomProperties()
         {
             /* 一括削除設定を初期化 */
             setLabelBulkDelete(-1, -1);
@@ -174,7 +174,7 @@ namespace ICApiAddin.icPowerApps
             initializeTreeGridViewScene();
 
             /* パーツ/アセンブリ情報を取得しTreeGridViewSceneに設定する */
-            await setAssemblyPartsToTreeGridViewScene();
+            setAssemblyPartsToTreeGridViewScene();
          
             /* ノードを全て展開状態にする */
             TreeGridNodeCollection nodes = treeGridViewScene.Nodes;
@@ -183,7 +183,7 @@ namespace ICApiAddin.icPowerApps
             /* カスタムプロパティを取得し表示する */
             setCustomPropertiesToTreeGridViewScene();
 
-            return true;
+            return;
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace ICApiAddin.icPowerApps
         /// アセンブリ/パーツ情報をTreeGridViewSceneに設定する
         /// </summary>
         /// <returns></returns>
-        private async Task<bool> setAssemblyPartsToTreeGridViewScene()
+        private void setAssemblyPartsToTreeGridViewScene()
         {
             TreeGridView tgv = this.treeGridViewScene;
             IZDoc doc = this._ironcadApp.ActiveDoc;
@@ -303,13 +303,9 @@ namespace ICApiAddin.icPowerApps
             topNode.Height = (int)(TreeNodeHeight * ScaleReziser.getScalingFactor());
             int depth = 1;
 
-            bool ret = await Task.Run(() => {
-                icapiCommon.GetSceneTreeInfo(icapiCommon.CREATE_TREE_MODE.CHECK_IN, TreeNodeHeight, sceneDoc.GetTopElement(), ref topNode, ref depth);
-                return true;
-            });
-
-
-            return true;
+            icapiCommon.GetSceneTreeInfo(icapiCommon.CREATE_TREE_MODE.CHECK_IN, TreeNodeHeight, sceneDoc.GetTopElement(), ref topNode, ref depth);
+            
+            return;
         }
 
         #region イベント
@@ -494,7 +490,7 @@ namespace ICApiAddin.icPowerApps
                             icapiCommon.EditCustomProperty(elem, changePropName, objValue, changeIsShared);
                         }
                         /* 列の削除が発生するのでReloadさせる */
-                        await ReloadAssemblyPartsCustomProperties();
+                        ReloadAssemblyPartsCustomProperties();
 
                         MessageBox.Show("カスタムプロパティ名/プロパティ範囲を変更しました。");
                         ButtonAddEditChange(false, -1);
@@ -992,7 +988,7 @@ namespace ICApiAddin.icPowerApps
                 {
                     icapiCommon.DeleteAllCustomProperties(elem);
                     MessageBox.Show("削除しました。");
-                    await ReloadAssemblyPartsCustomProperties();
+                    ReloadAssemblyPartsCustomProperties();
                 }
             }
 
@@ -1036,7 +1032,7 @@ namespace ICApiAddin.icPowerApps
                         treeGridViewScene[columnIndex, rowIndex].Value = null;
                     }
                     MessageBox.Show("削除しました。");
-                    await ReloadAssemblyPartsCustomProperties();
+                    ReloadAssemblyPartsCustomProperties();
                 }
             }
 
@@ -1058,7 +1054,7 @@ namespace ICApiAddin.icPowerApps
                         icapiCommon.DeleteAllCustomProperties(elem);
                     }
                     MessageBox.Show("削除しました。");
-                    await ReloadAssemblyPartsCustomProperties();
+                    ReloadAssemblyPartsCustomProperties();
                 }
             }
         }

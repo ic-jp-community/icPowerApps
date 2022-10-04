@@ -394,11 +394,6 @@
             "AssemblyAsmDisplayName" = "8:HtmlAgilityPack, Version=1.11.39.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1023D91BFCFA109642B08C64BEA23CF9"
-                    {
-                    "Name" = "8:HtmlAgilityPack.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:HtmlAgilityPack.dll"
             "TargetName" = "8:"
@@ -425,11 +420,6 @@
             "AssemblyAsmDisplayName" = "8:ExpandableGridView, Version=1.0.0.0, Culture=neutral, PublicKeyToken=56647e1eee90f6d4, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_310706E12B931469AA6A07CE4654BAE9"
-                    {
-                    "Name" = "8:ExpandableGridView.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:ExpandableGridView.dll"
             "TargetName" = "8:"
@@ -493,14 +483,9 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:icPowerApps, Version=0.0.0.2, Culture=neutral, PublicKeyToken=a2b0442fc83d6b2c, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:icPowerApps, Version=0.0.0.3, Culture=neutral, PublicKeyToken=a2b0442fc83d6b2c, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
-                    "_5F1F28991471F0C45B026BB08D91D299"
-                    {
-                    "Name" = "8:icPowerApps.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:icPowerApps.dll"
             "TargetName" = "8:"
@@ -700,15 +685,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:icPowerApps"
-        "ProductCode" = "8:{3543EE59-F17B-42C3-8F7B-3C35464726E6}"
-        "PackageCode" = "8:{32F93B84-CDA0-4FFA-B6F2-33736B8B4376}"
+        "ProductCode" = "8:{CEED014E-655A-4FFC-A9DC-BBD753DC3C7B}"
+        "PackageCode" = "8:{A0177423-2939-4AFE-9ED6-BA3C80E90525}"
         "UpgradeCode" = "8:{353B92EC-01E7-46D0-96D3-55DB1E32A816}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:0.0.3"
+        "ProductVersion" = "8:0.0.4"
         "Manufacturer" = "8:IRONCAD JP Community"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
