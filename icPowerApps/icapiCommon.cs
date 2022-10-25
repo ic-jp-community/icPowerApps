@@ -707,7 +707,118 @@ namespace ICApiAddin.icPowerApps
             }
             return true;
         }
+        /// <summary>
+        /// シーンファイルのツリー表示を作成する(TreeGridView用) 再帰処理
+        /// </summary>
+        /// <param name="mode">表示する対象</param>
+        /// <param name="nodeHeight">各ノードの高さ</param>
+        /// <param name="currElem">現在のアセンブリ/パーツ Element</param>
+        /// <param name="currNode1">現在のノード1</param>
+        /// <param name="currNode2">現在のノード2</param>
+        /// <param name="currDepth">現在の深さ</param>
+        /// <returns></returns>
+        public static bool GetSceneTreeInfo2(CREATE_TREE_MODE mode, int nodeHeight, IZElement currElem, ref TreeGridNode currNode1, ref TreeGridNode currNode2, ref int currDepth)
+        {
+            try
+            {
+                if ((currElem.Type != eZElementType.Z_ELEMENT_PART) &&
+                    (currElem.Type != eZElementType.Z_ELEMENT_ASSEMBLY) &&
+                    //                    (elem.Type != eZElementType.Z_ELEMENT_WIRE) &&
+                    //                    (elem.Type != eZElementType.Z_ELEMENT_PROFILE) &&
+                    (currElem.Type != eZElementType.Z_ELEMENT_SHEETMETAL_PART) &&
+                    (currElem.Type != eZElementType.Z_ELEMENT_UNKNOWN))
+                {
 
+                    return false;
+                }
+                ZArray childs = currElem.GetChildrenZArray();
+                int count = 0;
+                childs.Count(out count);
+                for (int i = 0; i < count; i++)
+                {
+                    object obj;
+                    IZElement childElem;
+                    childs.Get(i, out obj);
+                    childElem = obj as IZElement;
+                    if ((childElem.Type == eZElementType.Z_ELEMENT_PART) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_ASSEMBLY) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_WIRE) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_PROFILE) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_SHEETMETAL_PART))
+                    {
+                        /* パーツ/アセンブリの情報 */
+                        IZDoc doc = childElem.OwningDoc;
+                        IZSceneDoc scene = doc as IZSceneDoc;
+                        string dataType = string.Empty;
+                        bool link = false;
+                        string linkStr = string.Empty;
+                        string dispName = string.Empty;
+                        switch (childElem.Type)
+                        {
+                            case eZElementType.Z_ELEMENT_ASSEMBLY:
+                                IZAssembly asm = childElem as IZAssembly;
+                                linkStr = asm.GetExternallyLinkedInfo(out link);
+                                dataType = GetInnerDataType(childElem.Type, link, eZBodyType.Z_BODY_EMPTY);
+                                break;
+                            case eZElementType.Z_ELEMENT_PART:
+                            case eZElementType.Z_ELEMENT_WIRE:
+                            case eZElementType.Z_ELEMENT_PROFILE:
+                            case eZElementType.Z_ELEMENT_SHEETMETAL_PART:
+                                IZPart part = childElem as IZPart;
+                                eZBodyType body = eZBodyType.Z_BODY_EMPTY;
+                                linkStr = part.GetExternallyLinkedInfo(out link);
+                                if (childElem.Type == eZElementType.Z_ELEMENT_PART)
+                                {
+                                    part.GetBodyType(ref body);
+                                }
+                                dataType = GetInnerDataType(childElem.Type, link, body);
+                                break;
+                            default:
+                                break;
+                        }
+                        dispName = childElem.Name;
+
+                        TreeGridNode childNode = null;
+                        TreeGridNode childNode2 = null;
+                        switch (mode)
+                        {
+                            case CREATE_TREE_MODE.CHECK_IN:
+                                /* ★データの順序変更は本メソッド使用箇所のデザイナのColumn順番も変更する必要あり */
+                                childNode = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                childNode.Cells[0].Tag = childElem;
+                                childNode2 = currNode2.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                childNode2.Cells[0].Tag = childElem;
+                                break;
+                            case CREATE_TREE_MODE.CHECKOUT_SELECT:
+                                childNode = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                childNode2 = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                break;
+                            case CREATE_TREE_MODE.INPUT_CUSTOM_PROP:
+                                childNode = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                childNode2 = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                break;
+                            case CREATE_TREE_MODE.SCENEFILE_MANAGEMENT:
+                                childNode = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                childNode2 = currNode1.Nodes.Add(childElem.Name, childElem.SystemName, childElem.Id, dataType, currDepth, linkStr);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        childNode2.ImageIndex = childNode.ImageIndex = getImageIndexAssemblyParts(dataType);
+                        childNode2.Height = childNode.Height = (int)(nodeHeight * ScaleReziser.getScalingFactor());
+                        currDepth++;
+                        GetSceneTreeInfo2(mode, nodeHeight, childElem, ref childNode, ref childNode2, ref currDepth);
+                        currDepth--;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            return true;
+        }
         public const string SCENE_DATATYPE_ASSEMBLY = "ASSEMBLY";
         public const string SCENE_DATATYPE_PART = "PARTS";
         public const string SCENE_DATATYPE_PART_SOLID = "PARTS_SOLID";

@@ -136,9 +136,9 @@
             // buttonExportFile
             // 
             this.buttonExportFile.AutoSize = true;
-            this.buttonExportFile.Location = new System.Drawing.Point(261, 3);
+            this.buttonExportFile.Location = new System.Drawing.Point(243, 3);
             this.buttonExportFile.Name = "buttonExportFile";
-            this.buttonExportFile.Size = new System.Drawing.Size(103, 29);
+            this.buttonExportFile.Size = new System.Drawing.Size(121, 33);
             this.buttonExportFile.TabIndex = 1;
             this.buttonExportFile.Text = "ファイルに保存";
             this.buttonExportFile.UseVisualStyleBackColor = true;
@@ -147,9 +147,9 @@
             // buttonImportFile
             // 
             this.buttonImportFile.AutoSize = true;
-            this.buttonImportFile.Location = new System.Drawing.Point(142, 3);
+            this.buttonImportFile.Location = new System.Drawing.Point(103, 3);
             this.buttonImportFile.Name = "buttonImportFile";
-            this.buttonImportFile.Size = new System.Drawing.Size(113, 29);
+            this.buttonImportFile.Size = new System.Drawing.Size(134, 33);
             this.buttonImportFile.TabIndex = 0;
             this.buttonImportFile.Text = "ファイルから読込";
             this.buttonImportFile.UseVisualStyleBackColor = true;
@@ -177,9 +177,9 @@
             // 
             this.buttonGetCurrentSuppress.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.buttonGetCurrentSuppress.AutoSize = true;
-            this.buttonGetCurrentSuppress.Location = new System.Drawing.Point(3, 7);
+            this.buttonGetCurrentSuppress.Location = new System.Drawing.Point(3, 5);
             this.buttonGetCurrentSuppress.Name = "buttonGetCurrentSuppress";
-            this.buttonGetCurrentSuppress.Size = new System.Drawing.Size(163, 29);
+            this.buttonGetCurrentSuppress.Size = new System.Drawing.Size(193, 33);
             this.buttonGetCurrentSuppress.TabIndex = 0;
             this.buttonGetCurrentSuppress.Text = "現在の抑制状態を取得";
             this.buttonGetCurrentSuppress.UseVisualStyleBackColor = true;
@@ -194,7 +194,7 @@
             this.tableLayoutPanel4.Controls.Add(this.buttonSetSuppress, 1, 0);
             this.tableLayoutPanel4.Controls.Add(this.comboBoxSuppress, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(172, 3);
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(202, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));

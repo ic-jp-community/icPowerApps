@@ -227,6 +227,36 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_SceneBrowserTreeSort {
+            get {
+                object obj = ResourceManager.GetObject("icon_SceneBrowserTreeSort", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_SceneBrowserTreeSort_l {
+            get {
+                object obj = ResourceManager.GetObject("icon_SceneBrowserTreeSort_l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_SceneBrowserTreeSort_s {
+            get {
+                object obj = ResourceManager.GetObject("icon_SceneBrowserTreeSort_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_webBrowserABC {
             get {
                 object obj = ResourceManager.GetObject("icon_webBrowserABC", resourceCulture);
@@ -440,6 +470,46 @@ namespace ICApiAddin.icPowerApps.Properties {
         internal static System.Drawing.Bitmap SheetMetal {
             get {
                 object obj = ResourceManager.GetObject("SheetMetal", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap SortAscending {
+            get {
+                object obj = ResourceManager.GetObject("SortAscending", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap SortDescending {
+            get {
+                object obj = ResourceManager.GetObject("SortDescending", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap SortMix {
+            get {
+                object obj = ResourceManager.GetObject("SortMix", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap SortSeparately {
+            get {
+                object obj = ResourceManager.GetObject("SortSeparately", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

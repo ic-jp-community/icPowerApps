@@ -22,6 +22,7 @@ namespace ICApiAddin.icPowerApps
         private ZCommandHandler m_buttonIcWebBrowser;
         private ZCommandHandler m_buttonSuppressManager;
         private ZCommandHandler m_buttonCustomPropertyManager;
+        private ZCommandHandler m_buttonSceneBrowserTreeSort;
         #endregion
 
         //Constractor
@@ -78,6 +79,12 @@ namespace ICApiAddin.icPowerApps
                     m_buttonCustomPropertyManager.Enabled = true;
 
 
+                    stdole.IPictureDisp oImageSmallSceneBrowserTreeSort = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_SceneBrowserTreeSort_s);
+                    stdole.IPictureDisp oImageLargeSceneBrowserTreeSort = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_SceneBrowserTreeSort_l);
+                    m_buttonSceneBrowserTreeSort = piAddinSite.CreateCommandHandler("icSceneBrowserTreeSort", "シーンブラウザ 並び替え", "シーンブラウザ 並び替え", "シーンブラウザ 並び替えを表示します。", oImageSmallSceneBrowserTreeSort, oImageLargeSceneBrowserTreeSort);
+                    m_buttonSceneBrowserTreeSort.Enabled = true;
+
+
                     //Control bar
                     ZControlBar cControlBar;
                     ZEnvironmentMgr cEnvMgr = this.IronCADApp.EnvironmentMgr;
@@ -94,12 +101,14 @@ namespace ICApiAddin.icPowerApps
                     cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonIcWebBrowser.ControlDescriptor, null);
                     cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonSuppressManager.ControlDescriptor, null);
                     cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonCustomPropertyManager.ControlDescriptor, null);
+                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonSceneBrowserTreeSort.ControlDescriptor, null);
 
                     //Add button to RibbonBar
                     cRibbonBar.AddButton2(m_buttonIcPowerAppsTestApp.ControlDescriptor, true);
                     cRibbonBar.AddButton2(m_buttonIcWebBrowser.ControlDescriptor, true);
                     cRibbonBar.AddButton2(m_buttonSuppressManager.ControlDescriptor, true);
                     cRibbonBar.AddButton2(m_buttonCustomPropertyManager.ControlDescriptor, true);
+                    cRibbonBar.AddButton2(m_buttonSceneBrowserTreeSort.ControlDescriptor, true);
                     //                    cRibbonBar.AddButton2(m_buttonForm.ControlDescriptor, false);
 
                     /************************************************************
@@ -121,7 +130,10 @@ namespace ICApiAddin.icPowerApps
                     m_buttonCustomPropertyManager.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonCustomPropertyManager_OnClick);
                     m_buttonCustomPropertyManager.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonCustomPropertyManager_OnUpdate);
 
-                    //Register App Events
+                    m_buttonSceneBrowserTreeSort.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonSceneBrowserTreeSort_OnClick);
+                    m_buttonSceneBrowserTreeSort.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonSceneBrowserTreeSort_OnUpdate);
+
+
                 }
                 catch (Exception ex)
                 {
@@ -183,6 +195,12 @@ namespace ICApiAddin.icPowerApps
         {
             m_buttonCustomPropertyManager.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
         }
+
+        private void m_buttonSceneBrowserTreeSort_OnUpdate()
+        {
+            m_buttonSceneBrowserTreeSort.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+        }
+        
         private void m_buttonForm_OnClick()
         {
             IZDoc doc = GetActiveDoc();
@@ -272,6 +290,45 @@ namespace ICApiAddin.icPowerApps
             IZEnvironmentMgr iZEnvMgr = GetEnvironmentMgr();
             Form_CustomPropertyManager frm = new Form_CustomPropertyManager(this.IronCADApp);
             frm.ShowDialog();
+        }
+
+        private void m_buttonSceneBrowserTreeSort_OnClick()
+        {
+            IZAddinSite addinSite = m_izAddinSite;
+            IZDockingBar dockingBar;
+            IZEnvironmentMgr envMgr = GetEnvironmentMgr();
+            IZEnvironment env = envMgr.ActiveEnvironment;
+            uint dockPosition = AFX_IDW_DOCKBAR_FLOAT;
+            int left, top, right, bottom;
+
+            /* ユーザーコントロール */
+            UserControlSceneBrowserTreeSort uc = new UserControlSceneBrowserTreeSort(IronCADApp);
+
+            /* DockingBarの追加 */
+            dockingBar = env.AddDockingBar((ZAddinSite)addinSite, 1, "シーンブラウザ 並び替え", dockPosition);
+            dockingBar.GetClientRect(out left, out top, out right, out bottom);
+
+            /* IRONCADウィンドウの半分のサイズで真ん中に設定(未表示)する */
+            RECT appRect;
+            IntPtr appHWndHandle = Process.GetCurrentProcess().MainWindowHandle;
+            GetWindowRect(appHWndHandle, out appRect);
+            IntPtr dockingBarHWnd = CwndToHwnd(dockingBar.GetCWnd());
+            //int height = (appRect.Bottom - appRect.Top) / 2;
+            //int width = (appRect.Right - appRect.Left) / 2;
+            int startY = (appRect.Bottom - appRect.Top) / 4;
+            int startX = (appRect.Right - appRect.Left) / 4;
+            SetWindowPos(dockingBarHWnd, 0, startX, startY, uc.Width, uc.Height, 0);
+
+            /* ユーザコントロールをDockingBarにマッピング */
+            uc.SetBounds(0, 0, uc.Width, uc.Height);
+            IntPtr cwnd = HwndToCwnd(uc.Handle);
+            dockingBar.SetSubWindow((ulong)cwnd);
+            if (dockPosition == AFX_IDW_DOCKBAR_FLOAT)
+            {
+                /* FLOATの場合はSWP_SHOWWINDOWをしないと表示されなかった */
+                SetWindowPos(dockingBarHWnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+            }
+            dockingBar.ShowControlBar(1, 1, 1);
         }
 
         private IZDoc GetActiveDoc()

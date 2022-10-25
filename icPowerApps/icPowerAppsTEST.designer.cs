@@ -34,8 +34,9 @@
             this.toolStripLabelTop = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonIcWebBrowser = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonSuppressManager = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCustomPropertyManager = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonSceneBrowserTreeSort = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelTitle = new System.Windows.Forms.TableLayoutPanel();
             this.labelTitle = new System.Windows.Forms.Label();
@@ -56,23 +57,24 @@
             this.toolStripLabelTop,
             this.toolStripSeparator1,
             this.toolStripButtonIcWebBrowser,
-            this.toolStripButtonSuppressManager,
-            this.toolStripButtonCustomPropertyManager});
+            this.toolStripButton1,
+            this.toolStripButtonCustomPropertyManager,
+            this.toolStripButtonSceneBrowserTreeSort});
             this.toolStripFunction.Location = new System.Drawing.Point(0, 0);
             this.toolStripFunction.Name = "toolStripFunction";
-            this.toolStripFunction.Size = new System.Drawing.Size(279, 781);
+            this.toolStripFunction.Size = new System.Drawing.Size(330, 781);
             this.toolStripFunction.TabIndex = 8;
             this.toolStripFunction.Text = "toolStrip1";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(276, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(327, 6);
             // 
             // toolStripLabelTop
             // 
             this.toolStripLabelTop.Name = "toolStripLabelTop";
-            this.toolStripLabelTop.Size = new System.Drawing.Size(276, 28);
+            this.toolStripLabelTop.Size = new System.Drawing.Size(327, 34);
             this.toolStripLabelTop.Text = "機能を選択";
             this.toolStripLabelTop.Click += new System.EventHandler(this.toolStripLabelTop_Click);
             // 
@@ -80,7 +82,7 @@
             // 
             this.toolStripSeparator1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 7);
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(276, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(327, 6);
             // 
             // toolStripButtonIcWebBrowser
             // 
@@ -90,27 +92,35 @@
             this.toolStripButtonIcWebBrowser.Margin = new System.Windows.Forms.Padding(7, 1, 0, 2);
             this.toolStripButtonIcWebBrowser.Name = "toolStripButtonIcWebBrowser";
             this.toolStripButtonIcWebBrowser.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
-            this.toolStripButtonIcWebBrowser.Size = new System.Drawing.Size(269, 46);
+            this.toolStripButtonIcWebBrowser.Size = new System.Drawing.Size(320, 48);
             this.toolStripButtonIcWebBrowser.Text = "icWebBrowser";
             this.toolStripButtonIcWebBrowser.Click += new System.EventHandler(this.toolStripButtonIcWebBrowser_Click);
             // 
-            // toolStripButtonSuppressManager
+            // toolStripButton1
             // 
-            this.toolStripButtonSuppressManager.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_icSuppressManager_l;
-            this.toolStripButtonSuppressManager.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButtonSuppressManager.Name = "toolStripButtonSuppressManager";
-            this.toolStripButtonSuppressManager.Size = new System.Drawing.Size(276, 36);
-            this.toolStripButtonSuppressManager.Text = "SuppressManager";
-            this.toolStripButtonSuppressManager.Click += new System.EventHandler(this.toolStripButtonSuppressManager_Click);
+            this.toolStripButton1.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_icSuppressManager_l;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(327, 38);
+            this.toolStripButton1.Text = "SuppressManager";
             // 
             // toolStripButtonCustomPropertyManager
             // 
             this.toolStripButtonCustomPropertyManager.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_CustomPropertyManager_l;
             this.toolStripButtonCustomPropertyManager.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonCustomPropertyManager.Name = "toolStripButtonCustomPropertyManager";
-            this.toolStripButtonCustomPropertyManager.Size = new System.Drawing.Size(276, 36);
+            this.toolStripButtonCustomPropertyManager.Size = new System.Drawing.Size(327, 38);
             this.toolStripButtonCustomPropertyManager.Text = "CustomPropertyManager";
             this.toolStripButtonCustomPropertyManager.Click += new System.EventHandler(this.toolStripButtonCustomPropertyManager_Click);
+            // 
+            // toolStripButtonSceneBrowserTreeSort
+            // 
+            this.toolStripButtonSceneBrowserTreeSort.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_SceneBrowserTreeSort_l;
+            this.toolStripButtonSceneBrowserTreeSort.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonSceneBrowserTreeSort.Name = "toolStripButtonSceneBrowserTreeSort";
+            this.toolStripButtonSceneBrowserTreeSort.Size = new System.Drawing.Size(327, 38);
+            this.toolStripButtonSceneBrowserTreeSort.Text = "SceneBrowserTreeSort";
+            this.toolStripButtonSceneBrowserTreeSort.Click += new System.EventHandler(this.toolStripButtonSceneBrowserTreeSort_Click);
             // 
             // tableLayoutPanelBase
             // 
@@ -120,13 +130,13 @@
             this.tableLayoutPanelBase.Controls.Add(this.tableLayoutPanelTitle, 0, 0);
             this.tableLayoutPanelBase.Controls.Add(this.panelFunction, 0, 1);
             this.tableLayoutPanelBase.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelBase.Location = new System.Drawing.Point(279, 0);
+            this.tableLayoutPanelBase.Location = new System.Drawing.Point(330, 0);
             this.tableLayoutPanelBase.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.tableLayoutPanelBase.Name = "tableLayoutPanelBase";
             this.tableLayoutPanelBase.RowCount = 2;
             this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanelBase.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelBase.Size = new System.Drawing.Size(988, 781);
+            this.tableLayoutPanelBase.Size = new System.Drawing.Size(937, 781);
             this.tableLayoutPanelBase.TabIndex = 9;
             // 
             // tableLayoutPanelTitle
@@ -143,7 +153,7 @@
             this.tableLayoutPanelTitle.RowCount = 1;
             this.tableLayoutPanelTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanelTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanelTitle.Size = new System.Drawing.Size(988, 38);
+            this.tableLayoutPanelTitle.Size = new System.Drawing.Size(937, 38);
             this.tableLayoutPanelTitle.TabIndex = 8;
             // 
             // labelTitle
@@ -151,11 +161,11 @@
             this.labelTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.labelTitle.AutoSize = true;
             this.labelTitle.Font = new System.Drawing.Font("メイリオ", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.labelTitle.Location = new System.Drawing.Point(3, 3);
+            this.labelTitle.Location = new System.Drawing.Point(3, 2);
             this.labelTitle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 0);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.labelTitle.Size = new System.Drawing.Size(72, 33);
+            this.labelTitle.Size = new System.Drawing.Size(83, 36);
             this.labelTitle.TabIndex = 8;
             this.labelTitle.Text = "Title";
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -168,13 +178,13 @@
             this.panelFunction.Location = new System.Drawing.Point(0, 38);
             this.panelFunction.Margin = new System.Windows.Forms.Padding(0);
             this.panelFunction.Name = "panelFunction";
-            this.panelFunction.Size = new System.Drawing.Size(988, 743);
+            this.panelFunction.Size = new System.Drawing.Size(937, 743);
             this.panelFunction.TabIndex = 10;
             // 
             // icPowerAppsTEST
             // 
             this.AllowDrop = true;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 23F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1267, 781);
             this.Controls.Add(this.tableLayoutPanelBase);
@@ -206,7 +216,8 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabelTop;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTitle;
-        private System.Windows.Forms.ToolStripButton toolStripButtonSuppressManager;
+        private System.Windows.Forms.ToolStripButton toolStripButtonSceneBrowserTreeSort;
         private System.Windows.Forms.ToolStripButton toolStripButtonCustomPropertyManager;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
     }
 }

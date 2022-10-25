@@ -173,5 +173,11 @@ namespace ICApiAddin.icPowerApps
             Form_CustomPropertyManager form = new Form_CustomPropertyManager(this._ironcadApp);
             showFormControl(form);
         }
+
+        private void toolStripButtonSceneBrowserTreeSort_Click(object sender, EventArgs e)
+        {
+            UserControlSceneBrowserTreeSort userControl = new UserControlSceneBrowserTreeSort(this._ironcadApp);
+            showUserControl(userControl, UserControlSuppressManager.title);
+        }
     }
 }
