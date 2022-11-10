@@ -259,4 +259,16 @@
   <data name="SortSeparately" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\SortSeparately.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_ExternalLinkManager_l" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_ExternalLinkManager_l.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_ExternalLinkManager_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_ExternalLinkManager_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_setting_l" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_setting_l.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_setting_s" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\icon_setting_s.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

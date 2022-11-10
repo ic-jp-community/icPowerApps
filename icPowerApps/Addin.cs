@@ -6,13 +6,14 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using interop.ICApiIronCAD;
 using System.Diagnostics;
+using static ICApiAddin.icPowerApps.icPowerAppsSetting;
 
 namespace ICApiAddin.icPowerApps
 {
     [Guid("6AE87CEF-C966-4938-A945-40D4280F6001"), ClassInterface(ClassInterfaceType.None), ProgId("icPowerApps.AddIn")]
     public class Addin : IZAddinServer
     {
-         public const string ADDIN_GUID = "6AE87CEF-C966-4938-A945-40D4280F6001";
+        public const string ADDIN_GUID = "6AE87CEF-C966-4938-A945-40D4280F6001";
         public const string ADDIN_APP_NAME = "icPowerApps";
         public const string ADDIN_APP_DESCRIPTION= "IRONCADをさらに便利に使うためのツール群です。";
 
@@ -23,6 +24,8 @@ namespace ICApiAddin.icPowerApps
         private ZCommandHandler m_buttonSuppressManager;
         private ZCommandHandler m_buttonCustomPropertyManager;
         private ZCommandHandler m_buttonSceneBrowserTreeSort;
+        private ZCommandHandler m_buttonExternalLinkManager;
+        private ZCommandHandler m_buttonSetting;
         #endregion
 
         //Constractor
@@ -46,9 +49,102 @@ namespace ICApiAddin.icPowerApps
 
         }
 
-#endregion
+        #endregion
 
-#region [IZAddinServer Members]
+        /// <summary>
+        /// This function is called by IRONCAD when the Addin is unloaded
+        /// </summary>
+        public void DeInitSelf()
+        {
+            //ハンドラの登録
+            foreach (AddInToolData tool in addInToolDataList)
+            {
+                try
+                {
+                    if (tool.button != null)
+                    {
+                        tool.button.OnClick -= tool.onClick;
+                        tool.button.OnUpdate -= tool.onUpdate;
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+        }
+        public class AddInToolData
+        {
+            public System.Drawing.Bitmap smallImage;
+            public System.Drawing.Bitmap largeImage;
+            public string uniqueName { get; set; }
+            public string dispName { get; set; }
+            public string statusBarName;
+            public string toolTip;
+            public bool isLargeIcon;
+            public bool isEnable;
+            public ZCommandHandler button;
+            public _IZCommandEvents_OnClickEventHandler onClick;
+            public _IZCommandEvents_OnUpdateEventHandler onUpdate;
+            public AddInToolData(System.Drawing.Bitmap smallImage, System.Drawing.Bitmap largeImage, 
+                                string uniqueName, string dispName, string statusBarName, string toolTip,
+                                bool isLargeIcon, bool isEnable, ZCommandHandler button,
+                                _IZCommandEvents_OnClickEventHandler onClick, _IZCommandEvents_OnUpdateEventHandler onUpdate)
+            {
+                this.smallImage = smallImage;
+                this.largeImage = largeImage;
+                this.uniqueName = uniqueName;
+                this.statusBarName = statusBarName;
+                this.dispName = dispName;
+                this.toolTip = toolTip;
+                this.isLargeIcon = isLargeIcon;
+                this.button = button;
+                this.onClick = onClick;
+                this.onUpdate = onUpdate;
+                this.isEnable = isEnable;
+            }
+        }
+        public List<AddInToolData> addinAddDataList = new List<AddInToolData>();
+
+        public void SetToolCommands(List<AddInToolData> addInDataList)
+        {                    //Control bar
+            ZEnvironmentMgr cEnvMgr = this.IronCADApp.EnvironmentMgr;
+            IZEnvironment cEnv = cEnvMgr.get_Environment(eZEnvType.Z_ENV_SCENE);
+            ZRibbonBar cRibbonBar = cEnv.GetRibbonBar(eZRibbonBarType.Z_RIBBONBAR);
+            ZControlBar cControlBar;
+            ZControls cControls;
+            cControlBar = cEnv.AddControlBar(m_izAddinSite, "icPowerApps");
+            cControls = cControlBar.Controls;
+
+            List<AddInToolData> reOrderAddInDataList = addInDataList.Where(a=> a.isEnable == true).OrderByDescending(a => a.isLargeIcon).ToList();
+
+            //ボタンの作成(Form)
+            foreach(AddInToolData tool in reOrderAddInDataList)
+            {
+                stdole.IPictureDisp oImageSmall = ConvertImage.ImageToPictureDisp(tool.smallImage);
+                stdole.IPictureDisp oImageLarge = ConvertImage.ImageToPictureDisp(tool.largeImage);
+                tool.button = m_izAddinSite.CreateCommandHandler(tool.uniqueName, tool.dispName, tool.statusBarName, tool.toolTip, oImageSmall, oImageLarge);
+                cRibbonBar.AddButton2(tool.button.ControlDescriptor, tool.isLargeIcon);
+                tool.button.Enabled = true;
+            }
+
+            //ツールバーを作成する
+            foreach (AddInToolData tool in reOrderAddInDataList)
+            {
+                cControls.Add(ezControlType.Z_CONTROL_BUTTON, tool.button.ControlDescriptor, null);
+            }
+
+            //ハンドラの登録
+            foreach (AddInToolData tool in reOrderAddInDataList)
+            {
+                tool.button.OnClick += tool.onClick;
+                tool.button.OnUpdate += tool.onUpdate;
+            }
+
+        }
+
+        public List<AddInToolData> addInToolDataList = new List<AddInToolData>();
+        #region [IZAddinServer Members]
         public void InitSelf(ZAddinSite piAddinSite)
         {
             if (piAddinSite != null)
@@ -56,84 +152,54 @@ namespace ICApiAddin.icPowerApps
                 m_izAddinSite = piAddinSite;
                 try
                 {
+                    /* 現在の設定ファイルを読み込む(共通設定) */
+                    string userConfigPath = icPowerAppsSetting.GetUserConfigFilePath();
+                    if (string.IsNullOrEmpty(userConfigPath) == true)
+                    {
+                        /* 共通コンフィグファイルが無いので作成する */
+                        icPowerAppsSetting.WriteicPowerAppsUserSetting(userConfigPath);
+                    }
+                    icPowerAppsSetting.ReadicPowerAppsUserSetting(userConfigPath);
+
+
+                    bool isLargeIcon = false;
                     //ボタンの作成(Form)
-                    stdole.IPictureDisp oImageSmall = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icPowerApps_s);
-                    stdole.IPictureDisp oImageLarge = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icPowerApps_l);
-                    m_buttonIcPowerAppsTestApp = piAddinSite.CreateCommandHandler("icPowerAppsTestApp", "icPowerAppsTestApp", "icPowerAppsTestApp", "icPowerAppsのTest確認用Appです。", oImageSmall, oImageLarge);
-                    m_buttonIcPowerAppsTestApp.Enabled = true;
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_icPowerApps_s, Properties.Resources.icon_icPowerApps_l,
+                                                            "icPowerAppsTestApp", "icPowerAppsTestApp", "icPowerAppsTestApp", "icPowerAppsのTest確認用Appです。",
+                                                            getIconSizeIsLarge("icPowerAppsTestApp"), getToolIsEnable("icPowerAppsTestApp"), m_buttonIcPowerAppsTestApp,
+                                                            new _IZCommandEvents_OnClickEventHandler(m_buttonIcPowerAppsTestApp_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonIcPowerAppsTestApp_OnUpdate)));
 
-                    stdole.IPictureDisp oImageSmallBrowser = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icWebBrowser_s);
-                    stdole.IPictureDisp oImageLargeBrowser = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icWebBrowser_l);
-                    m_buttonIcWebBrowser = piAddinSite.CreateCommandHandler("icWebBrowser", "icWebブラウザ", "icWebブラウザ", "ブラウザを表示します。", oImageSmallBrowser, oImageLargeBrowser);
-                    m_buttonIcWebBrowser.Enabled = true;
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_icWebBrowser_s, Properties.Resources.icon_icWebBrowser_l,
+                                                             "icWebBrowser", "icWebブラウザ", "icWebブラウザ", "ブラウザを表示します。",
+                                                              getIconSizeIsLarge("icWebブラウザ"), getToolIsEnable("icWebブラウザ"), m_buttonIcWebBrowser,
+                                                                new _IZCommandEvents_OnClickEventHandler(m_buttonIcWebBrowser_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonIcWebBrowser_OnUpdate)));
 
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_icSuppressManager_s, Properties.Resources.icon_icSuppressManager_l,
+                                                             "icSuppressManager", "抑制マネージャ", "抑制マネージャ", "抑制マネージャを表示します。",
+                                                             getIconSizeIsLarge("抑制マネージャ"), getToolIsEnable("抑制マネージャ"), m_buttonSuppressManager,
+                                                                new _IZCommandEvents_OnClickEventHandler(m_buttonSuppressManager_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonSuppressManager_OnUpdate)));
 
-                    stdole.IPictureDisp oImageSmallSuppress = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icSuppressManager_s);
-                    stdole.IPictureDisp oImageLargeSuppress = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_icSuppressManager_l);
-                    m_buttonSuppressManager = piAddinSite.CreateCommandHandler("icSuppressManager", "抑制マネージャ", "抑制マネージャ", "抑制マネージャを表示します。", oImageSmallSuppress, oImageLargeSuppress);
-                    m_buttonSuppressManager.Enabled = true;
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_CustomPropertyManager_s, Properties.Resources.icon_CustomPropertyManager_l,
+                                                            "icCustomPropertyManager", "カスタムプロパティ マネージャ", "カスタムプロパティ マネージャ", "カスタムプロパティ マネージャを表示します。",
+                                                             getIconSizeIsLarge("カスタムプロパティ マネージャ"), getToolIsEnable("カスタムプロパティ マネージャ"), m_buttonCustomPropertyManager,
+                                                                new _IZCommandEvents_OnClickEventHandler(m_buttonCustomPropertyManager_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonCustomPropertyManager_OnUpdate)));
 
-                    stdole.IPictureDisp oImageSmallCustomProperty = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_CustomPropertyManager_s);
-                    stdole.IPictureDisp oImageLargeCustomProperty = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_CustomPropertyManager_l);
-                    m_buttonCustomPropertyManager = piAddinSite.CreateCommandHandler("icCustomPropertyManager", "カスタムプロパティ マネージャ", "カスタムプロパティ マネージャ", "カスタムプロパティ マネージャを表示します。", oImageSmallCustomProperty, oImageLargeCustomProperty);
-                    m_buttonCustomPropertyManager.Enabled = true;
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_SceneBrowserTreeSort_s, Properties.Resources.icon_SceneBrowserTreeSort_l,
+                                        "icSceneBrowserTreeSort", "シーンブラウザ 並び替え", "シーンブラウザ 並び替え", "シーンブラウザ 並び替えを表示します。",
+                                         getIconSizeIsLarge("シーンブラウザ 並び替え"), getToolIsEnable("シーンブラウザ 並び替え"), m_buttonSceneBrowserTreeSort,
+                                          new _IZCommandEvents_OnClickEventHandler(m_buttonSceneBrowserTreeSort_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonSceneBrowserTreeSort_OnUpdate)));
 
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_ExternalLinkManager_s, Properties.Resources.icon_ExternalLinkManager_l,
+                                                            "icExternalLinkManager", "外部リンク マネージャ", "外部リンク マネージャ", "外部リンク マネージャを表示します。",
+                                                             getIconSizeIsLarge("外部リンク マネージャ"), getToolIsEnable("外部リンク マネージャ"), m_buttonExternalLinkManager,
+                                                              new _IZCommandEvents_OnClickEventHandler(m_buttonExternalLinkManager_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonExternalLinkManager_OnUpdate)));
 
-                    stdole.IPictureDisp oImageSmallSceneBrowserTreeSort = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_SceneBrowserTreeSort_s);
-                    stdole.IPictureDisp oImageLargeSceneBrowserTreeSort = ConvertImage.ImageToPictureDisp(Properties.Resources.icon_SceneBrowserTreeSort_l);
-                    m_buttonSceneBrowserTreeSort = piAddinSite.CreateCommandHandler("icSceneBrowserTreeSort", "シーンブラウザ 並び替え", "シーンブラウザ 並び替え", "シーンブラウザ 並び替えを表示します。", oImageSmallSceneBrowserTreeSort, oImageLargeSceneBrowserTreeSort);
-                    m_buttonSceneBrowserTreeSort.Enabled = true;
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_setting_s, Properties.Resources.icon_setting_l,
+                                        "icPowerAppsSetting", "設定", "設定", "設定を表示します。",
+                                         getIconSizeIsLarge("設定"), getToolIsEnable("設定"), m_buttonSetting,
+                                         new _IZCommandEvents_OnClickEventHandler(m_buttonSetting_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonSetting_OnUpdate)));
 
-
-                    //Control bar
-                    ZControlBar cControlBar;
-                    ZEnvironmentMgr cEnvMgr = this.IronCADApp.EnvironmentMgr;
-                    ZControls cControls;
-                    IZControl cControl;
-                    ZRibbonBar cRibbonBar;
-
-                    //ツールバーを作成する
-                    IZEnvironment cEnv = cEnvMgr.get_Environment(eZEnvType.Z_ENV_SCENE);
-                    cRibbonBar = cEnv.GetRibbonBar(eZRibbonBarType.Z_RIBBONBAR);
-                    cControlBar = cEnv.AddControlBar(piAddinSite, "icPowerApps");
-                    cControls = cControlBar.Controls;
-                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonIcPowerAppsTestApp.ControlDescriptor, null);
-                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonIcWebBrowser.ControlDescriptor, null);
-                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonSuppressManager.ControlDescriptor, null);
-                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonCustomPropertyManager.ControlDescriptor, null);
-                    cControl = cControls.Add(ezControlType.Z_CONTROL_BUTTON, m_buttonSceneBrowserTreeSort.ControlDescriptor, null);
-
-                    //Add button to RibbonBar
-                    cRibbonBar.AddButton2(m_buttonIcPowerAppsTestApp.ControlDescriptor, true);
-                    cRibbonBar.AddButton2(m_buttonIcWebBrowser.ControlDescriptor, true);
-                    cRibbonBar.AddButton2(m_buttonSuppressManager.ControlDescriptor, true);
-                    cRibbonBar.AddButton2(m_buttonCustomPropertyManager.ControlDescriptor, true);
-                    cRibbonBar.AddButton2(m_buttonSceneBrowserTreeSort.ControlDescriptor, true);
-                    //                    cRibbonBar.AddButton2(m_buttonForm.ControlDescriptor, false);
-
-                    /************************************************************
-                      リボンバーに大きいボタンで表示させたい時はこっち↓を使用する
-                      cRibbonBar.AddButton2(m_button.ControlDescriptor, true);
-                    *************************************************************/
-
-
-                    //Event handlers
-                    m_buttonIcPowerAppsTestApp.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonForm_OnClick);
-                    m_buttonIcPowerAppsTestApp.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonForm_OnUpdate);
-
-                    m_buttonIcWebBrowser.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonIcWebBrowser_OnClick);
-                    m_buttonIcWebBrowser.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonIcWebBrowser_OnUpdate);
-
-                    m_buttonSuppressManager.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonSuppressManager_OnClick);
-                    m_buttonSuppressManager.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonSuppressManager_OnUpdate);
-
-                    m_buttonCustomPropertyManager.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonCustomPropertyManager_OnClick);
-                    m_buttonCustomPropertyManager.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonCustomPropertyManager_OnUpdate);
-
-                    m_buttonSceneBrowserTreeSort.OnClick += new _IZCommandEvents_OnClickEventHandler(m_buttonSceneBrowserTreeSort_OnClick);
-                    m_buttonSceneBrowserTreeSort.OnUpdate += new _IZCommandEvents_OnUpdateEventHandler(m_buttonSceneBrowserTreeSort_OnUpdate);
-
-
+                    SetToolCommands(addInToolDataList);
                 }
                 catch (Exception ex)
                 {
@@ -146,15 +212,33 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
-
-        public void DeInitSelf()
+        public bool getIconSizeIsLarge(string displayName)
         {
-            m_buttonIcPowerAppsTestApp = null;
-         }
+            icPowerAppsConfig config = icPowerAppsSetting.GetConfig();
+            AddInToolIconSize tool = config.UserConfig.ClientConfig.AppList.Where(a => a.displayName == displayName).FirstOrDefault();
+            if(tool == null)
+            {
+                return true;
+            }
+            return tool.isLargeIcon;
+        }
 
-#endregion
 
-#region [Private Methods]
+        public bool getToolIsEnable(string displayName)
+        {
+            icPowerAppsConfig config = icPowerAppsSetting.GetConfig();
+            AddInToolIconSize tool = config.UserConfig.ClientConfig.AppList.Where(a => a.displayName == displayName).FirstOrDefault();
+            if (tool == null)
+            {
+                return true;
+            }
+            return tool.isEnable;
+        }
+        
+
+        #endregion
+
+        #region [Private Methods]
         [DllImport("icAPI_CppWrapper.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern IntPtr HwndToCwnd(IntPtr hwnd);
         [DllImport("icAPI_CppWrapper.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -179,29 +263,47 @@ namespace ICApiAddin.icPowerApps
             public int Bottom;      // y position of lower-right corner
         }
 
-        private void m_buttonForm_OnUpdate()
+        private void m_buttonIcPowerAppsTestApp_OnUpdate()
         {
-            m_buttonIcPowerAppsTestApp.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icPowerAppsTestApp").FirstOrDefault();
+            tool.button.Enabled = true;  
         }
         private void m_buttonIcWebBrowser_OnUpdate()
         {
-            m_buttonIcWebBrowser.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icWebBrowser").FirstOrDefault();
+            tool.button.Enabled = true;  
         }
         private void m_buttonSuppressManager_OnUpdate()
         {
-            m_buttonSuppressManager.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icSuppressManager").FirstOrDefault();
+            tool.button.Enabled = true;
         }
         private void m_buttonCustomPropertyManager_OnUpdate()
         {
-            m_buttonCustomPropertyManager.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icCustomPropertyManager").FirstOrDefault();
+            tool.button.Enabled = true;
         }
 
         private void m_buttonSceneBrowserTreeSort_OnUpdate()
         {
-            m_buttonSceneBrowserTreeSort.Enabled = true;  //Change to m_button.Enabled = false; to disable the button  
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icSceneBrowserTreeSort").FirstOrDefault();
+            tool.button.Enabled = true;
         }
-        
-        private void m_buttonForm_OnClick()
+
+        private void m_buttonExternalLinkManager_OnUpdate()
+        {
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icExternalLinkManager").FirstOrDefault();
+            tool.button.Enabled = true;
+        }
+
+        private void m_buttonSetting_OnUpdate()
+        {
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icPowerAppsSetting").FirstOrDefault();
+            tool.button.Enabled = true;  
+        }
+
+
+        private void m_buttonIcPowerAppsTestApp_OnClick()
         {
             IZDoc doc = GetActiveDoc();
             IZEnvironmentMgr iZEnvMgr = GetEnvironmentMgr();
@@ -227,6 +329,11 @@ namespace ICApiAddin.icPowerApps
             return title.ToString();
         }
 
+        private UserControlSuppressManager ucSuppressManager = null;
+        private UserControlExternalLinkManager ucExternalLinkManager = null;
+        private UserControlSceneBrowserTreeSort ucSceneBrowserTreeSort = null;
+        private UserControlWebBrowser ucIcWebBrowser = null;
+
         private void m_buttonIcWebBrowser_OnClick()
         {
             IZAddinSite addinSite = m_izAddinSite;
@@ -251,9 +358,9 @@ namespace ICApiAddin.icPowerApps
             SetWindowPos(dockingBarHWnd, 0, startX, startY, width, height, 0);
 
             /* ユーザコントロールをDockingBarにマッピング */
-            UserControlWebBrowser uc = new UserControlWebBrowser(true, true);
-            uc.SetBounds(0, 0, width, height);
-            IntPtr cwnd = HwndToCwnd(uc.Handle);
+            ucIcWebBrowser = new UserControlWebBrowser(true, true);
+            ucIcWebBrowser.SetBounds(0, 0, width, height);
+            IntPtr cwnd = HwndToCwnd(ucIcWebBrowser.Handle);
             dockingBar.SetSubWindow((ulong)cwnd);
             if(dockPosition == AFX_IDW_DOCKBAR_FLOAT)
             {
@@ -277,9 +384,9 @@ namespace ICApiAddin.icPowerApps
             dockingBar.GetClientRect(out left, out top, out right, out bottom);
 
             /* ユーザコントロールをDockingBarにマッピング */
-            UserControlSuppressManager uc = new UserControlSuppressManager(IronCADApp);
-            uc.SetBounds(left, top, right - left, bottom - top);
-            IntPtr cwnd = HwndToCwnd(uc.Handle);
+            ucSuppressManager = new UserControlSuppressManager(IronCADApp);
+            ucSuppressManager.SetBounds(left, top, right - left, bottom - top);
+            IntPtr cwnd = HwndToCwnd(ucSuppressManager.Handle);
             dockingBar.SetSubWindow((ulong)cwnd);
             dockingBar.ShowControlBar(1, 1, 1);
         }
@@ -302,8 +409,9 @@ namespace ICApiAddin.icPowerApps
             int left, top, right, bottom;
 
             /* ユーザーコントロール */
-            UserControlSceneBrowserTreeSort uc = new UserControlSceneBrowserTreeSort(IronCADApp);
-
+            ucSceneBrowserTreeSort = new UserControlSceneBrowserTreeSort(IronCADApp);
+            ucSceneBrowserTreeSort.Width = (int)(ucSceneBrowserTreeSort.Width * ScaleReziser.getScalingFactor());
+            ucSceneBrowserTreeSort.Height = (int)(ucSceneBrowserTreeSort.Height * ScaleReziser.getScalingFactor());
             /* DockingBarの追加 */
             dockingBar = env.AddDockingBar((ZAddinSite)addinSite, 1, "シーンブラウザ 並び替え", dockPosition);
             dockingBar.GetClientRect(out left, out top, out right, out bottom);
@@ -317,11 +425,11 @@ namespace ICApiAddin.icPowerApps
             //int width = (appRect.Right - appRect.Left) / 2;
             int startY = (appRect.Bottom - appRect.Top) / 4;
             int startX = (appRect.Right - appRect.Left) / 4;
-            SetWindowPos(dockingBarHWnd, 0, startX, startY, uc.Width, uc.Height, 0);
+            SetWindowPos(dockingBarHWnd, 0, startX, startY, ucSceneBrowserTreeSort.Width, ucSceneBrowserTreeSort.Height+40, 0);
 
             /* ユーザコントロールをDockingBarにマッピング */
-            uc.SetBounds(0, 0, uc.Width, uc.Height);
-            IntPtr cwnd = HwndToCwnd(uc.Handle);
+            ucSceneBrowserTreeSort.SetBounds(0, 0, ucSceneBrowserTreeSort.Width, ucSceneBrowserTreeSort.Height);
+            IntPtr cwnd = HwndToCwnd(ucSceneBrowserTreeSort.Handle);
             dockingBar.SetSubWindow((ulong)cwnd);
             if (dockPosition == AFX_IDW_DOCKBAR_FLOAT)
             {
@@ -329,6 +437,55 @@ namespace ICApiAddin.icPowerApps
                 SetWindowPos(dockingBarHWnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
             }
             dockingBar.ShowControlBar(1, 1, 1);
+        }
+
+        private void m_buttonExternalLinkManager_OnClick()
+        {
+            IZAddinSite addinSite = m_izAddinSite;
+            IZDockingBar dockingBar;
+            IZEnvironmentMgr envMgr = GetEnvironmentMgr();
+            IZEnvironment env = envMgr.ActiveEnvironment;
+            uint dockPosition = AFX_IDW_DOCKBAR_FLOAT;
+            int left, top, right, bottom;
+
+            /* ユーザーコントロール */
+            ucExternalLinkManager = new UserControlExternalLinkManager(IronCADApp);
+            ucExternalLinkManager.Width = (int)(ucExternalLinkManager.Width * ScaleReziser.getScalingFactor());
+            ucExternalLinkManager.Height = (int)(ucExternalLinkManager.Height * ScaleReziser.getScalingFactor());
+
+            /* DockingBarの追加 */
+            dockingBar = env.AddDockingBar((ZAddinSite)addinSite, 1, "外部リンク マネージャ", dockPosition);
+            dockingBar.GetClientRect(out left, out top, out right, out bottom);
+
+            /* IRONCADウィンドウの半分のサイズで真ん中に設定(未表示)する */
+            RECT appRect;
+            IntPtr appHWndHandle = Process.GetCurrentProcess().MainWindowHandle;
+            GetWindowRect(appHWndHandle, out appRect);
+            IntPtr dockingBarHWnd = CwndToHwnd(dockingBar.GetCWnd());
+            //int height = (appRect.Bottom - appRect.Top) / 2;
+            //int width = (appRect.Right - appRect.Left) / 2;
+            int startY = (appRect.Bottom - appRect.Top) / 4;
+            int startX = (appRect.Right - appRect.Left) / 4;
+            SetWindowPos(dockingBarHWnd, 0, startX, startY, ucExternalLinkManager.Width, ucExternalLinkManager.Height+40, 0);
+
+            /* ユーザコントロールをDockingBarにマッピング */
+            ucExternalLinkManager.SetBounds(0, 0, ucExternalLinkManager.Width, ucExternalLinkManager.Height);
+            IntPtr cwnd = HwndToCwnd(ucExternalLinkManager.Handle);
+            dockingBar.SetSubWindow((ulong)cwnd);
+            if (dockPosition == AFX_IDW_DOCKBAR_FLOAT)
+            {
+                /* FLOATの場合はSWP_SHOWWINDOWをしないと表示されなかった */
+                SetWindowPos(dockingBarHWnd, 0, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+            }
+            dockingBar.ShowControlBar(1, 1, 1);
+        }
+
+        private void m_buttonSetting_OnClick()
+        {
+            IZDoc doc = GetActiveDoc();
+            IZEnvironmentMgr iZEnvMgr = GetEnvironmentMgr();
+            Form_icPowerAppsSetting frm = new Form_icPowerAppsSetting(this.IronCADApp, addInToolDataList);
+            frm.ShowDialog();
         }
 
         private IZDoc GetActiveDoc()

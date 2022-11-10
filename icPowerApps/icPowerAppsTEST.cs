@@ -5,6 +5,8 @@ using System.Runtime.InteropServices;
 using interop.ICApiIronCAD;
 using System.Diagnostics;
 using System.Reflection;
+using static ICApiAddin.icPowerApps.Addin;
+using static ICApiAddin.icPowerApps.icPowerAppsSetting;
 
 namespace ICApiAddin.icPowerApps
 {
@@ -177,7 +179,38 @@ namespace ICApiAddin.icPowerApps
         private void toolStripButtonSceneBrowserTreeSort_Click(object sender, EventArgs e)
         {
             UserControlSceneBrowserTreeSort userControl = new UserControlSceneBrowserTreeSort(this._ironcadApp);
-            showUserControl(userControl, UserControlSuppressManager.title);
+            showUserControl(userControl, UserControlSceneBrowserTreeSort.title);
+        }
+
+        private void toolStripButtonCatalogSort_Click(object sender, EventArgs e)
+        {
+            UserControlCatalogSort userControl = new UserControlCatalogSort(this._ironcadApp);
+            showUserControl(userControl, UserControlCatalogSort.title);
+        }
+
+        private void toolStripButtonExternalLinkManager_Click(object sender, EventArgs e)
+        {
+            UserControlExternalLinkManager userControl = new UserControlExternalLinkManager(this._ironcadApp);
+            showUserControl(userControl, UserControlExternalLinkManager.title);
+        }
+
+        private void toolStripButtonSettings_Click(object sender, EventArgs e)
+        {
+            List<AddInToolData> addInToolDataList = new List<AddInToolData>();
+            string userConfigPath = icPowerAppsSetting.GetUserConfigFilePath();
+            if (string.IsNullOrEmpty(userConfigPath) == true)
+            {
+                /* ユーザーコンフィグファイルが無いので作成する */
+                icPowerAppsSetting.WriteicPowerAppsUserSetting(userConfigPath);
+            }
+            icPowerAppsSetting.ReadicPowerAppsUserSetting(userConfigPath);
+            icPowerAppsConfig _config = icPowerAppsSetting.GetConfig();
+            foreach(AddInToolIconSize tool in _config.UserConfig.ClientConfig.AppList)
+            {
+                addInToolDataList.Add(new AddInToolData(null, null, tool.uniqueName, tool.displayName, string.Empty, string.Empty, tool.isLargeIcon, tool.isEnable, null, null, null));
+            }
+            Form_icPowerAppsSetting form = new Form_icPowerAppsSetting(this._ironcadApp, addInToolDataList);
+            showFormControl(form);
         }
     }
 }

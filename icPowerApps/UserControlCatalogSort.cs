@@ -7,12 +7,15 @@ using System.Windows.Forms;
 using System.Threading.Tasks;
 using AdvancedDataGridView;
 using interop.ICApiIronCAD;
+using System.IO;
+using System.Text;
+using stdole;
 
 namespace ICApiAddin.icPowerApps
 {
-    public partial class UserControlSceneBrowserTreeSort : UserControl
+    public partial class UserControlCatalogSort : UserControl
     {
-        public const string title = "ソーンブラウザ ソート";
+        public const string title = "カタログ ソート";
         private IZBaseApp _ironcadApp = null;
 
         /// <summary>
@@ -34,12 +37,16 @@ namespace ICApiAddin.icPowerApps
         /// <summary>
         /// コンストラクタ
         /// </summary>
-        public UserControlSceneBrowserTreeSort(IZBaseApp ironcadApp)
+        public UserControlCatalogSort(IZBaseApp ironcadApp)
         {
             InitializeComponent();
             this.Tag = new UserControlTagData();
             this.Dock = DockStyle.Fill;
             this._ironcadApp = ironcadApp;
+            typeof(Control).GetProperty("DoubleBuffered",
+                             System.Reflection.BindingFlags.NonPublic |
+                             System.Reflection.BindingFlags.Instance)
+               .SetValue(listView1, true, null);
         }
 
 
@@ -60,10 +67,97 @@ namespace ICApiAddin.icPowerApps
                 /* 高DPI対応 */
                 ScaleReziser.InitializeFormControlScale(this, true, false, true, false, true);
 
+                IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+                IZCatalog catalog = catalogMgr.ActiveCatalog;
+                string catalogName = catalog.Name;
+                ImageList imageList = new ImageList();
+                imageList.ImageSize = new Size(32, 32);
+                listView1.LargeImageList = imageList;
+                for (int i = 0; i < catalog.EntryCount; i++)
+                {
+                    IZCatalogEntry entry = catalog.Entry[i];
+                    string name = entry.Name;
+
+                    /* iconをエクスポートする(なぜか名前が変わるので直後に再設定する) */
+                    string imagePath = Path.Combine(Path.GetTempPath(), "catalog" + i.ToString() + ".png");
+                    
+                    entry.ExportIconToFile(false, imagePath);
+                    entry.Name = name;
+                    string classId = entry.ClassID;
+                    Image image = Image.FromFile(imagePath);
+                    imageList.Images.Add(classId, image);
+//                    ListViewItem item = new ListViewItem(name);
+                    listView1.Items.Add(classId, name, i);
+                }
+
+
                 /* 初期化 */
                 ((UserControlTagData)this.Tag).canNotClose = false;
             }
         }
+
+
+        private void exportItemsIcon()
+        {
+            IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+            IZCatalog catalog = catalogMgr.ActiveCatalog;
+
+            for (int i = 0; i < catalog.EntryCount; i++)
+            {
+                /* get Entry */
+                IZCatalogEntry entry = catalog.get_Entry(i);
+                string name1 = entry.Name;
+
+                /* Export ICON */
+                string imagePath = Path.Combine("itemNo" + i.ToString() + ".png");
+                entry.ExportIconToFile(false, imagePath);
+
+                string name2 = entry.Name;
+            }
+        }
+
+
+        private void getCatalogItems()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            /* get current catalog */
+            IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+            IZCatalog catalog = catalogMgr.ActiveCatalog;
+
+            /* get all name */
+            for (int i = 0; i < catalog.EntryCount; i++)
+            {
+                IZCatalogEntry entry = catalog.Entry[i];
+                string itemName = entry.Name;
+
+                ///* Export Icon */
+                //string imagePath = Path.Combine(Path.GetTempPath(), "Item" + i.ToString() + ".png");
+                //entry.ExportIconToFile(false, imagePath);
+
+                //string itemName2 = entry.Name;
+
+                sb.AppendLine(entry.Name);
+            }
+            MessageBox.Show(sb.ToString());
+
+            sb.Clear();
+            for (int i = 0; i < catalog.EntryCount; i++)
+            {
+                IZCatalogEntry entry = catalog.get_Entry(i);
+                string itemName = entry.Name;
+
+                ///* Export Icon */
+                //string imagePath = Path.Combine(Path.GetTempPath(), "Item" + i.ToString() + ".png");
+                //entry.ExportIconToFile(false, imagePath);
+
+                //string itemName2 = entry.Name;
+
+                sb.AppendLine(entry.Name);
+            }
+            MessageBox.Show(sb.ToString());
+        }
+
 
 
         /// <summary>
@@ -243,6 +337,122 @@ namespace ICApiAddin.icPowerApps
                 }
             }
         }
+
+        public class orderData
+        {
+            public int x;
+            public int y;
+            public int index;
+            public orderData(int x, int y, int index)
+            {
+                this.x = x;
+                this.y = y;
+                this.index = index;
+            }
+
+
+        }
+
+        private void createNewCatalog()
+        {
+            /* get current catalog */
+            IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+            IZCatalog activeCatalog = catalogMgr.ActiveCatalog;
+            IZCatalog newCatalog = catalogMgr.Add();
+            newCatalog.Name = "newCatalog";
+            for (int i = 0; i < activeCatalog.EntryCount; i++)
+            {
+                try
+                {
+                    IZCatalogEntry item = activeCatalog.Entry[i];
+                    IZCatalogEntry newItem = newCatalog.AddEntry(item);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                try
+                {
+                    IZCatalogEntry item = activeCatalog.Entry[i];
+                    IZCatalogEntry newItem = newCatalog.AddEntry(item.Object);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+            }
+        }
+
+        private void setCatalog()
+        {
+            IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+            IZCatalog activeCatalog = catalogMgr.ActiveCatalog;
+            IZCatalog newCatalog = catalogMgr.Add();
+
+            IUnknown piNewElement;
+            IZCatalogEntry existItem = activeCatalog.Entry[0];
+            IZElement newElement = existItem.InsertElement();
+            if (null != newElement)
+            {
+                IZCatalogEntry newEntry = newCatalog.AddEntry(newElement);
+                newElement.Remove();
+            }
+        }
+
+        private void getCatalogEntry()
+        {
+            IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+            IZCatalog activeCatalog = catalogMgr.ActiveCatalog;
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < activeCatalog.EntryCount; i++)
+            {
+                IZCatalogEntry entry = activeCatalog.get_Entry(i);
+                string itemName = entry.Name;
+                sb.AppendLine(entry.Name);
+            }
+            MessageBox.Show(sb.ToString());
+        }
+
+
+        private void getCurrentCatalogOrder2()
+        {
+            //List<orderData> catalogDataList = new List<orderData>();
+            //for (int i = 0; i < listView1.Items.Count; i++)
+            //{
+            //    int x = listView1.Items[i].Position.X;
+            //    int y = listView1.Items[i].Position.Y;
+            //    catalogDataList.Add(new orderData(x, y, i));
+            //}
+            //List<orderData> orderDataList = catalogDataList.OrderBy(a => a.y).ThenBy(a => a.x).ToList();
+
+            ///* get current catalog */
+            //IZCatalogMgr catalogMgr = this._ironcadApp.CatalogMgr;
+            //IZCatalog catalog = catalogMgr.ActiveCatalog;
+            //StringBuilder sb = new StringBuilder();
+            //for (int i = 0; i < orderDataList.Count; i++)
+            //{
+            //    int entryIndex = orderDataList[i].index;
+            //    sb.AppendLine(catalog.Entry[entryIndex].Name);
+            //}
+            //MessageBox.Show(sb.ToString());
+
+            //IZCatalog newCatalog = catalogMgr.Add();
+            //newCatalog.Name = "新しいカタログ";
+            //for (int i = 0; i < orderDataList.Count; i++)
+            //{
+            //    int entryIndex = orderDataList[i].index;
+
+            //    IZCatalogEntry newEntry;
+            //    Object newObj = catalog.Entry[entryIndex].Object;
+            //    IZCatalogEntry item = newCatalog.AddEntry(newEntry);
+            //    item.Name = catalog.Entry[entryIndex].Name;
+            //}
+            //newCatalog.SaveAs("E:\newCatalog.icc");
+            //catalogMgr.Open("E:\newCatalog.icc");
+        }
+
         #region イベント
         /// <summary>
         /// 並び替えするボタンクリック イベント
@@ -308,5 +518,47 @@ namespace ICApiAddin.icPowerApps
             }
         }
         #endregion イベント
+
+        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        {
+            listView1.AutoArrange = false;
+            heldDownItem = listView1.GetItemAt(e.X, e.Y);
+            if (heldDownItem != null)
+            {
+                heldDownPoint = new Point(e.X - heldDownItem.Position.X,
+                                          e.Y - heldDownItem.Position.Y);
+            }
+        }
+
+        private void listView1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (heldDownItem != null)
+            {
+                heldDownItem.Position = new Point(e.Location.X - heldDownPoint.X,
+                                                  e.Location.Y - heldDownPoint.Y);
+            }
+        }
+
+        private void listView1_MouseUp(object sender, MouseEventArgs e)
+        {
+            heldDownItem = null;
+            listView1.AutoArrange = true;
+        }
+        ListViewItem heldDownItem;
+        Point heldDownPoint;
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            getCatalogEntry();
+            setCatalog();
+//            getCatalogItems();
+            createNewCatalog();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            exportItemsIcon();
+//            getCatalogEntry();
+        }
     }
 }

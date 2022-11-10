@@ -157,6 +157,26 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap icon_ExternalLinkManager_l {
+            get {
+                object obj = ResourceManager.GetObject("icon_ExternalLinkManager_l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_ExternalLinkManager_s {
+            get {
+                object obj = ResourceManager.GetObject("icon_ExternalLinkManager_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_icPowerApps_l {
             get {
                 object obj = ResourceManager.GetObject("icon_icPowerApps_l", resourceCulture);
@@ -250,6 +270,26 @@ namespace ICApiAddin.icPowerApps.Properties {
         internal static System.Drawing.Bitmap icon_SceneBrowserTreeSort_s {
             get {
                 object obj = ResourceManager.GetObject("icon_SceneBrowserTreeSort_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_setting_l {
+            get {
+                object obj = ResourceManager.GetObject("icon_setting_l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_setting_s {
+            get {
+                object obj = ResourceManager.GetObject("icon_setting_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

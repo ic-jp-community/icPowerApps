@@ -556,6 +556,31 @@ namespace ICApiAddin.icPowerApps
         }
 
         /// <summary>
+        /// ディレクトリの選択ダイアログ
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="directoryPath"></param>
+        /// <returns></returns>
+        public static bool OpenDirectoryDialog(string title, ref string directoryPath)
+        {
+            /* 保存先のダイアログを表示する */
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.FileName = "Folder Selection";
+            ofd.Title = title;
+            ofd.Filter = "Folder|.";
+            ofd.ValidateNames = false;
+            ofd.CheckFileExists = false;
+            ofd.CheckPathExists = true;
+            if (ofd.ShowDialog() != DialogResult.OK)
+            {
+                /* 取得キャンセル */
+                return false;
+            }
+            directoryPath = Path.GetDirectoryName(ofd.FileName);
+            return true;
+        }
+
+        /// <summary>
         /// アセンブリ/パーツのツリー表示用の画像を取得する
         /// </summary>
         /// <param name="size"></param>

@@ -124,7 +124,14 @@
     <Compile Include="Form_CustomPropertyManager.designer.cs">
       <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_icPowerAppsSetting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_icPowerAppsSetting.Designer.cs">
+      <DependentUpon>Form_icPowerAppsSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="icapiCommon.cs" />
+    <Compile Include="icPowerAppsSetting.cs" />
     <Compile Include="icPowerAppsTEST.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,23 +146,29 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="scaleReziser.cs" />
-    <Compile Include="UserControlIroncadSettings.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UserControlIroncadSettings.Designer.cs">
-      <DependentUpon>UserControlIroncadSettings.cs</DependentUpon>
-    </Compile>
     <Compile Include="UserControlIroncadRepair.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControlIroncadRepair.Designer.cs">
       <DependentUpon>UserControlIroncadRepair.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlCatalogSort.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlCatalogSort.Designer.cs">
+      <DependentUpon>UserControlCatalogSort.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlSceneBrowserTreeSort.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="UserControlSceneBrowserTreeSort.Designer.cs">
       <DependentUpon>UserControlSceneBrowserTreeSort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlExternalLinkManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlExternalLinkManager.Designer.cs">
+      <DependentUpon>UserControlExternalLinkManager.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControlSuppressManager_ChangeHeaderNameForm.cs">
       <SubType>Form</SubType>
@@ -192,6 +205,9 @@
     <EmbeddedResource Include="Form_CustomPropertyManager.resx">
       <DependentUpon>Form_CustomPropertyManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form_icPowerAppsSetting.resx">
+      <DependentUpon>Form_icPowerAppsSetting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="icPowerAppsTEST.resx">
       <DependentUpon>icPowerAppsTEST.cs</DependentUpon>
     </EmbeddedResource>
@@ -199,14 +215,17 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserControlIroncadSettings.resx">
-      <DependentUpon>UserControlIroncadSettings.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UserControlIroncadRepair.resx">
       <DependentUpon>UserControlIroncadRepair.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControlCatalogSort.resx">
+      <DependentUpon>UserControlCatalogSort.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControlSceneBrowserTreeSort.resx">
       <DependentUpon>UserControlSceneBrowserTreeSort.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlExternalLinkManager.resx">
+      <DependentUpon>UserControlExternalLinkManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlSuppressManager_ChangeHeaderNameForm.resx">
       <DependentUpon>UserControlSuppressManager_ChangeHeaderNameForm.cs</DependentUpon>
@@ -341,6 +360,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Icons\icon_SceneBrowserTreeSort_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_ExternalLinkManager_l.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_ExternalLinkManager_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_setting_l.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\icon_setting_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_setting.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
