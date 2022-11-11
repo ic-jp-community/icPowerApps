@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using interop.ICApiIronCAD;
 using System.Diagnostics;
 using static ICApiAddin.icPowerApps.icPowerAppsSetting;
+using System.IO;
 
 namespace ICApiAddin.icPowerApps
 {
@@ -154,12 +155,12 @@ namespace ICApiAddin.icPowerApps
                 {
                     /* 現在の設定ファイルを読み込む(共通設定) */
                     string userConfigPath = icPowerAppsSetting.GetUserConfigFilePath();
-                    if (string.IsNullOrEmpty(userConfigPath) == true)
+                    if (File.Exists(userConfigPath) != true)
                     {
                         /* 共通コンフィグファイルが無いので作成する */
                         icPowerAppsSetting.WriteicPowerAppsUserSetting(userConfigPath);
                     }
-                    icPowerAppsSetting.ReadicPowerAppsUserSetting(userConfigPath);
+                    icPowerAppsSetting.ReadicPowerAppsUserSetting(userConfigPath, false);
 
 
                     bool isLargeIcon = false;

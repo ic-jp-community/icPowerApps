@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Reflection;
 using static ICApiAddin.icPowerApps.Addin;
 using static ICApiAddin.icPowerApps.icPowerAppsSetting;
+using System.IO;
 
 namespace ICApiAddin.icPowerApps
 {
@@ -198,7 +199,7 @@ namespace ICApiAddin.icPowerApps
         {
             List<AddInToolData> addInToolDataList = new List<AddInToolData>();
             string userConfigPath = icPowerAppsSetting.GetUserConfigFilePath();
-            if (string.IsNullOrEmpty(userConfigPath) == true)
+            if (File.Exists(userConfigPath) != true)
             {
                 /* ユーザーコンフィグファイルが無いので作成する */
                 icPowerAppsSetting.WriteicPowerAppsUserSetting(userConfigPath);

@@ -66,6 +66,13 @@ namespace ICApiAddin.icPowerApps
         public Form_CustomPropertyManager(IZBaseApp ironcadApp)
         {
             InitializeComponent();
+            string ver = ironcadApp.ApplicationVersion;
+            if(Double.Parse(ver) < 22.0)
+            {
+                MessageBox.Show("この機能はIRONCAD2020以降でのみ使用可能です。");
+                this.Close();
+                return;
+            }
             comboBoxScope.SelectedIndex = 1;
             comboBoxDataType.SelectedIndex = 0;
             Initialize(ironcadApp);
@@ -76,7 +83,7 @@ namespace ICApiAddin.icPowerApps
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Form_InputCustomProperties_Load(object sender, EventArgs e)
+        private void Form_CustomPropertyManager_Load(object sender, EventArgs e)
         {
             splitContainerCustomProperty.Panel1Collapsed = true;
             if (string.IsNullOrEmpty(this._userId) != true)
@@ -96,7 +103,7 @@ namespace ICApiAddin.icPowerApps
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void Form_CheckIn_Shown(object sender, EventArgs e)
+        private void Form_CustomPropertyManager_Shown(object sender, EventArgs e)
         {
             if (this._ironcadApp == null)
             {

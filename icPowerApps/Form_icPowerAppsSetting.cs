@@ -54,14 +54,14 @@ namespace ICApiAddin.icPowerApps
 
 
             string userConfigPath = icPowerAppsSetting.GetUserConfigFilePath();
-            if (string.IsNullOrEmpty(userConfigPath) == true)
+            if (File.Exists(userConfigPath) != true)
             {
                 /* ユーザーコンフィグファイルが無いので作成する */
                 icPowerAppsSetting.WriteicPowerAppsUserSetting(userConfigPath);
             }
 
             string commonConfigPath = icPowerAppsSetting.GetCommonConfigFilePath();
-            if (string.IsNullOrEmpty(commonConfigPath) == true)
+            if (File.Exists(commonConfigPath) != true)
             {
                 /* 共通コンフィグファイルが無いので作成する */
                 icPowerAppsSetting.WriteicPowerAppsCommonSetting(commonConfigPath);

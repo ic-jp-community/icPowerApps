@@ -668,8 +668,8 @@
             this.Controls.Add(this.tableLayoutPanelBase);
             this.Name = "Form_CustomPropertyManager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_CustomPropertyManager_FormClosing);
-            this.Load += new System.EventHandler(this.Form_InputCustomProperties_Load);
-            this.Shown += new System.EventHandler(this.Form_CheckIn_Shown);
+            this.Load += new System.EventHandler(this.Form_CustomPropertyManager_Load);
+            this.Shown += new System.EventHandler(this.Form_CustomPropertyManager_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.treeGridViewScene)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
