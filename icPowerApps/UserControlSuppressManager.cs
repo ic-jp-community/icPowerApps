@@ -203,15 +203,12 @@ namespace ICApiAddin.icPowerApps
             string systemName = string.Empty;
             string elementId = string.Empty;
             int currentDepth = 0;
-            bool ret = await Task.Run(() => {
-                TreeGridNode topNode = tgv.Nodes.Add(Path.GetFileName(doc.Name), systemName, elementId, icapiCommon.SCENE_DATATYPE_SCENE, currentDepth, doc.Name);
-                topNode.ImageIndex = icapiCommon.getImageIndexAssemblyParts(icapiCommon.SCENE_DATATYPE_SCENE);
-                topNode.Height = (int)(TreeNodeHeight * ScaleReziser.getScalingFactor());
-                int depth = 1;
-                icapiCommon.GetSceneTreeInfo(icapiCommon.CREATE_TREE_MODE.CHECK_IN, TreeNodeHeight, sceneDoc.GetTopElement(), ref topNode, ref depth);
-                return true;
-            });
-            return ret;
+            TreeGridNode topNode = tgv.Nodes.Add(Path.GetFileName(doc.Name), systemName, elementId, icapiCommon.SCENE_DATATYPE_SCENE, currentDepth, doc.Name);
+            topNode.ImageIndex = icapiCommon.getImageIndexAssemblyParts(icapiCommon.SCENE_DATATYPE_SCENE);
+            topNode.Height = (int)(TreeNodeHeight * ScaleReziser.getScalingFactor());
+            int depth = 1;
+            icapiCommon.GetSceneTreeInfo(icapiCommon.CREATE_TREE_MODE.CHECK_IN, TreeNodeHeight, sceneDoc.GetTopElement(), ref topNode, ref depth);
+            return true;
         }
 
 

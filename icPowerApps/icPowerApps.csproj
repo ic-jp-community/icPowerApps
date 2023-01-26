@@ -376,6 +376,12 @@
   <ItemGroup>
     <None Include="Icons\icon_setting.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\icAPIAddinEnableDisable\icAPIAddinEnableDisable.csproj">
+      <Project>{96a5430a-83fd-43a3-a9f7-4716909d0bce}</Project>
+      <Name>icAPIAddinEnableDisable</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Windows Kits\10\bin\x64\mt.exe" -managedassemblyname:$(TargetFileName) -nodependency -out:$(TargetFileName).manifest

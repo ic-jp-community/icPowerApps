@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,6 +120,15 @@ namespace ICApiAddin.icPowerApps
     /// </summary>
     public static class icapiCommon
     {
+        /// <summary>
+        /// 実行しているdllのパスを取得する
+        /// </summary>
+        /// <returns></returns>
+        public static string GetIcApiDllPath()
+        {
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+        }
+
         /// <summary>
         /// DataGridViewのダブルバッファを有効にする
         /// </summary>

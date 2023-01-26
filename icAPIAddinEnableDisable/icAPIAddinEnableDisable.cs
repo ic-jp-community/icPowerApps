@@ -1,99 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using ICApiAddin.icPowerApps;
-namespace icPowerApps_Configuration
+
+namespace icAPIAddinEnableDisable
 {
-    [System.ComponentModel.RunInstaller(true)]
-    public class icPowerApps_Config : System.Configuration.Install.Installer
+    public class AddinConfig
     {
-        public class WindowWrapper : IWin32Window
+        public static string ADDIN_CONFIG_FILE_PATH = "Config\\Ironcad.Addin.config";
+
+        #region IRONCADのインストールパス取得
+        /// <summary>
+        /// インストールされている全てのバージョンのIRONCADインストールディレクトリを取得する
+        /// </summary>
+        /// <param name="installedIcList"></param>
+        public static void GetAllIronCADInstallPath(ref List<KeyValuePair<string, string>> installedIcList, bool getYearVersion)
         {
-            private readonly IntPtr hwnd;
-            public IntPtr Handle
+            installedIcList = new List<KeyValuePair<string, string>>();
+            Microsoft.Win32.RegistryKey rkey = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\IronCAD\IRONCAD\");
+            if (rkey != null)
             {
-                get { return hwnd; }
-            }
-            public WindowWrapper(IntPtr handle)
-            {
-                hwnd = handle;
-            }
-        }
-        public static class TopMostMessageBox
-        {
-            public static void Show(string message)
-            {
-                var proc = Process.GetProcessesByName("msiexec").FirstOrDefault(p => p.MainWindowTitle == "icMaintenanceTools");
-                if (proc != null)
+                string[] IronCADKeys = rkey.GetSubKeyNames();
+                for (int i = 0; i < IronCADKeys.Count(); i++)
                 {
-                    MessageBox.Show(new WindowWrapper(proc.MainWindowHandle), message); // 結果、メッセージボックスも最前面に表示される
+                    Microsoft.Win32.RegistryKey subKey = rkey.OpenSubKey(IronCADKeys[i], false);
+                    if (subKey == null)
+                    {
+                        continue;
+                    }
+                    bool installDirValueExists = subKey.GetValueNames().ToList().Contains("InstallDir");
+                    if (installDirValueExists != true)
+                    {
+                        subKey.Close();
+                        continue;
+                    }
+                    string installDir = subKey.GetValue("InstallDir").ToString();
+                    subKey.Close();
+                    if (string.IsNullOrEmpty(installDir) == true)
+                    {
+                        continue;
+                    }
+                    if (getYearVersion == true)
+                    {
+                        string yearVersion = convertNumberVersionToYearVersion(double.Parse(IronCADKeys[i]));
+                        installedIcList.Add(new KeyValuePair<string, string>(yearVersion, installDir));
+                    }
+                    else
+                    {
+                        installedIcList.Add(new KeyValuePair<string, string>(IronCADKeys[i], installDir));
+                    }
                 }
-                else
-                {
-                    MessageBox.Show(message); // 結果、メッセージボックスも最前面に表示される
-                }
+                rkey.Close();
             }
         }
 
-        public override void Install(System.Collections.IDictionary stateSaver)
+        private static string convertNumberVersionToYearVersion(double number)
         {
-            base.Install(stateSaver);
-            bool ret1 = AddConfig(@"C:\Program Files\IronCAD\2020\Config\Ironcad.Addin.config",
-                Addin.ADDIN_GUID,
-                Addin.ADDIN_APP_NAME,
-                Addin.ADDIN_APP_DESCRIPTION);
-            bool ret2 = AddConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
-                Addin.ADDIN_GUID,
-                Addin.ADDIN_APP_NAME,
-                Addin.ADDIN_APP_DESCRIPTION);
-            bool ret3 = AddConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
-                Addin.ADDIN_GUID,
-                Addin.ADDIN_APP_NAME,
-                Addin.ADDIN_APP_DESCRIPTION);
-            bool ret4 = AddConfig(@"C:\Program Files\IronCAD\2023\Config\Ironcad.Addin.config",
-                Addin.ADDIN_GUID,
-                Addin.ADDIN_APP_NAME,
-                Addin.ADDIN_APP_DESCRIPTION);
-            if ((ret1 != true) && (ret2 != true) && (ret3 != true) && (ret4 != true))
-            {
-                TopMostMessageBox.Show("IRONCADが見つかりませんでした。\n(インストールは続行されます)");
-            }
+            int yearVersion = (int)(number + 1998);
+            return yearVersion.ToString();
         }
+        #endregion
 
-        public override void Commit(System.Collections.IDictionary savedState)
-        {
-            base.Commit(savedState);
-        }
-
-        public override void Rollback(System.Collections.IDictionary savedState)
-        {
-            base.Rollback(savedState);
-        }
-
-        public override void Uninstall(System.Collections.IDictionary savedState)
-        {
-            base.Uninstall(savedState);
-            for (int count = 0; count < 10; count++)
-            {
-                int delnum =  DeleteConfig(@"C:\Program Files\IronCAD\2020\Config\Ironcad.Addin.config",
-                                        Addin.ADDIN_GUID);
-                delnum +=  DeleteConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
-                                        Addin.ADDIN_GUID);
-                delnum += DeleteConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
-                                        Addin.ADDIN_GUID);
-                delnum += DeleteConfig(@"C:\Program Files\IronCAD\2023\Config\Ironcad.Addin.config",
-                                        Addin.ADDIN_GUID); if (delnum == 0)
-                {
-                    break;
-                }
-            }
-        }
-
+        #region IRONCADへのアドイン追加/削除
         public static bool AddConfig(string xmlpath, string guid, string name, string description)
         {
             /* ファイルの有無チェック */
@@ -257,6 +227,49 @@ namespace icPowerApps_Configuration
             System.IO.File.SetAttributes(xmlpath, attr);
             return delCount;
         }
-    }
 
+        public static bool GetConfigIsEnable(string xmlpath, string searchGuid)
+        {
+            bool retExist = false;
+
+            /* ファイルの有無チェック */
+            if (File.Exists(xmlpath) != true)
+            {
+                return false;
+            }
+
+            //C:\test.txt の属性を取得する
+            System.IO.FileAttributes attr = System.IO.File.GetAttributes(xmlpath);
+
+            ////読み取り専用属性があるか調べる
+            //if ((attr & System.IO.FileAttributes.ReadOnly) == System.IO.FileAttributes.ReadOnly)
+            //{
+            //    //読み取り専用属性を削除する
+            //    System.IO.File.SetAttributes(xmlpath, attr & (~System.IO.FileAttributes.ReadOnly));
+            //}
+
+            StreamReader sr = new StreamReader(xmlpath);
+            List<string> allLine = new List<string>();
+            while (sr.EndOfStream != true)
+            {
+                allLine.Add(sr.ReadLine());
+            }
+            sr.Close();
+
+            int guidIndex = -1;
+            for (int i = 0; i < allLine.Count; i++)
+            {
+                string str = allLine[i].Trim(' ', '\t');
+                if (str.Contains(searchGuid) == true)
+                {
+                    retExist = true;
+                    guidIndex = i;
+                    break;
+                }
+            }
+            return retExist;
+        }
+
+        #endregion
+    }
 }
