@@ -146,7 +146,7 @@ namespace ICApiAddin.icPowerApps
                         sortChildElement(sortOptions, sortArray1[num].elem);
                     }
                 }
-                emptyAsm.AddChild(sortArray1[num].elem);
+                emptyAsm.MoveChild(sortArray1[num].elem, true);
             }
 
             SortData[] sortArray2 = sortDataList2.ToArray();
@@ -154,7 +154,7 @@ namespace ICApiAddin.icPowerApps
             /* sortArray2にはアセンブリは入らないのでそのまま仮のアセンブリに突っ込む */
             for (int num = 0; num < sortArray2.Count(); num++)
             {
-                emptyAsm.AddChild(sortArray2[num].elem);
+                emptyAsm.MoveChild(sortArray2[num].elem, true);
             }
             emptyAsm.Disassemble();
         }
