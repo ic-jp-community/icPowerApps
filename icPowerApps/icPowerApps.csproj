@@ -170,6 +170,12 @@
     <Compile Include="UserControlExternalLinkManager.Designer.cs">
       <DependentUpon>UserControlExternalLinkManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserControlElementManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlElementManager.Designer.cs">
+      <DependentUpon>UserControlElementManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="UserControlSuppressManager_ChangeHeaderNameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -226,6 +232,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlExternalLinkManager.resx">
       <DependentUpon>UserControlExternalLinkManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControlElementManager.resx">
+      <DependentUpon>UserControlElementManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UserControlSuppressManager_ChangeHeaderNameForm.resx">
       <DependentUpon>UserControlSuppressManager_ChangeHeaderNameForm.cs</DependentUpon>
@@ -381,6 +390,33 @@
       <Project>{96a5430a-83fd-43a3-a9f7-4716909d0bce}</Project>
       <Name>icAPIAddinEnableDisable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Icon_ElementManager_l.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Icon_ElementManager_s.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_CustomPropertyManager.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\Icon_ElementManager.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_ExternalLinkManager.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_icPowerApps.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_icPowerApps128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_icSuppressManager.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Icons\icon_SceneBrowserTreeSort.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

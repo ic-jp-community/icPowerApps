@@ -135,6 +135,16 @@ namespace ICApiAddin.icPowerApps.Properties {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_CustomPropertyManager {
+            get {
+                object obj = ResourceManager.GetObject("icon_CustomPropertyManager", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap icon_CustomPropertyManager_l {
@@ -151,6 +161,46 @@ namespace ICApiAddin.icPowerApps.Properties {
             get {
                 object obj = ResourceManager.GetObject("icon_CustomPropertyManager_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon Icon_ElementManager {
+            get {
+                object obj = ResourceManager.GetObject("Icon_ElementManager", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Icon_ElementManager_l {
+            get {
+                object obj = ResourceManager.GetObject("Icon_ElementManager_l", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap Icon_ElementManager_s {
+            get {
+                object obj = ResourceManager.GetObject("Icon_ElementManager_s", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_ExternalLinkManager {
+            get {
+                object obj = ResourceManager.GetObject("icon_ExternalLinkManager", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -175,6 +225,16 @@ namespace ICApiAddin.icPowerApps.Properties {
         }
         
         /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_icPowerApps {
+            get {
+                object obj = ResourceManager.GetObject("icon_icPowerApps", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap icon_icPowerApps_l {
@@ -191,6 +251,26 @@ namespace ICApiAddin.icPowerApps.Properties {
             get {
                 object obj = ResourceManager.GetObject("icon_icPowerApps_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_icPowerApps128 {
+            get {
+                object obj = ResourceManager.GetObject("icon_icPowerApps128", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_icSuppressManager {
+            get {
+                object obj = ResourceManager.GetObject("icon_icSuppressManager", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
@@ -271,6 +351,26 @@ namespace ICApiAddin.icPowerApps.Properties {
             get {
                 object obj = ResourceManager.GetObject("icon_SceneBrowserTreeSort_s", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_SceneBrowserTreeSort1 {
+            get {
+                object obj = ResourceManager.GetObject("icon_SceneBrowserTreeSort1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   (アイコン) に類似した型 System.Drawing.Icon のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Icon icon_setting {
+            get {
+                object obj = ResourceManager.GetObject("icon_setting", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
             }
         }
         
