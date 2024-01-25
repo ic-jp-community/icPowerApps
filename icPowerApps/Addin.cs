@@ -500,11 +500,8 @@ namespace ICApiAddin.icPowerApps
         private void m_buttonElementManager_OnClick()
         {
             IZAddinSite addinSite = m_izAddinSite;
-            IZDockingBar dockingBar;
             IZEnvironmentMgr envMgr = GetEnvironmentMgr();
             IZEnvironment env = envMgr.ActiveEnvironment;
-            uint dockPosition = AFX_IDW_DOCKBAR_RIGHT;
-            int left, top, right, bottom;
             /* ElementManagerを作成 */
             ucElementManager = new UserControlElementManager(IronCADApp);
             Form frm = new Form();
@@ -514,6 +511,7 @@ namespace ICApiAddin.icPowerApps
             frm.Icon = Properties.Resources.Icon_ElementManager;
             frm.Text = UserControlElementManager.title;
             frm.TopMost = true;
+            frm.StartPosition = FormStartPosition.CenterScreen;
             frm.Show();
         }
 

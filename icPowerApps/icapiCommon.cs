@@ -612,6 +612,10 @@ namespace ICApiAddin.icPowerApps
             imageList.Images.Add(Resources.LinkedSheetMetal);
             imageList.Images.Add(Resources.PartsSheet);
             imageList.Images.Add(Resources.LinkedPartsSheet);
+            imageList.Images.Add(Resources.FacetPart);
+            imageList.Images.Add(Resources.LinkFacetPart);
+            imageList.Images.Add(Resources.StructuredParts);
+            imageList.Images.Add(Resources.LinkStructuredParts);
             imageList.ImageSize = size;
             imageList.ColorDepth = ColorDepth.Depth32Bit;
         }
@@ -670,9 +674,12 @@ namespace ICApiAddin.icPowerApps
                     childs.Get(i, out obj);
                     childElem = obj as IZElement;
                     if ((childElem.Type == eZElementType.Z_ELEMENT_PART) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_FACET_PART) ||
                         (childElem.Type == eZElementType.Z_ELEMENT_ASSEMBLY) ||
                         (childElem.Type == eZElementType.Z_ELEMENT_WIRE) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_WIRE_PART) ||
                         (childElem.Type == eZElementType.Z_ELEMENT_PROFILE) ||
+                        (childElem.Type == eZElementType.Z_ELEMENT_PROFILE_PART) ||
                         (childElem.Type == eZElementType.Z_ELEMENT_SHEETMETAL_PART))
                     {
                         /* パーツ/アセンブリの情報 */
@@ -687,20 +694,29 @@ namespace ICApiAddin.icPowerApps
                             case eZElementType.Z_ELEMENT_ASSEMBLY:
                                 IZAssembly asm = childElem as IZAssembly;
                                 linkStr = asm.GetExternallyLinkedInfo(out link);
-                                dataType = GetInnerDataType(childElem.Type, link, eZBodyType.Z_BODY_EMPTY);
+                                dataType = GetInnerDataType(childElem.Type, eZPartType.Z_PART_NULL, link, eZBodyType.Z_BODY_EMPTY);
                                 break;
                             case eZElementType.Z_ELEMENT_PART:
+                            case eZElementType.Z_ELEMENT_FACET_PART:
                             case eZElementType.Z_ELEMENT_WIRE:
+                            case eZElementType.Z_ELEMENT_WIRE_PART:
                             case eZElementType.Z_ELEMENT_PROFILE:
+                            case eZElementType.Z_ELEMENT_PROFILE_PART:
                             case eZElementType.Z_ELEMENT_SHEETMETAL_PART:
                                 IZPart part = childElem as IZPart;
                                 eZBodyType body = eZBodyType.Z_BODY_EMPTY;
+                                eZPartType partType = eZPartType.Z_PART_NULL;
+                                if (part == null)
+                                {
+                                    continue;
+                                }
                                 linkStr = part.GetExternallyLinkedInfo(out link);
                                 if (childElem.Type == eZElementType.Z_ELEMENT_PART)
                                 {
                                     part.GetBodyType(ref body);
+                                    part.GetPartType(out partType);
                                 }
-                                dataType = GetInnerDataType(childElem.Type, link, body);
+                                dataType = GetInnerDataType(childElem.Type, partType, link, body);
                                 break;
                             default:
                                 break;
@@ -793,7 +809,7 @@ namespace ICApiAddin.icPowerApps
                             case eZElementType.Z_ELEMENT_ASSEMBLY:
                                 IZAssembly asm = childElem as IZAssembly;
                                 linkStr = asm.GetExternallyLinkedInfo(out link);
-                                dataType = GetInnerDataType(childElem.Type, link, eZBodyType.Z_BODY_EMPTY);
+                                dataType = GetInnerDataType(childElem.Type, eZPartType.Z_PART_NULL, link, eZBodyType.Z_BODY_EMPTY);
                                 break;
                             case eZElementType.Z_ELEMENT_PART:
                             case eZElementType.Z_ELEMENT_WIRE:
@@ -801,12 +817,22 @@ namespace ICApiAddin.icPowerApps
                             case eZElementType.Z_ELEMENT_SHEETMETAL_PART:
                                 IZPart part = childElem as IZPart;
                                 eZBodyType body = eZBodyType.Z_BODY_EMPTY;
+                                eZPartType partType = eZPartType.Z_PART_NULL;
+                                if (part == null)
+                                {
+                                    continue;
+                                }
                                 linkStr = part.GetExternallyLinkedInfo(out link);
                                 if (childElem.Type == eZElementType.Z_ELEMENT_PART)
                                 {
                                     part.GetBodyType(ref body);
                                 }
-                                dataType = GetInnerDataType(childElem.Type, link, body);
+                                if (childElem.Type == eZElementType.Z_ELEMENT_PART)
+                                {
+                                    part.GetBodyType(ref body);
+                                    part.GetPartType(out partType);
+                                }
+                                dataType = GetInnerDataType(childElem.Type, partType, link, body);
                                 break;
                             default:
                                 break;
@@ -856,7 +882,9 @@ namespace ICApiAddin.icPowerApps
         }
         public const string SCENE_DATATYPE_ASSEMBLY = "ASSEMBLY";
         public const string SCENE_DATATYPE_PART = "PARTS";
+        public const string SCENE_DATATYPE_FACET_PART = "FACET_PARTS";
         public const string SCENE_DATATYPE_PART_SOLID = "PARTS_SOLID";
+        public const string SCENE_DATATYPE_PART_STRUCTURED = "STRUCTURED_PARTS";
         public const string SCENE_DATATYPE_PART_SHEET = "PARTS_SHEET";
         public const string SCENE_DATATYPE_PART_UNKNOWN = "PARTS_UNKNOWN";
         public const string SCENE_DATATYPE_PART_WIRE = "PARTS_WIRE";
@@ -866,6 +894,8 @@ namespace ICApiAddin.icPowerApps
         public const string SCENE_DATATYPE_SHEETMETAL_PART = "SHEETMETAL_PARTS";
         public const string SCENE_DATATYPE_LINKED_ASSEMBLY = "LINKED_ASSEMBLY";
         public const string SCENE_DATATYPE_LINKED_PART = "LINKED_PARTS";
+        public const string SCENE_DATATYPE_LINKED_FACET_PART = "LINKED_FACET_PARTS";
+        public const string SCENE_DATATYPE_LINKED_PART_STRUCTURED = "LINKED_STRUCTURED_PARTS";
         public const string SCENE_DATATYPE_LINKED_PART_SOLID = "LINKED_PARTS_SOLID";
         public const string SCENE_DATATYPE_LINKED_PART_SHEET = "LINKED_PARTS_SHEET";
         public const string SCENE_DATATYPE_LINKED_PART_UNKNOWN = "LINKED_PARTS_UNKNOWN";
@@ -874,6 +904,7 @@ namespace ICApiAddin.icPowerApps
         public const string SCENE_DATATYPE_LINKED_WIRE = "LINKED_WIRE";
         public const string SCENE_DATATYPE_LINKED_PROFILE = "LINKED_PROFILE";
         public const string SCENE_DATATYPE_LINKED_SHEETMETAL_PART = "LINKED_SHEETMETAL_PARTS";
+
         public const string SCENE_DATATYPE_SCENE = "SCENE";
         public const string SCENE_DATATYPE_FILE = "FILE";
 
@@ -881,10 +912,11 @@ namespace ICApiAddin.icPowerApps
         /// element種類からicVaultのデータ種類を取得する
         /// </summary>
         /// <param name="elemType">elementの種類</param>
+        /// <param name="partType">partの種類</param>
         /// <param name="isLinked">外部リンク有無 true;外部リンクあり false:外部リンクなし</param>
         /// <param name="body">elementのボディー種別</param>
         /// <returns></returns>
-        public static string GetInnerDataType(eZElementType elemType, bool isLinked, eZBodyType body)
+        public static string GetInnerDataType(eZElementType elemType, eZPartType partType, bool isLinked, eZBodyType body)
         {
             string dataType = string.Empty;
             switch (elemType)
@@ -908,7 +940,14 @@ namespace ICApiAddin.icPowerApps
                                 dataType = SCENE_DATATYPE_LINKED_PART_EMPTY;
                                 break;
                             case eZBodyType.Z_BODY_UNKNOWN:
-                                dataType = SCENE_DATATYPE_LINKED_PART_UNKNOWN;
+                                if (partType == eZPartType.Z_PART_STRUCTURED_PART)
+                                {
+                                    dataType = SCENE_DATATYPE_LINKED_PART_STRUCTURED;
+                                }
+                                else
+                                {
+                                    dataType = SCENE_DATATYPE_LINKED_PART_UNKNOWN;
+                                }
                                 break;
                             default:
                                 break;
@@ -932,7 +971,14 @@ namespace ICApiAddin.icPowerApps
                                 dataType = SCENE_DATATYPE_PART_EMPTY;
                                 break;
                             case eZBodyType.Z_BODY_UNKNOWN:
-                                dataType = SCENE_DATATYPE_PART_UNKNOWN;
+                                if (partType == eZPartType.Z_PART_STRUCTURED_PART)
+                                {
+                                    dataType = SCENE_DATATYPE_PART_STRUCTURED;
+                                }
+                                else
+                                {
+                                    dataType = SCENE_DATATYPE_PART_UNKNOWN;
+                                }
                                 break;
                             default:
                                 break;
@@ -950,6 +996,7 @@ namespace ICApiAddin.icPowerApps
                     }
                     break;
                 case eZElementType.Z_ELEMENT_WIRE:
+                case eZElementType.Z_ELEMENT_WIRE_PART:
                     if (isLinked == true)
                     {
                         dataType = SCENE_DATATYPE_LINKED_WIRE;
@@ -960,6 +1007,7 @@ namespace ICApiAddin.icPowerApps
                     }
                     break;
                 case eZElementType.Z_ELEMENT_PROFILE:
+                case eZElementType.Z_ELEMENT_PROFILE_PART:
                     if (isLinked == true)
                     {
                         dataType = SCENE_DATATYPE_LINKED_PROFILE;
@@ -977,6 +1025,16 @@ namespace ICApiAddin.icPowerApps
                     else
                     {
                         dataType = SCENE_DATATYPE_SHEETMETAL_PART;
+                    }
+                    break;
+                case eZElementType.Z_ELEMENT_FACET_PART:
+                    if (isLinked == true)
+                    {
+                        dataType = SCENE_DATATYPE_LINKED_FACET_PART;
+                    }
+                    else
+                    {
+                        dataType = SCENE_DATATYPE_FACET_PART;
                     }
                     break;
                 default:
@@ -1040,6 +1098,18 @@ namespace ICApiAddin.icPowerApps
                     break;
                 case SCENE_DATATYPE_LINKED_PART_SHEET:
                     index = 13;
+                    break;
+                case SCENE_DATATYPE_FACET_PART:
+                    index = 14;
+                    break;
+                case SCENE_DATATYPE_LINKED_FACET_PART:
+                    index = 15;
+                    break;
+                case SCENE_DATATYPE_PART_STRUCTURED:
+                    index = 16;
+                    break;
+                case SCENE_DATATYPE_LINKED_PART_STRUCTURED:
+                    index = 17;
                     break;
                 default:
                     index = 0;

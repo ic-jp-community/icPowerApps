@@ -127,6 +127,16 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap FacetPart {
+            get {
+                object obj = ResourceManager.GetObject("FacetPart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap icon_All_Ironcad {
             get {
                 object obj = ResourceManager.GetObject("icon_All_Ironcad", resourceCulture);
@@ -557,9 +567,29 @@ namespace ICApiAddin.icPowerApps.Properties {
         /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
+        internal static System.Drawing.Bitmap LinkFacetPart {
+            get {
+                object obj = ResourceManager.GetObject("LinkFacetPart", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
         internal static System.Drawing.Bitmap LinkParts {
             get {
                 object obj = ResourceManager.GetObject("LinkParts", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap LinkStructuredParts {
+            get {
+                object obj = ResourceManager.GetObject("LinkStructuredParts", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -650,6 +680,16 @@ namespace ICApiAddin.icPowerApps.Properties {
         internal static System.Drawing.Bitmap SortSeparately {
             get {
                 object obj = ResourceManager.GetObject("SortSeparately", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
+        /// </summary>
+        internal static System.Drawing.Bitmap StructuredParts {
+            get {
+                object obj = ResourceManager.GetObject("StructuredParts", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

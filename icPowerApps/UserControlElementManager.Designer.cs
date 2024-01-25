@@ -32,7 +32,7 @@
             this.tableLayoutPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxAllSetValue = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonAllSetValue = new System.Windows.Forms.Button();
@@ -42,7 +42,7 @@
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSetSuppress = new System.Windows.Forms.Button();
-            this.comboBoxSetType = new System.Windows.Forms.ComboBox();
+            this.comboBoxFunctionType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.treeGridViewScene = new AdvancedDataGridView.TreeGridView();
@@ -53,16 +53,19 @@
             this.Depth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExternalLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.progressBarWaitProgress = new System.Windows.Forms.ProgressBar();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxSelectedHighLight = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxAllSetValue.SuspendLayout();
             this.tableLayoutPanel7.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeGridViewScene)).BeginInit();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelBase
@@ -88,6 +91,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel8, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel5, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -104,7 +108,7 @@
             this.tableLayoutPanel8.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanel8.ColumnCount = 1;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel8.Controls.Add(this.groupBox1, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.groupBoxAllSetValue, 0, 1);
             this.tableLayoutPanel8.Controls.Add(this.tableLayoutPanel9, 0, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(3, 3);
@@ -115,18 +119,18 @@
             this.tableLayoutPanel8.Size = new System.Drawing.Size(443, 141);
             this.tableLayoutPanel8.TabIndex = 8;
             // 
-            // groupBox1
+            // groupBoxAllSetValue
             // 
-            this.groupBox1.AutoSize = true;
-            this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBox1.Controls.Add(this.tableLayoutPanel7);
-            this.groupBox1.Location = new System.Drawing.Point(10, 50);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(353, 88);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "一括設定";
+            this.groupBoxAllSetValue.AutoSize = true;
+            this.groupBoxAllSetValue.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBoxAllSetValue.Controls.Add(this.tableLayoutPanel7);
+            this.groupBoxAllSetValue.Location = new System.Drawing.Point(10, 50);
+            this.groupBoxAllSetValue.Margin = new System.Windows.Forms.Padding(10, 3, 3, 3);
+            this.groupBoxAllSetValue.Name = "groupBoxAllSetValue";
+            this.groupBoxAllSetValue.Size = new System.Drawing.Size(353, 88);
+            this.groupBoxAllSetValue.TabIndex = 7;
+            this.groupBoxAllSetValue.TabStop = false;
+            this.groupBoxAllSetValue.Text = "一括設定";
             // 
             // tableLayoutPanel7
             // 
@@ -229,7 +233,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel4.Controls.Add(this.buttonSetSuppress, 1, 0);
-            this.tableLayoutPanel4.Controls.Add(this.comboBoxSetType, 0, 0);
+            this.tableLayoutPanel4.Controls.Add(this.comboBoxFunctionType, 0, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(74, 3);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
@@ -249,17 +253,15 @@
             this.buttonSetSuppress.UseVisualStyleBackColor = true;
             this.buttonSetSuppress.Click += new System.EventHandler(this.buttonGetElementInformation_Click);
             // 
-            // comboBoxSetType
+            // comboBoxFunctionType
             // 
-            this.comboBoxSetType.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.comboBoxSetType.FormattingEnabled = true;
-            this.comboBoxSetType.Items.AddRange(new object[] {
-            "Anchor"});
-            this.comboBoxSetType.Location = new System.Drawing.Point(3, 7);
-            this.comboBoxSetType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
-            this.comboBoxSetType.Name = "comboBoxSetType";
-            this.comboBoxSetType.Size = new System.Drawing.Size(215, 23);
-            this.comboBoxSetType.TabIndex = 3;
+            this.comboBoxFunctionType.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.comboBoxFunctionType.FormattingEnabled = true;
+            this.comboBoxFunctionType.Location = new System.Drawing.Point(3, 7);
+            this.comboBoxFunctionType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
+            this.comboBoxFunctionType.Name = "comboBoxFunctionType";
+            this.comboBoxFunctionType.Size = new System.Drawing.Size(215, 23);
+            this.comboBoxFunctionType.TabIndex = 3;
             // 
             // label1
             // 
@@ -321,6 +323,7 @@
             this.treeGridViewScene.TabIndex = 0;
             this.treeGridViewScene.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeGridViewScene_CellValueChanged);
             this.treeGridViewScene.CurrentCellDirtyStateChanged += new System.EventHandler(this.treeGridViewScene_CurrentCellDirtyStateChanged);
+            this.treeGridViewScene.SelectionChanged += new System.EventHandler(this.treeGridViewScene_SelectionChanged);
             // 
             // Scene
             // 
@@ -397,6 +400,33 @@
             this.progressBarWaitProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.progressBarWaitProgress.TabIndex = 1;
             // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.checkBoxSelectedHighLight, 0, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 747);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 2;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(443, 44);
+            this.tableLayoutPanel2.TabIndex = 9;
+            // 
+            // checkBoxSelectedHighLight
+            // 
+            this.checkBoxSelectedHighLight.AutoSize = true;
+            this.checkBoxSelectedHighLight.Checked = true;
+            this.checkBoxSelectedHighLight.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxSelectedHighLight.Location = new System.Drawing.Point(3, 3);
+            this.checkBoxSelectedHighLight.Name = "checkBoxSelectedHighLight";
+            this.checkBoxSelectedHighLight.Size = new System.Drawing.Size(267, 19);
+            this.checkBoxSelectedHighLight.TabIndex = 0;
+            this.checkBoxSelectedHighLight.Text = "選択したデータをシーンブラウザでハイライト表示する";
+            this.checkBoxSelectedHighLight.UseVisualStyleBackColor = true;
+            // 
             // UserControlElementManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -415,8 +445,8 @@
             this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxAllSetValue.ResumeLayout(false);
+            this.groupBoxAllSetValue.PerformLayout();
             this.tableLayoutPanel7.ResumeLayout(false);
             this.tableLayoutPanel7.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
@@ -425,6 +455,8 @@
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.treeGridViewScene)).EndInit();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -437,12 +469,12 @@
         private AdvancedDataGridView.TreeGridView treeGridViewScene;
         private System.Windows.Forms.Button buttonSetSuppress;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.ComboBox comboBoxSetType;
+        private System.Windows.Forms.ComboBox comboBoxFunctionType;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.ProgressBar progressBarWaitProgress;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxAllSetValue;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button buttonAllSetValue;
@@ -456,5 +488,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn DataType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Depth;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExternalLink;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.CheckBox checkBoxSelectedHighLight;
     }
 }

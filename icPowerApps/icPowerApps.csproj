@@ -418,6 +418,18 @@
   <ItemGroup>
     <None Include="Icons\icon_SceneBrowserTreeSort.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\FacetPart.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkFacetPart.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\LinkStructuredParts.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\StructuredParts.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Windows Kits\10\bin\x64\mt.exe" -managedassemblyname:$(TargetFileName) -nodependency -out:$(TargetFileName).manifest
