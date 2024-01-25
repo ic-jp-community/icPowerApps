@@ -198,8 +198,8 @@ namespace ICApiAddin.icPowerApps
                                                               new _IZCommandEvents_OnClickEventHandler(m_buttonExternalLinkManager_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonExternalLinkManager_OnUpdate)));
 
                     addInToolDataList.Add(new AddInToolData(Properties.Resources.Icon_ElementManager_s, Properties.Resources.Icon_ElementManager_l,
-                                                             "icElementManager", "Elementマネージャ", "Elementマネージャ", "Elementマネージャを表示します。",
-                                                             getIconSizeIsLarge("Elementマネージャ"), getToolIsEnable("Elementマネージャ"), m_buttonElementManager,
+                                                             "icElementManager", "Element マネージャ", "Element マネージャ", "Elementマネージャを表示します。",
+                                                             getIconSizeIsLarge("Element マネージャ"), getToolIsEnable("Element マネージャ"), m_buttonElementManager,
                                                                 new _IZCommandEvents_OnClickEventHandler(m_buttonElementManager_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonElementManager_OnUpdate)));
 
                     addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_setting_s, Properties.Resources.icon_setting_l,

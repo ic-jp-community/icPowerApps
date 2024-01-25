@@ -183,7 +183,7 @@ namespace ICApiAddin.icPowerApps
         {
             if (Visible && !Disposing)
             {
-                if(this._ironcadApp == null)
+                if (this._ironcadApp == null)
                 {
                     MessageBox.Show("IRONCADと連携する機能のため、スタンドアロン起動では使用できません。");
                     return;
@@ -207,21 +207,12 @@ namespace ICApiAddin.icPowerApps
                 await getTreeGridView();
                 treeGridViewScene.ShowLines = true;
 
-                /* ノードを全て展開状態にする */
-                TreeGridNodeCollection nodes = treeGridViewScene.Nodes;
-                icapiCommon.ExpandTreeGridViewTreeNodes(ref nodes);
-
                 /* 列の幅をユーザーが指定可能に設定 */
-                treeGridViewScene.Columns["Scene"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-                treeGridViewScene.Columns["SystemName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
                 treeGridViewScene.Columns["Scene"].Width = treeGridViewScene.Columns["Scene"].Width+10;
                 treeGridViewScene.Columns["SystemName"].Width = treeGridViewScene.Columns["SystemName"].Width + 10;
-                treeGridViewScene.Columns["Scene"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-                treeGridViewScene.Columns["SystemName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
 
                 /* ComboBox表示用データを作成 */
                 CreateComboboxDataSet();                
-
 
                 /* 初期化完了したのでProgressBarを解除 */
                 setProgressBar(false);
@@ -231,10 +222,6 @@ namespace ICApiAddin.icPowerApps
                 this._isInitializing = false;
                 this.Cursor = Cursors.Default;
                 ((UserControlTagData)this.Tag).canNotClose = false;
-            }
-            if(Disposing == true)
-            {
-                treeGridViewScene.SelectionChanged -= treeGridViewScene_SelectionChanged;
             }
         }
 
@@ -260,7 +247,15 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
-
+        private void setColumnAutoSizeTreeGridViewScene()
+        {
+            for (int i = 0; i < treeGridViewScene.Columns.Count; i++)
+            {
+                string columnName = treeGridViewScene.Columns[i].Name;
+                treeGridViewScene.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                treeGridViewScene.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            }
+        }
         /// <summary>
         /// シーンツリーを取得する　　　
         /// </summary>
@@ -487,11 +482,11 @@ namespace ICApiAddin.icPowerApps
                 case "[表示のみ] 計算重量/指定重量":
                     textBoxColumn1.HeaderText = "計算重量";
                     textBoxColumn1.Name = "_CalculatedMass";
-                    textBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    textBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                     textBoxColumn1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     textBoxColumn2.HeaderText = "指定重量";
                     textBoxColumn2.Name = "_SpecifiedMass";
-                    textBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    textBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
                     textBoxColumn2.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
                     returnColumn.Add(textBoxColumn1);
                     returnColumn.Add(textBoxColumn2);
@@ -501,6 +496,7 @@ namespace ICApiAddin.icPowerApps
             }
             if(comboBoxColumn != null)
             {
+                comboBoxColumn.MinimumWidth = 200;
                 comboBoxColumn.ValueMember = "value";
                 comboBoxColumn.DisplayMember = "displayName";
                 comboBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
@@ -516,6 +512,9 @@ namespace ICApiAddin.icPowerApps
         /// <param name="functionName"></param>
         private void setCurrentElementValue(string functionName)
         {
+            int massUnit = (int)this._docProp.MassUnit;
+            string massUnitStr = convertMassUnitToString(massUnit);
+            double massUnitScale = GetMassUnitScale(massUnit);
             for (int i = 0; i < treeGridViewScene.Rows.Count; i++)
             {
                 if (treeGridViewScene["Scene", i].Tag == null)
@@ -531,6 +530,7 @@ namespace ICApiAddin.icPowerApps
                 IZAssembly asm = null;
                 IZAssemblyProperty asmProp = null;
                 IZPartProperty partProp = null;
+
                 switch (functionName)
                 {
                     case "Anchor":
@@ -567,17 +567,15 @@ namespace ICApiAddin.icPowerApps
                         setColumnName2 = "_SpecifiedMass";
                         part = sceneElement as IZPart;
                         asm = sceneElement as IZAssembly;
-                        int massUnit = (int)this._docProp.MassUnit;
-                        string massUnitStr = convertMassUnitToString(massUnit);
                         if (asm != null)
                         {
                             asmProp = sceneElement as IZAssemblyProperty;
-                            treeGridViewScene[setColumnName1, i].Value = string.Format("{0} {1}", Math.Round(asmProp.CalculatedMass,3), massUnitStr);
+                            treeGridViewScene[setColumnName1, i].Value = string.Format("{0} {1}", FastMath.Round(asmProp.CalculatedMass,3), massUnitStr);
                             treeGridViewScene[setColumnName2, i].Value = string.Format("{0} {1}", asmProp.SpecifiedMass, massUnitStr);
                             treeGridViewScene[setColumnName1, i].ReadOnly = true;
                             treeGridViewScene[setColumnName2, i].ReadOnly = true;
                         }
-                        if(part != null)
+                        if (part != null)
                         {
                             if ((element.Type != eZElementType.Z_ELEMENT_PROFILE) &&
                                 (element.Type != eZElementType.Z_ELEMENT_PROFILE_PART) &&
@@ -591,9 +589,9 @@ namespace ICApiAddin.icPowerApps
                                 {
                                     partProp.MassDensity = 7800;
                                 }
-                                double calculatedMass = partProp.CalculatedMass / GetMassUnitScale(massUnit);
+                                double calculatedMass = partProp.CalculatedMass / massUnitScale;
                                 double specifiedMass = partProp.SpecifiedMass;
-                                treeGridViewScene[setColumnName1, i].Value = string.Format("{0} {1}", Math.Round(calculatedMass,3), massUnitStr);
+                                treeGridViewScene[setColumnName1, i].Value = string.Format("{0} {1}", FastMath.Round(calculatedMass,3), massUnitStr);
                                 treeGridViewScene[setColumnName2, i].Value = string.Format("{0} {1}", specifiedMass, massUnitStr);
                                 treeGridViewScene[setColumnName1, i].ReadOnly = true;
                                 treeGridViewScene[setColumnName2, i].ReadOnly = true;
@@ -618,10 +616,34 @@ namespace ICApiAddin.icPowerApps
                     treeGridViewScene[setColumnName2, i].ReadOnly = true;
                 }
             }
-
         }
 
 
+        /// <summary>
+        /// Formのサイズを自動調整する(Max800)
+        /// </summary>
+        private void FormAutoSize()
+        {
+            int allWidth = 0;
+            foreach (DataGridViewColumn column in treeGridViewScene.Columns)
+            {
+                if (column.Visible == true)
+                {
+                    allWidth += column.Width;
+                }
+            }
+            allWidth = allWidth + 70;
+            Form frm = this.Parent as Form;
+            if (frm.Width < allWidth)
+            {
+                if (allWidth > 800)
+                {
+                    allWidth = 800;
+                }
+                frm.Width = allWidth;
+                frm.Refresh();
+            }
+        }
 
         #region イベント
 
@@ -649,9 +671,10 @@ namespace ICApiAddin.icPowerApps
                     treeGridViewScene.Columns.Add(column);
                 }
             }
-
             setCurrentElementValue(functionName);
+            setColumnAutoSizeTreeGridViewScene();
             setComboboxAllSetValue(functionName);
+            FormAutoSize();
             this._isInitializing = false;
         }
 
@@ -767,6 +790,7 @@ namespace ICApiAddin.icPowerApps
             }
 
             List<int> selectedRowIndexList = getSelectedRowsList();
+
             /* イベントを一時的に無効化する */
             this.treeGridViewScene.CellValueChanged -= treeGridViewScene_CellValueChanged;
 

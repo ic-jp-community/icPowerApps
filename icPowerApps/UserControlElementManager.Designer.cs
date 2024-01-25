@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
@@ -46,15 +46,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.treeGridViewScene = new AdvancedDataGridView.TreeGridView();
+            this.progressBarWaitProgress = new System.Windows.Forms.ProgressBar();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxSelectedHighLight = new System.Windows.Forms.CheckBox();
             this.Scene = new AdvancedDataGridView.TreeGridColumn();
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Depth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExternalLink = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.progressBarWaitProgress = new System.Windows.Forms.ProgressBar();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBoxSelectedHighLight = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
@@ -302,15 +302,15 @@
             this.DataType,
             this.Depth,
             this.ExternalLink});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.treeGridViewScene.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.treeGridViewScene.DefaultCellStyle = dataGridViewCellStyle2;
             this.treeGridViewScene.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeGridViewScene.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.treeGridViewScene.ImageList = null;
@@ -324,70 +324,6 @@
             this.treeGridViewScene.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeGridViewScene_CellValueChanged);
             this.treeGridViewScene.CurrentCellDirtyStateChanged += new System.EventHandler(this.treeGridViewScene_CurrentCellDirtyStateChanged);
             this.treeGridViewScene.SelectionChanged += new System.EventHandler(this.treeGridViewScene_SelectionChanged);
-            // 
-            // Scene
-            // 
-            this.Scene.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.Scene.DefaultNodeImage = null;
-            this.Scene.HeaderText = "シーン";
-            this.Scene.MinimumWidth = 10;
-            this.Scene.Name = "Scene";
-            this.Scene.ReadOnly = true;
-            this.Scene.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Scene.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Scene.Width = 250;
-            // 
-            // SystemName
-            // 
-            this.SystemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.SystemName.FillWeight = 80F;
-            this.SystemName.HeaderText = "システム名";
-            this.SystemName.Name = "SystemName";
-            this.SystemName.ReadOnly = true;
-            this.SystemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.SystemName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SystemName.Width = 73;
-            // 
-            // id
-            // 
-            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.id.FillWeight = 50F;
-            this.id.HeaderText = "ID";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.id.Visible = false;
-            // 
-            // DataType
-            // 
-            this.DataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.DataType.FillWeight = 80F;
-            this.DataType.HeaderText = "データ種別";
-            this.DataType.Name = "DataType";
-            this.DataType.ReadOnly = true;
-            this.DataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.DataType.Visible = false;
-            // 
-            // Depth
-            // 
-            this.Depth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Depth.FillWeight = 30F;
-            this.Depth.HeaderText = "深さ";
-            this.Depth.Name = "Depth";
-            this.Depth.ReadOnly = true;
-            this.Depth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Depth.Visible = false;
-            // 
-            // ExternalLink
-            // 
-            this.ExternalLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.ExternalLink.FillWeight = 80F;
-            this.ExternalLink.HeaderText = "外部リンク";
-            this.ExternalLink.Name = "ExternalLink";
-            this.ExternalLink.ReadOnly = true;
-            this.ExternalLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ExternalLink.Visible = false;
-            this.ExternalLink.Width = 60;
             // 
             // progressBarWaitProgress
             // 
@@ -426,6 +362,70 @@
             this.checkBoxSelectedHighLight.TabIndex = 0;
             this.checkBoxSelectedHighLight.Text = "選択したデータをシーンブラウザでハイライト表示する";
             this.checkBoxSelectedHighLight.UseVisualStyleBackColor = true;
+            // 
+            // Scene
+            // 
+            this.Scene.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Scene.DefaultNodeImage = null;
+            this.Scene.HeaderText = "シーン";
+            this.Scene.MinimumWidth = 10;
+            this.Scene.Name = "Scene";
+            this.Scene.ReadOnly = true;
+            this.Scene.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Scene.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Scene.Width = 250;
+            // 
+            // SystemName
+            // 
+            this.SystemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.SystemName.FillWeight = 80F;
+            this.SystemName.HeaderText = "システム名";
+            this.SystemName.Name = "SystemName";
+            this.SystemName.ReadOnly = true;
+            this.SystemName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SystemName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SystemName.Width = 73;
+            // 
+            // id
+            // 
+            this.id.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.id.FillWeight = 50F;
+            this.id.HeaderText = "ID";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.id.Visible = false;
+            // 
+            // DataType
+            // 
+            this.DataType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.DataType.FillWeight = 80F;
+            this.DataType.HeaderText = "データ種別";
+            this.DataType.Name = "DataType";
+            this.DataType.ReadOnly = true;
+            this.DataType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.DataType.Visible = false;
+            // 
+            // Depth
+            // 
+            this.Depth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.Depth.FillWeight = 30F;
+            this.Depth.HeaderText = "深さ";
+            this.Depth.Name = "Depth";
+            this.Depth.ReadOnly = true;
+            this.Depth.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Depth.Visible = false;
+            // 
+            // ExternalLink
+            // 
+            this.ExternalLink.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.ExternalLink.FillWeight = 80F;
+            this.ExternalLink.HeaderText = "外部リンク";
+            this.ExternalLink.Name = "ExternalLink";
+            this.ExternalLink.ReadOnly = true;
+            this.ExternalLink.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ExternalLink.Visible = false;
+            this.ExternalLink.Width = 60;
             // 
             // UserControlElementManager
             // 
@@ -482,13 +482,13 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
         private System.Windows.Forms.CheckBox checkBoxAllSetAllItem;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.CheckBox checkBoxSelectedHighLight;
         private AdvancedDataGridView.TreeGridColumn Scene;
         private System.Windows.Forms.DataGridViewTextBoxColumn SystemName;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn DataType;
         private System.Windows.Forms.DataGridViewTextBoxColumn Depth;
         private System.Windows.Forms.DataGridViewTextBoxColumn ExternalLink;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.CheckBox checkBoxSelectedHighLight;
     }
 }

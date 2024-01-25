@@ -116,6 +116,37 @@ namespace ICApiAddin.icPowerApps
     }
 
     /// <summary>
+    /// Round関数が遅いので高速化版で処理
+    /// </summary>
+    public static class FastMath
+    {
+        private static readonly double[] RoundLookup = CreateRoundLookup();
+
+        private static double[] CreateRoundLookup()
+        {
+            double[] result = new double[15];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = Math.Pow(10, i);
+            }
+
+            return result;
+        }
+
+        public static double Round(double value)
+        {
+            return Math.Floor(value + 0.5);
+        }
+
+        public static double Round(double value, int decimalPlaces)
+        {
+            double adjustment = RoundLookup[decimalPlaces];
+            return Math.Floor(value * adjustment + 0.5) / adjustment;
+        }
+    }
+
+
+    /// <summary>
     /// 共通処理
     /// </summary>
     public static class icapiCommon
@@ -724,6 +755,7 @@ namespace ICApiAddin.icPowerApps
                         dispName = childElem.Name;
 
                         TreeGridNode childNode = null;
+                        currNode.Expand();
                         switch (mode)
                         {
                             case CREATE_TREE_MODE.CHECK_IN:
