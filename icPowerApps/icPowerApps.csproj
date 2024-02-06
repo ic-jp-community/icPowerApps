@@ -182,6 +182,7 @@
     <Compile Include="UserControlSuppressManager_ChangeHeaderNameForm.Designer.cs">
       <DependentUpon>UserControlSuppressManager_ChangeHeaderNameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Win32HWNDWrapper.cs" />
     <Compile Include="_UserControlSceneTreeBase.cs">
       <SubType>UserControl</SubType>
     </Compile>

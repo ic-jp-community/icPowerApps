@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tableLayoutPanelBase = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
@@ -220,7 +220,7 @@
             this.comboBoxAllSetValue.FormattingEnabled = true;
             this.comboBoxAllSetValue.Items.AddRange(new object[] {
             "Anchor"});
-            this.comboBoxAllSetValue.Location = new System.Drawing.Point(52, 6);
+            this.comboBoxAllSetValue.Location = new System.Drawing.Point(52, 7);
             this.comboBoxAllSetValue.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxAllSetValue.Name = "comboBoxAllSetValue";
             this.comboBoxAllSetValue.Size = new System.Drawing.Size(227, 23);
@@ -326,7 +326,7 @@
             this.comboBoxAllSetMaterialClassification.FormattingEnabled = true;
             this.comboBoxAllSetMaterialClassification.Items.AddRange(new object[] {
             "Anchor"});
-            this.comboBoxAllSetMaterialClassification.Location = new System.Drawing.Point(64, 21);
+            this.comboBoxAllSetMaterialClassification.Location = new System.Drawing.Point(64, 22);
             this.comboBoxAllSetMaterialClassification.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxAllSetMaterialClassification.Name = "comboBoxAllSetMaterialClassification";
             this.comboBoxAllSetMaterialClassification.Size = new System.Drawing.Size(147, 23);
@@ -350,7 +350,7 @@
             this.comboBoxAllSetMaterialValue.FormattingEnabled = true;
             this.comboBoxAllSetMaterialValue.Items.AddRange(new object[] {
             "Anchor"});
-            this.comboBoxAllSetMaterialValue.Location = new System.Drawing.Point(254, 22);
+            this.comboBoxAllSetMaterialValue.Location = new System.Drawing.Point(254, 21);
             this.comboBoxAllSetMaterialValue.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxAllSetMaterialValue.Name = "comboBoxAllSetMaterialValue";
             this.comboBoxAllSetMaterialValue.Size = new System.Drawing.Size(124, 23);
@@ -446,7 +446,7 @@
             // 
             this.comboBoxFunctionType.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.comboBoxFunctionType.FormattingEnabled = true;
-            this.comboBoxFunctionType.Location = new System.Drawing.Point(3, 6);
+            this.comboBoxFunctionType.Location = new System.Drawing.Point(3, 7);
             this.comboBoxFunctionType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxFunctionType.Name = "comboBoxFunctionType";
             this.comboBoxFunctionType.Size = new System.Drawing.Size(215, 23);
@@ -546,15 +546,15 @@
             this.DataType,
             this.Depth,
             this.ExternalLink});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.treeGridViewScene.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.treeGridViewScene.DefaultCellStyle = dataGridViewCellStyle1;
             this.treeGridViewScene.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeGridViewScene.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.treeGridViewScene.ImageList = null;
@@ -568,7 +568,6 @@
             this.treeGridViewScene.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeGridViewScene_CellEndEdit);
             this.treeGridViewScene.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.treeGridViewScene_CellValueChanged);
             this.treeGridViewScene.CurrentCellDirtyStateChanged += new System.EventHandler(this.treeGridViewScene_CurrentCellDirtyStateChanged);
-            this.treeGridViewScene.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.treeGridViewScene_EditingControlShowing);
             this.treeGridViewScene.SelectionChanged += new System.EventHandler(this.treeGridViewScene_SelectionChanged);
             // 
             // Scene

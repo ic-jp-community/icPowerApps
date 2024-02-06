@@ -502,6 +502,8 @@ namespace ICApiAddin.icPowerApps
             IZAddinSite addinSite = m_izAddinSite;
             IZEnvironmentMgr envMgr = GetEnvironmentMgr();
             IZEnvironment env = envMgr.ActiveEnvironment;
+            System.IntPtr iHwnd = (IntPtr)this.IronCADApp.Frame.HWND;
+            Win32HWNDWrapper cWin32HWNDWrapper = new Win32HWNDWrapper(iHwnd);
             /* ElementManagerを作成 */
             ucElementManager = new UserControlElementManager(IronCADApp);
             Form frm = new Form();
@@ -512,7 +514,7 @@ namespace ICApiAddin.icPowerApps
             frm.Text = UserControlElementManager.title;
             frm.TopMost = true;
             frm.StartPosition = FormStartPosition.CenterScreen;
-            frm.Show();
+            frm.Show(cWin32HWNDWrapper);
         }
 
         private void m_buttonSetting_OnClick()
