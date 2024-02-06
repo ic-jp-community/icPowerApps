@@ -1003,11 +1003,18 @@ namespace ICApiAddin.icPowerApps
                         {
                             IZAssemblyProperty asmprop = sceneElement as IZAssemblyProperty ;
                             double ach, vol;
-                            vol = asmprop.GetVolume(0.0000001, out ach);
-                            double mass = asmprop.CalculatedMass;
                             asmprop.GetMaterialName(out materialName, out thisOnly);
                             treeGridViewScene[setColumnName1, i].Value = materialName;
-                            treeGridViewScene[setColumnName2, i].Value = FastMath.Round(mass/vol, 3);
+                            if (checkBoxAssemblyDensitySkip.Checked != true)
+                            {
+                                vol = asmprop.GetVolume(0.0001, out ach);
+                                double mass = asmprop.CalculatedMass;
+                                treeGridViewScene[setColumnName2, i].Value = FastMath.Round(mass / vol, 3);
+                            }
+                            else
+                            {
+                                treeGridViewScene[setColumnName2, i].Value = "skip";
+                            }
                             treeGridViewScene[setColumnName1, i].ReadOnly = false;
                             treeGridViewScene[setColumnName2, i].ReadOnly = true;
                         }
@@ -1766,6 +1773,25 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
-
+        private void comboBoxFunctionType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if ((this._isInitializing == true) || (this._isModify == true))
+            {
+                return;
+            }
+            if (comboBoxFunctionType.SelectedIndex < 0)
+            {
+                return;
+            }
+            string functionType = comboBoxFunctionType.Items[comboBoxFunctionType.SelectedIndex].ToString();
+            if(functionType == "材料")
+            {
+                checkBoxAssemblyDensitySkip.Visible = true;
+            }
+            else
+            {
+                checkBoxAssemblyDensitySkip.Visible = false;
+            }
+        }
     }
 }
