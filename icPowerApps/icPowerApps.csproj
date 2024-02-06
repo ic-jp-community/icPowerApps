@@ -265,6 +265,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="ElementManagerMaterial.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="ic-jp-community.snk" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -505,7 +505,7 @@ namespace ICApiAddin.icPowerApps
             /* ElementManagerを作成 */
             ucElementManager = new UserControlElementManager(IronCADApp);
             Form frm = new Form();
-            frm.Width = ucElementManager.Width+20;
+            frm.Width = ucElementManager.Width + 20;
             frm.Height = ucElementManager.Height;
             frm.Controls.Add(ucElementManager);
             frm.Icon = Properties.Resources.Icon_ElementManager;

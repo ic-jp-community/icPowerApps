@@ -36,6 +36,14 @@ namespace ICApiAddin.icPowerApps
         List<COMBOBOX_ON_OFF> _comboboxAssemblyUnderShowAllSetOnOffList = new List<COMBOBOX_ON_OFF>();
         List<COMBOBOX_ON_OFF> _comboboxPartUnderShowOnOffList = new List<COMBOBOX_ON_OFF>();
         List<COMBOBOX_ON_OFF> _comboboxPartUnderShowAllSetOnOffList = new List<COMBOBOX_ON_OFF>();
+        List<COMBOBOX_ON_OFF> _comboboxIncludeInBomOnOffList = new List<COMBOBOX_ON_OFF>();
+        List<COMBOBOX_ON_OFF> _comboboxIncludeInBomAllSetOnOffList = new List<COMBOBOX_ON_OFF>();
+        List<COMBOBOX_ON_OFF> _comboboxExpansionStateInBomOnOffList = new List<COMBOBOX_ON_OFF>();
+        List<COMBOBOX_ON_OFF> _comboboxExpansionStateInBomAllSetOnOffList = new List<COMBOBOX_ON_OFF>();
+        List<string> _comboboxMaterialClassificationAllSetList = new List<string>();
+        List<COMBOBOX_MATERIAL> _comboboxMaterialListAllSetList = new List<COMBOBOX_MATERIAL>();
+        List<COMBOBOX_MATERIAL> _comboboxMaterialListAllSetFilterdList = new List<COMBOBOX_MATERIAL>();
+
         /// <summary>
         /// 各パーツアセンブリのAnchor設定情報
         /// </summary>
@@ -54,6 +62,32 @@ namespace ICApiAddin.icPowerApps
                 this.value = anchor;
             }
         }
+
+        /// <summary>
+        /// 材料設定情報
+        /// </summary>
+        public class COMBOBOX_MATERIAL
+        {
+            public string classification { get; set; }
+            public string displayName { get; set; }
+            public string value { get; set; }
+            public double density { get; set; }
+            public COMBOBOX_MATERIAL()
+            {
+                this.classification = string.Empty;
+                this.displayName = string.Empty;
+                this.value = string.Empty;
+                this.density = 0.0;
+            }
+            public COMBOBOX_MATERIAL(string classification, string displayName, double density)
+            {
+                this.classification = classification;
+                this.displayName = displayName;
+                this.value = displayName;
+                this.density = density;
+            }
+        }
+
         /// <summary>
         /// ONOFF設定情報
         /// </summary>
@@ -72,6 +106,8 @@ namespace ICApiAddin.icPowerApps
                 this.value = boolValue;
             }
         }
+
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -138,16 +174,45 @@ namespace ICApiAddin.icPowerApps
             return convStr;
         }
 
+
         /// <summary>
         /// ComboBoxに表示するデータを作成する
         /// </summary>
         private void CreateComboboxDataSet()
         {
             /* 各項目機能  */
+            comboBoxFunctionType.Items.Add("ユーザ名-パーツ番号-説明");
+            comboBoxFunctionType.Items.Add("材料");
             comboBoxFunctionType.Items.Add("Anchor");
             comboBoxFunctionType.Items.Add("アセンブリ配下の選択を防止する");
             comboBoxFunctionType.Items.Add("パーツ配下の要素を表示しない");
             comboBoxFunctionType.Items.Add("[表示のみ] 計算重量/指定重量");
+            comboBoxFunctionType.Items.Add("このシェイプをBOMに含める");
+            comboBoxFunctionType.Items.Add("BOMでのアセンブリ展開");
+
+            /* ユーザ名-パーツ番号-説明 */
+            /* 特にマスターとなるデータは無し */
+
+            /* 材料 */
+            _comboboxMaterialClassificationAllSetList.Add("すべて");
+            string filePath = Path.Combine(icapiCommon.GetIcApiDllPath(), "ElementManagerMaterial.csv");
+            string[] materialList = File.ReadAllLines(filePath);
+            foreach(string material in materialList)
+            {
+                string[] splitData = material.Split(',');
+                double density = 0.0;
+                if(splitData.Count() >= 3)
+                {
+                    double.TryParse(splitData[2], out density);
+                }
+                _comboboxMaterialListAllSetList.Add(new COMBOBOX_MATERIAL(splitData[0], splitData[1], density));
+
+                if(_comboboxMaterialClassificationAllSetList.Contains(splitData[0]) != true)
+                {
+                    _comboboxMaterialClassificationAllSetList.Add(splitData[0]);
+                }
+            }
+            _comboboxMaterialListAllSetFilterdList = new List<COMBOBOX_MATERIAL>(_comboboxMaterialListAllSetList);
 
             /* Anchor */
             _comboboxAnchorList.Add(new COMBOBOX_ELEMENT_ANCHOR("表面に沿って移動", eZAnchorBehavior.Z_ANCHOR_BEHAVIOR_SLIDE_ALONG_SURFACE));
@@ -165,6 +230,16 @@ namespace ICApiAddin.icPowerApps
             _comboboxPartUnderShowOnOffList.Add(new COMBOBOX_ON_OFF("配下の要素を表示しない", true));
             _comboboxPartUnderShowOnOffList.Add(new COMBOBOX_ON_OFF("配下の要素を表示する", false));
             _comboboxPartUnderShowAllSetOnOffList = new List<COMBOBOX_ON_OFF>(_comboboxPartUnderShowOnOffList);
+
+            /* このシェイプをBOMに含める */
+            _comboboxIncludeInBomOnOffList.Add(new COMBOBOX_ON_OFF("BOMに含める", true));
+            _comboboxIncludeInBomOnOffList.Add(new COMBOBOX_ON_OFF("BOMに含めない", false));
+            _comboboxIncludeInBomAllSetOnOffList = new List<COMBOBOX_ON_OFF>(_comboboxIncludeInBomOnOffList);
+
+            /* BOMでのアセンブリ展開 */
+            _comboboxExpansionStateInBomOnOffList.Add(new COMBOBOX_ON_OFF("展開(パーツも表示)", true));
+            _comboboxExpansionStateInBomOnOffList.Add(new COMBOBOX_ON_OFF("展開しない(アセンブリのみ)", false));
+            _comboboxExpansionStateInBomAllSetOnOffList = new List<COMBOBOX_ON_OFF>(_comboboxExpansionStateInBomOnOffList);
 
             /* 初期値を設定 */
             comboBoxFunctionType.SelectedIndex = 0;
@@ -225,6 +300,7 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
+
         /// <summary>
         /// 初期化中のProgressBarを設定する
         /// </summary>
@@ -247,6 +323,10 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
+
+        /// <summary>
+        /// 列サイズを自動調整する
+        /// </summary>
         private void setColumnAutoSizeTreeGridViewScene()
         {
             for (int i = 0; i < treeGridViewScene.Columns.Count; i++)
@@ -256,6 +336,8 @@ namespace ICApiAddin.icPowerApps
                 treeGridViewScene.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
             }
         }
+
+
         /// <summary>
         /// シーンツリーを取得する　　　
         /// </summary>
@@ -289,6 +371,202 @@ namespace ICApiAddin.icPowerApps
             this._sceneDoc.UpdateGraphics(0);
         }
 
+
+        /// <summary>
+        /// Elementにユーザ名を設定する
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="anchorBehaviorValue"></param>
+        /// <returns></returns>
+        private bool setElementUserName(int rowIndex, string userName)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            if (element == null)
+            {
+                return false;
+            }
+            this._isModify = true;
+            element.Name = userName;
+            element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
+            this._isModify = false;
+            return true;
+        }
+
+
+        /// <summary>
+        /// Elementにパーツ番号を設定する
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="anchorBehaviorValue"></param>
+        /// <returns></returns>
+        private bool setElementPartNumber(int rowIndex, string partNumber)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            if (sceneElement == null)
+            {
+                return false;
+            }
+            IZPart part = sceneElement as IZPart;
+            IZAssembly asm = sceneElement as IZAssembly;
+            if ((asm == null) && (part == null))
+            {
+                return false;
+            }
+            this._isModify = true;
+            if (asm != null)
+            {
+                asm.BOMPartNumber = partNumber;
+            }
+            if (part != null)
+            {
+                part.BOMPartNumber = partNumber;
+            }
+            element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
+            this._isModify = false;
+            return true;
+        }
+
+
+        /// <summary>
+        /// Elementにパーツの説明を設定する
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="anchorBehaviorValue"></param>
+        /// <returns></returns>
+        private bool setElementDescription(int rowIndex, string description)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            if (sceneElement == null)
+            {
+                return false;
+            }
+            IZPart part = sceneElement as IZPart;
+            IZAssembly asm = sceneElement as IZAssembly;
+            if ((asm == null) && (part == null))
+            {
+                return false;
+            }
+            this._isModify = true;
+            if (asm != null)
+            {
+                asm.BOMDescription = description;
+            }
+            if (part != null)
+            {
+                part.BOMDescription = description;
+            }
+            element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
+            this._isModify = false;
+            return true;
+        }
+
+
+        /// <summary>
+        /// Elementに材料を設定する
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="anchorBehaviorValue"></param>
+        /// <returns></returns>
+        private bool setElementMaterial(int rowIndex, string material)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            if (sceneElement == null)
+            {
+                return false;
+            }
+            IZPart part = sceneElement as IZPart;
+            IZAssembly asm = sceneElement as IZAssembly;
+            IZAssemblyProperty asmProp = null;
+            IZPartProperty partProp = null;
+            bool thisOnly = false;
+            string currMaterial = string.Empty;
+            if ((asm == null) && (part == null))
+            {
+                return false;
+            }
+            this._isModify = true;
+            if (asm != null)
+            {
+                asmProp = sceneElement as IZAssemblyProperty;
+                asmProp.GetMaterialName(out currMaterial, out thisOnly);
+                asmProp.SetMaterialName(material, thisOnly);
+            }
+            if (part != null)
+            {
+                partProp = sceneElement as IZPartProperty;
+                partProp.GetMaterialName(out currMaterial, out thisOnly);
+                partProp.SetMaterialName(material, thisOnly);
+            }
+            treeGridViewScene["_MaterialName", rowIndex].Value = material;
+            element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
+            this._isModify = false;
+            return true;
+        }
+
+
+        /// <summary>
+        /// Elementに材料密度を設定する
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="anchorBehaviorValue"></param>
+        /// <returns></returns>
+        private bool setElementMassDensity(int rowIndex, double density)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            if (sceneElement == null)
+            {
+                return false;
+            }
+            IZPart part = sceneElement as IZPart;
+            IZAssembly asm = sceneElement as IZAssembly;
+            IZPartProperty partProp = null;
+            string currMaterial = string.Empty;
+            if ((asm == null) && (part == null))
+            {
+                return false;
+            }
+            this._isModify = true;
+            if (asm != null)
+            {
+                /* 処理なし */
+            }
+            if (part != null)
+            {
+                partProp = sceneElement as IZPartProperty;
+                partProp.MassDensity = density;
+                treeGridViewScene["_MassDensity", rowIndex].Value = density;
+            }
+
+            element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
+            this._isModify = false;
+            return true;
+        }
+
+
         /// <summary>
         /// Anchorを設定する
         /// </summary>
@@ -302,12 +580,17 @@ namespace ICApiAddin.icPowerApps
                 return false;
             }
             this._isModify = true;
-            IZSceneElement element = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
-            element.AnchorBehavior = anchorBehaviorValue;
-            treeGridViewScene["_Anchor", rowIndex].Value = element.AnchorBehavior;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            if (sceneElement == null)
+            {
+                return false;
+            }
+            sceneElement.AnchorBehavior = anchorBehaviorValue;
+            treeGridViewScene["_Anchor", rowIndex].Value = sceneElement.AnchorBehavior;
             this._isModify = false;
             return true;
         }
+
 
         /// <summary>
         /// アセンブリ配下の選択を防止する を設定する
@@ -321,7 +604,6 @@ namespace ICApiAddin.icPowerApps
             {
                 return false;
             }
-            this._isModify = true;
             IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
             IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
             IZAssembly asm = sceneElement as IZAssembly;
@@ -329,6 +611,7 @@ namespace ICApiAddin.icPowerApps
             {
                 return false;
             }
+            this._isModify = true;
             asm.PreventSelectionBelowAssembly = setBoolValue;
             treeGridViewScene["_AssemblyUnderShow", rowIndex].Value = asm.PreventSelectionBelowAssembly;
             element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
@@ -349,7 +632,6 @@ namespace ICApiAddin.icPowerApps
             {
                 return false;
             }
-            this._isModify = true;
             IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
             IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
             IZPart part = sceneElement as IZPart;
@@ -357,12 +639,79 @@ namespace ICApiAddin.icPowerApps
             {
                 return false;
             }
+            this._isModify = true;
             part.PreventSelectionBelowPart = setBoolValue;
             treeGridViewScene["_PartUnderShow", rowIndex].Value = part.PreventSelectionBelowPart;
             element.SetDirtyFlag(eZDirtyFlag.Z_DIRTY_GRAPHICS);
             this._isModify = false;
             return true;
         }
+
+
+        /// <summary>
+        /// シェイプをBOMに含めるの設定
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="setBoolValue"></param>
+        /// <returns></returns>
+        private bool setIncludeInBom(int rowIndex, bool setBoolValue)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            IZPart part = sceneElement as IZPart;
+            IZAssembly asm = sceneElement as IZAssembly;
+            if ((asm == null) && (part == null))
+            {
+                return false;
+            }
+            this._isModify = true;
+            if (asm != null)
+            {
+                asm.IncludedInBOM = setBoolValue;
+                treeGridViewScene["_IncludeInBom", rowIndex].Value = asm.IncludedInBOM;
+            }
+            if (part != null)
+            {
+                part.IncludedInBOM = setBoolValue;
+                treeGridViewScene["_IncludeInBom", rowIndex].Value = part.IncludedInBOM;
+            }
+            this._isModify = false;
+            return true;
+        }
+
+
+        /// <summary>
+        /// BOMの展開設定
+        /// </summary>
+        /// <param name="rowIndex"></param>
+        /// <param name="setBoolValue"></param>
+        /// <returns></returns>
+        private bool setExpansionStateInBOM(int rowIndex, bool setBoolValue)
+        {
+            if (treeGridViewScene["Scene", rowIndex].Tag == null)
+            {
+                return false;
+            }
+            IZElement element = treeGridViewScene["Scene", rowIndex].Tag as IZElement;
+            IZSceneElement sceneElement = treeGridViewScene["Scene", rowIndex].Tag as IZSceneElement;
+            IZAssembly asm = sceneElement as IZAssembly;
+            if (asm == null)
+            {
+                return false;
+            }
+            bool AllLinkedInstance = false;
+            asm.GetExpansionStateInBOM(out AllLinkedInstance);
+            asm.SetExpansionStateInBOM(AllLinkedInstance,setBoolValue);
+            this._isModify = true;
+            treeGridViewScene["_ExpansionStateInBom", rowIndex].Value = asm.GetExpansionStateInBOM(out AllLinkedInstance);
+            this._isModify = false;
+            return true;
+        }
+
 
         /// <summary>
         /// 選択している行番号を取得する
@@ -390,6 +739,7 @@ namespace ICApiAddin.icPowerApps
             return selectedRowsList;
         }
 
+
         /// <summary>
         /// 各機能で表示したデータ(列)を削除する
         /// </summary>
@@ -410,15 +760,36 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
+
         /// <summary>
         /// 一括設定のComboBoxにマスタデータを設定する
         /// </summary>
         /// <param name="functionName"></param>
         private void setComboboxAllSetValue(string functionName)
         {
-
+            bool enableCommon = true;
+            bool enableMaterial = false;
+            bool enableAllSet = true;
+            comboBoxAllSetValue.DataSource = null;
+            comboBoxAllSetMaterialValue.DataSource = null;
+            comboBoxAllSetMaterialClassification.DataSource = null;
             switch (functionName)
             {
+                case "ユーザ名-パーツ番号-説明":
+                    comboBoxAllSetValue.DataSource = null;
+                    enableAllSet = false;
+                    break;
+                case "材料":
+                    comboBoxAllSetMaterialClassification.DataSource = _comboboxMaterialClassificationAllSetList;
+                    comboBoxAllSetMaterialValue.DataSource = _comboboxMaterialListAllSetFilterdList;
+                    if(comboBoxAllSetMaterialValue.SelectedIndex != -1)
+                    {
+                        COMBOBOX_MATERIAL materialData = comboBoxAllSetMaterialValue.Items[comboBoxAllSetMaterialValue.SelectedIndex] as COMBOBOX_MATERIAL;
+                        textBoxMassDensity.Text = materialData.density.ToString();
+                    }
+                    enableMaterial = true;
+                    enableCommon = false;
+                    break;
                 case "Anchor":
                     comboBoxAllSetValue.DataSource = _comboboxAllSetAnchorList;
                     break;
@@ -430,22 +801,34 @@ namespace ICApiAddin.icPowerApps
                     break;
                 case "[表示のみ] 計算重量/指定重量":
                     comboBoxAllSetValue.DataSource = null;
+                    enableAllSet = false;
+                    break;
+                case "このシェイプをBOMに含める":
+                    comboBoxAllSetValue.DataSource = _comboboxIncludeInBomAllSetOnOffList;
+                    break;
+                case "BOMでのアセンブリ展開":
+                    comboBoxAllSetValue.DataSource = _comboboxExpansionStateInBomAllSetOnOffList;
                     break;
                 default:
                     return;
             }
             if (comboBoxAllSetValue.DataSource != null)
             {
-                groupBoxAllSetValue.Enabled = true;
                 comboBoxAllSetValue.ValueMember = "value";
                 comboBoxAllSetValue.DisplayMember = "displayName";
             }
-            else
+            if (comboBoxAllSetMaterialValue.DataSource != null)
             {
-                groupBoxAllSetValue.Enabled = false;
+                comboBoxAllSetMaterialValue.Enabled = true;
+                comboBoxAllSetMaterialValue.ValueMember = "value";
+                comboBoxAllSetMaterialValue.DisplayMember = "displayName";
             }
+            tableLayoutPanelAllSetCommon.Visible = enableCommon;
+            tableLayoutPanelAllSetMaterial.Visible = enableMaterial;
+            groupBoxAllSetValue.Visible = enableAllSet;
             return;
         }
+
 
         /// <summary>
         /// 各機能に対する作成列を取得する
@@ -458,9 +841,33 @@ namespace ICApiAddin.icPowerApps
             DataGridViewComboBoxColumn comboBoxColumn = new DataGridViewComboBoxColumn();
             DataGridViewTextBoxColumn textBoxColumn1 = new DataGridViewTextBoxColumn();
             DataGridViewTextBoxColumn textBoxColumn2 = new DataGridViewTextBoxColumn();
-
+            DataGridViewTextBoxColumn textBoxColumn3 = new DataGridViewTextBoxColumn();
             switch (functionName)
             {
+                case "ユーザ名-パーツ番号-説明":
+                    textBoxColumn1.HeaderText = "ユーザ名";
+                    textBoxColumn1.Name = "_UserName";
+                    textBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    textBoxColumn2.HeaderText = "パーツ番号";
+                    textBoxColumn2.Name = "_PartNumber";
+                    textBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    textBoxColumn3.HeaderText = "説明";
+                    textBoxColumn3.Name = "_Description";
+                    textBoxColumn3.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    returnColumn.Add(textBoxColumn1);
+                    returnColumn.Add(textBoxColumn2);
+                    returnColumn.Add(textBoxColumn3);
+                    break;
+                case "材料":
+                    textBoxColumn1.HeaderText = "材料名";
+                    textBoxColumn1.Name = "_MaterialName";
+                    textBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    textBoxColumn2.HeaderText = "密度";
+                    textBoxColumn2.Name = "_MassDensity";
+                    textBoxColumn2.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                    returnColumn.Add(textBoxColumn1);
+                    returnColumn.Add(textBoxColumn2);
+                    break;
                 case "Anchor":
                     comboBoxColumn.HeaderText = "アンカー設定";
                     comboBoxColumn.Name = "_Anchor";
@@ -491,10 +898,22 @@ namespace ICApiAddin.icPowerApps
                     returnColumn.Add(textBoxColumn1);
                     returnColumn.Add(textBoxColumn2);
                     break;
+                case "このシェイプをBOMに含める":
+                    comboBoxColumn.HeaderText = "このシェイプをBOMに含める";
+                    comboBoxColumn.Name = "_IncludeInBom";
+                    comboBoxColumn.DataSource = _comboboxIncludeInBomOnOffList;
+                    returnColumn.Add(comboBoxColumn);
+                    break;
+                case "BOMでのアセンブリ展開":
+                    comboBoxColumn.HeaderText = "BOMでのアセンブリ展開";
+                    comboBoxColumn.Name = "_ExpansionStateInBom";
+                    comboBoxColumn.DataSource = _comboboxExpansionStateInBomOnOffList;
+                    returnColumn.Add(comboBoxColumn);
+                    break;
                 default:
                     return null;
             }
-            if(comboBoxColumn != null)
+            if (comboBoxColumn != null)
             {
                 comboBoxColumn.MinimumWidth = 200;
                 comboBoxColumn.ValueMember = "value";
@@ -510,7 +929,7 @@ namespace ICApiAddin.icPowerApps
         /// 現在の設定値をTreeGridViewSceneに設定する
         /// </summary>
         /// <param name="functionName"></param>
-        private void setCurrentElementValue(string functionName)
+        private void getCurrentSceneElementValue(string functionName)
         {
             int massUnit = (int)this._docProp.MassUnit;
             string massUnitStr = convertMassUnitToString(massUnit);
@@ -519,13 +938,17 @@ namespace ICApiAddin.icPowerApps
             {
                 if (treeGridViewScene["Scene", i].Tag == null)
                 {
+                    treeGridViewScene.Rows[i].ReadOnly = true;
                     continue;
                 }
-
+                treeGridViewScene.Rows[i].ReadOnly = false;
                 IZElement element = treeGridViewScene["Scene", i].Tag as IZElement;
                 IZSceneElement sceneElement = treeGridViewScene["Scene", i].Tag as IZSceneElement;
                 string setColumnName1 = string.Empty;
                 string setColumnName2 = string.Empty;
+                string setColumnName3 = string.Empty;
+                string materialName = string.Empty;
+                bool thisOnly = false;
                 IZPart part = null;
                 IZAssembly asm = null;
                 IZAssemblyProperty asmProp = null;
@@ -533,6 +956,78 @@ namespace ICApiAddin.icPowerApps
 
                 switch (functionName)
                 {
+                    case "ユーザ名-パーツ番号-説明":
+                        setColumnName1 = "_UserName";
+                        setColumnName2 = "_PartNumber";
+                        setColumnName3 = "_Description";
+                        part = sceneElement as IZPart;
+                        asm = sceneElement as IZAssembly;
+                        if(element != null)
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = element.Name;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = false;
+                        }
+                        else
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = string.Empty;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = true;
+                        }
+                        if (asm != null)
+                        {
+                            treeGridViewScene[setColumnName2, i].Value = asm.BOMPartNumber;
+                            treeGridViewScene[setColumnName3, i].Value = asm.BOMDescription;
+                            treeGridViewScene[setColumnName2, i].ReadOnly = false;
+                            treeGridViewScene[setColumnName3, i].ReadOnly = false;
+                        }
+                        if (part != null)
+                        {
+                            treeGridViewScene[setColumnName2, i].Value = part.BOMPartNumber;
+                            treeGridViewScene[setColumnName3, i].Value = part.BOMDescription;
+                            treeGridViewScene[setColumnName2, i].ReadOnly = false;
+                            treeGridViewScene[setColumnName3, i].ReadOnly = false;
+                        }
+                        if ((asm == null) && (part == null))
+                        {
+                            treeGridViewScene[setColumnName2, i].Value = string.Empty;
+                            treeGridViewScene[setColumnName2, i].ReadOnly = true;
+                            treeGridViewScene[setColumnName3, i].Value = string.Empty;
+                            treeGridViewScene[setColumnName3, i].ReadOnly = true;
+                        }
+                        break;
+                    case "材料":
+                        setColumnName1 = "_MaterialName";
+                        setColumnName2 = "_MassDensity";
+                        part = sceneElement as IZPart;
+                        asm = sceneElement as IZAssembly;
+                        if (asm != null)
+                        {
+                            IZAssemblyProperty asmprop = sceneElement as IZAssemblyProperty ;
+                            double ach, vol;
+                            vol = asmprop.GetVolume(0.0000001, out ach);
+                            double mass = asmprop.CalculatedMass;
+                            asmprop.GetMaterialName(out materialName, out thisOnly);
+                            treeGridViewScene[setColumnName1, i].Value = materialName;
+                            treeGridViewScene[setColumnName2, i].Value = FastMath.Round(mass/vol, 3);
+                            treeGridViewScene[setColumnName1, i].ReadOnly = false;
+                            treeGridViewScene[setColumnName2, i].ReadOnly = true;
+                        }
+                        if (part != null)
+                        {
+                            IZPartProperty partprop = sceneElement as IZPartProperty;
+                            partprop.GetMaterialName(out materialName, out thisOnly);
+                            treeGridViewScene[setColumnName1, i].Value = materialName;
+                            treeGridViewScene[setColumnName2, i].Value = FastMath.Round(partprop.MassDensity, 3);
+                            treeGridViewScene[setColumnName1, i].ReadOnly = false;
+                            treeGridViewScene[setColumnName2, i].ReadOnly = false;
+                        }
+                        if ((asm == null) && (part == null))
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = string.Empty;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = true;
+                            treeGridViewScene[setColumnName2, i].Value = string.Empty;
+                            treeGridViewScene[setColumnName2, i].ReadOnly = true;
+                        }
+                        break;
                     case "Anchor":
                         setColumnName1 = "_Anchor";
                         eZAnchorBehavior anchor = sceneElement.AnchorBehavior;
@@ -604,6 +1099,41 @@ namespace ICApiAddin.icPowerApps
                             treeGridViewScene[setColumnName1, i].ReadOnly = true;
                         }
                         break;
+                    case "このシェイプをBOMに含める":
+                        setColumnName1 = "_IncludeInBom";
+                        asm = sceneElement as IZAssembly;
+                        part = sceneElement as IZPart;
+                        if ((asm == null) && (part == null))
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = null;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = true;
+                            break;
+                        }
+                        if(asm != null)
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = asm.IncludedInBOM;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = false;
+                        }
+                        if (part != null)
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = part.IncludedInBOM;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = false;
+                        }
+                        break;
+                    case "BOMでのアセンブリ展開":
+                        setColumnName1 = "_ExpansionStateInBom";
+                        asm = sceneElement as IZAssembly;
+                        if (asm == null)
+                        {
+                            treeGridViewScene[setColumnName1, i].Value = null;
+                            treeGridViewScene[setColumnName1, i].ReadOnly = true;
+                            break;
+                        }
+                        bool linkedInstance = false;
+                        bool expansionStateInBom = asm.GetExpansionStateInBOM(out linkedInstance);
+                        treeGridViewScene[setColumnName1, i].Value = expansionStateInBom;
+                        treeGridViewScene[setColumnName1, i].ReadOnly = false;
+                        break;
                     default:
                         break;
                 }
@@ -614,6 +1144,10 @@ namespace ICApiAddin.icPowerApps
                 if ((i == 0) && (string.IsNullOrEmpty(setColumnName2) != true))
                 {
                     treeGridViewScene[setColumnName2, i].ReadOnly = true;
+                }
+                if ((i == 0) && (string.IsNullOrEmpty(setColumnName3) != true))
+                {
+                    treeGridViewScene[setColumnName3, i].ReadOnly = true;
                 }
             }
         }
@@ -660,10 +1194,9 @@ namespace ICApiAddin.icPowerApps
             {
                 return;
             }
-            this._isInitializing = true;
-            _currFunctionName = functionName;
+            this._currFunctionName = functionName;
             clearFunctionColumn();
-            List<DataGridViewColumn> columnList = getFunctionColumn(functionName);
+            List<DataGridViewColumn> columnList = getFunctionColumn(this._currFunctionName);
             foreach (DataGridViewColumn column in columnList)
             {
                 if (treeGridViewScene.Columns.Contains(column.Name) != true)
@@ -671,10 +1204,23 @@ namespace ICApiAddin.icPowerApps
                     treeGridViewScene.Columns.Add(column);
                 }
             }
-            setCurrentElementValue(functionName);
-            setColumnAutoSizeTreeGridViewScene();
-            setComboboxAllSetValue(functionName);
-            FormAutoSize();
+            RefreshElementInformation(true);
+        }
+
+        /// <summary>
+        /// Elementの情報を更新(再取得)する
+        /// </summary>
+        /// <param name="resizeForm"></param>
+        private void RefreshElementInformation(bool resizeForm)
+        {
+            this._isInitializing = true;
+            getCurrentSceneElementValue(this._currFunctionName);
+            if(resizeForm == true)
+            {
+                setColumnAutoSizeTreeGridViewScene();
+                FormAutoSize();
+            }
+            setComboboxAllSetValue(this._currFunctionName);
             this._isInitializing = false;
         }
 
@@ -689,7 +1235,7 @@ namespace ICApiAddin.icPowerApps
             List<int> rowIndexList = new List<int>();
 
             /* 機能が選択されているか */
-            if (string.IsNullOrEmpty(_currFunctionName) == true)
+            if (string.IsNullOrEmpty(this._currFunctionName) == true)
             {
                 return;
             }
@@ -720,33 +1266,65 @@ namespace ICApiAddin.icPowerApps
                 }
             }
             bool setBoolValue = false;
-            bool updateFlag = false;
+            bool updateSceneBrowserFlag = false;
+            bool updateCurrentElementInformation = true;
             foreach (int rowIndex in rowIndexList)
             {
-                switch (_currFunctionName)
+                switch (this._currFunctionName)
                 {
+                    case "ユーザ名-パーツ番号-説明":
+                        /* 一括設定なし */
+                        break;
+                    case "材料":
+                        int index = comboBoxAllSetMaterialValue.SelectedIndex;
+                        COMBOBOX_MATERIAL materialData = comboBoxAllSetMaterialValue.Items[index] as COMBOBOX_MATERIAL;
+                        string materialName = (string)comboBoxAllSetMaterialValue.SelectedValue;
+                        double massDensity = 0.0;
+                        bool parse = double.TryParse(textBoxMassDensity.Text, out massDensity);
+                        if(parse != true)
+                        {
+                            MessageBox.Show("密度の値が不正な値です。");
+                            return;
+                        }
+                        setElementMaterial(rowIndex, materialData.value);
+                        setElementMassDensity(rowIndex, massDensity);
+                        break;
                     case "Anchor":
                         eZAnchorBehavior anchorBehaviorValue = (eZAnchorBehavior)comboBoxAllSetValue.SelectedValue;
                         setAnchorBehavior(rowIndex, anchorBehaviorValue);
                         break;
                     case "アセンブリ配下の選択を防止する":
-                        updateFlag = true;
+                        updateSceneBrowserFlag = true;
                         setBoolValue = (bool)comboBoxAllSetValue.SelectedValue;
                         setPreventSelectionBelowAssembly(rowIndex, setBoolValue);
                         break;
                     case "パーツ配下の要素を表示しない":
-                        updateFlag = true;
+                        updateSceneBrowserFlag = true;
                         setBoolValue = (bool)comboBoxAllSetValue.SelectedValue;
                         setPreventSelectionBelowPart(rowIndex, setBoolValue);
+                        break;
+                    case "このシェイプをBOMに含める":
+                        setBoolValue = (bool)comboBoxAllSetValue.SelectedValue;
+                        setIncludeInBom(rowIndex, setBoolValue);
+                        break;
+                    case "BOMでのアセンブリ展開":
+                        setBoolValue = (bool)comboBoxAllSetValue.SelectedValue;
+                        setExpansionStateInBOM(rowIndex, setBoolValue);
+                        updateCurrentElementInformation = true;
                         break;
                     default:
                         break;
                 }
             }
-            if (updateFlag == true)
+            if (updateSceneBrowserFlag == true)
             {
                 UpdateSceneBrowser();
             }
+            if(updateCurrentElementInformation == true)
+            {
+                RefreshElementInformation(false);
+            }
+
         }
 
 
@@ -759,8 +1337,23 @@ namespace ICApiAddin.icPowerApps
         {
             if (treeGridViewScene.IsCurrentCellDirty)
             {
-                // This fires the cell value changed handler below
-                treeGridViewScene.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                switch (this._currFunctionName)
+                {
+                    case "ユーザ名-パーツ番号-説明":
+                    case "材料":
+                        /* 処理なし(columnの種類がtextboxのため) */
+                        break;
+                    case "Anchor":
+                    case "アセンブリ配下の選択を防止する":
+                    case "パーツ配下の要素を表示しない":
+                    case "このシェイプをBOMに含める":
+                    case "BOMでのアセンブリ展開":
+                        // This fires the cell value changed handler below
+                        treeGridViewScene.CommitEdit(DataGridViewDataErrorContexts.Commit);
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -782,9 +1375,12 @@ namespace ICApiAddin.icPowerApps
                 return;
             }
 
+            /* Combobox系のみ処理するのでそれ以外は省く */
             if (((treeGridViewScene.Columns.Contains("_Anchor") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_Anchor"].Index)) &&
                ((treeGridViewScene.Columns.Contains("_AssemblyUnderShow") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_AssemblyUnderShow"].Index)) &&
-               ((treeGridViewScene.Columns.Contains("_PartUnderShow") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_PartUnderShow"].Index)))
+               ((treeGridViewScene.Columns.Contains("_PartUnderShow") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_PartUnderShow"].Index)) &&
+               ((treeGridViewScene.Columns.Contains("_IncludeInBom") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_IncludeInBom"].Index)) &&
+               ((treeGridViewScene.Columns.Contains("_ExpansionStateInBom") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_ExpansionStateInBom"].Index)))
             {
                 return;
             }
@@ -798,32 +1394,50 @@ namespace ICApiAddin.icPowerApps
             {
                 /* 値を変更する */
                 bool setBoolValue = false;
-                bool updateFlag = false;
+                bool updateSceneBrowserFlag = false;
+                bool updateCurrentElementInformation = false;
                 foreach (int rowIndex in selectedRowIndexList)
                 {
-                    switch (_currFunctionName)
+                    switch (this._currFunctionName)
                     {
+                        case "ユーザ名-パーツ番号-説明":
+                        case "材料":
+                            /* treeGridViewScene_CellEndEditで処理する */
+                            break;
                         case "Anchor":
                             eZAnchorBehavior anchorBehaviorValue = (eZAnchorBehavior)treeGridViewScene[baseColumnIndex, rowIndex].Value;
                             setAnchorBehavior(rowIndex, anchorBehaviorValue);
                             break;
                         case "アセンブリ配下の選択を防止する":
-                            updateFlag = true;
+                            updateSceneBrowserFlag = true;
                             setBoolValue = (bool)treeGridViewScene[baseColumnIndex, rowIndex].Value;
                             setPreventSelectionBelowAssembly(rowIndex, setBoolValue);
                             break;
                         case "パーツ配下の要素を表示しない":
-                            updateFlag = true;
+                            updateSceneBrowserFlag = true;
                             setBoolValue = (bool)treeGridViewScene[baseColumnIndex, rowIndex].Value;
                             setPreventSelectionBelowPart(rowIndex, setBoolValue);
+                            break;
+                        case "このシェイプをBOMに含める":
+                            setBoolValue = (bool)treeGridViewScene[baseColumnIndex, rowIndex].Value;
+                            setIncludeInBom(rowIndex, setBoolValue);
+                            break;
+                        case "BOMでのアセンブリ展開":
+                            setBoolValue = (bool)treeGridViewScene[baseColumnIndex, rowIndex].Value;
+                            setExpansionStateInBOM(rowIndex, setBoolValue);
+                            updateCurrentElementInformation = true;
                             break;
                         default:
                             break;
                     }
                 }
-                if (updateFlag == true)
+                if (updateSceneBrowserFlag == true)
                 {
                     UpdateSceneBrowser();
+                }
+                if(updateCurrentElementInformation == true)
+                {
+                    RefreshElementInformation(false);
                 }
             }
             catch (Exception ex)
@@ -865,7 +1479,293 @@ namespace ICApiAddin.icPowerApps
                 selectMgr.AddElementToSelection(element, true);
             }
         }
+
+        /// <summary>
+        /// アセンブリのみを表示するのチェック変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void checkBoxShowAssemblyOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            ShowAssemblyOnly(checkBoxShowAssemblyOnly.Checked);
+        }
+
+
+        /// <summary>
+        /// セル変更終了イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeGridViewScene_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if ((this._isInitializing == true) || (this._isModify == true))
+            {
+                return;
+            }
+            int baseRowIndex = e.RowIndex;
+            int baseColumnIndex = e.ColumnIndex;
+            if ((e.RowIndex < 0) || (e.ColumnIndex < 0))
+            {
+                return;
+            }
+
+            if (((treeGridViewScene.Columns.Contains("_UserName") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_UserName"].Index)) &&
+                ((treeGridViewScene.Columns.Contains("_PartNumber") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_PartNumber"].Index)) &&
+                ((treeGridViewScene.Columns.Contains("_Description") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_Description"].Index)) &&
+                ((treeGridViewScene.Columns.Contains("_MaterialName") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_MaterialName"].Index)) &&
+                ((treeGridViewScene.Columns.Contains("_MassDensity") != true) || (e.ColumnIndex != treeGridViewScene.Columns["_MassDensity"].Index)))
+            {
+                return;
+            }
+
+            try
+            {
+                /* 値を変更する */
+                bool updateSceneBrowserFlag = false;
+                bool updateCurrentElementInformation = false;
+                string strValue = string.Empty;
+                switch (this._currFunctionName)
+                {
+                    case "ユーザ名-パーツ番号-説明":
+                        /*treeGridViewScene_CellEndEdit*/
+                        updateSceneBrowserFlag = true;
+                        updateCurrentElementInformation = true;
+                        strValue = treeGridViewScene[baseColumnIndex, baseRowIndex].Value.ToString();
+                        switch (treeGridViewScene.Columns[baseColumnIndex].Name)
+                        {
+                            case "_UserName":
+                                setElementUserName(baseRowIndex, strValue);
+                                break;
+                            case "_PartNumber":
+                                setElementPartNumber(baseRowIndex, strValue);
+                                break;
+                            case "_Description":
+                                setElementDescription(baseRowIndex, strValue);
+                                break;
+                        }
+                        break;
+                    case "材料":
+                        /*treeGridViewScene_CellEndEdit*/
+                        updateSceneBrowserFlag = false;
+                        updateCurrentElementInformation = true;
+                        strValue = treeGridViewScene[baseColumnIndex, baseRowIndex].Value.ToString();
+                        switch (treeGridViewScene.Columns[baseColumnIndex].Name)
+                        {
+                            case "_MaterialName":
+                                setElementMaterial(baseRowIndex, strValue);
+                                break;
+                            case "_MassDensity":
+                                double density = 0.0;
+                                bool parse = double.TryParse(strValue, out density);
+                                if (parse == true)
+                                {
+                                    setElementMassDensity(baseRowIndex, density);
+                                }
+                                break;
+                        }
+                        break;
+                    case "Anchor":
+                        /*treeGridViewScene_CellValueChanged*/
+                        break;
+                    case "アセンブリ配下の選択を防止する":
+                        /*treeGridViewScene_CellValueChanged*/
+                        break;
+                    case "パーツ配下の要素を表示しない":
+                        /*treeGridViewScene_CellValueChanged*/
+                        break;
+                    case "このシェイプをBOMに含める":
+                        /*treeGridViewScene_CellValueChanged*/
+                        break;
+                    case "BOMでのアセンブリ展開":
+                        /*treeGridViewScene_CellValueChanged*/
+                        break;
+                    default:
+                        break;
+                }
+                if (updateSceneBrowserFlag == true)
+                {
+                    UpdateSceneBrowser();
+                }
+                if (updateCurrentElementInformation == true)
+                {
+                    RefreshElementInformation(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("エラーが発生しました。");
+            }
+        }
+
+        bool cancelRequest = false;
+
+
+        /// <summary>
+        /// キー入力イベントの有効化処理(DataGridViewのColumnがTextBox系)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeGridViewScene_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            //表示されているコントロールがDataGridViewTextBoxEditingControlか調べる
+            if (e.Control is DataGridViewTextBoxEditingControl)
+            {
+                DataGridView dgv = (DataGridView)sender;
+
+                //編集のために表示されているコントロールを取得
+                DataGridViewTextBoxEditingControl tb = (DataGridViewTextBoxEditingControl)e.Control;
+
+                //イベントハンドラを削除
+                tb.KeyDown -= new KeyEventHandler(dataGridViewTextBox_KeyDown);
+                tb.KeyPress -= new KeyPressEventHandler(dataGridViewTextBox_KeyPress);
+
+                //該当する列か調べる
+                if ((dgv.CurrentCell.OwningColumn.Name == "_UserName") ||
+                    (dgv.CurrentCell.OwningColumn.Name == "_PartNumber") ||
+                    (dgv.CurrentCell.OwningColumn.Name == "_Description") ||
+                    (dgv.CurrentCell.OwningColumn.Name == "_MaterialName") ||
+                    (dgv.CurrentCell.OwningColumn.Name == "_MassDensity"))
+                {
+                    //KeyPressイベントハンドラを追加
+                    tb.KeyDown += new KeyEventHandler(dataGridViewTextBox_KeyDown);
+                    tb.KeyPress += new KeyPressEventHandler(dataGridViewTextBox_KeyPress);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// キー押下イベント(モーダレスダイアログのときはCtrl+V等は使えないので警告を出す)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridViewTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                MessageBox.Show("コピー/切り取り/貼り付けは右クリックメニューで操作できます。", "エラー", MessageBoxButtons.OK);
+                cancelRequest = true;
+            }
+            else
+            {
+                cancelRequest = false;
+            }
+        }
+
+
+        /// <summary>
+        /// Ctrl系のキー押下のときは入力をキャンセルする
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridViewTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (cancelRequest == true)
+            {
+                e.Handled = true;
+            }
+        }
+
+
+        /// <summary>
+        /// 一括設定の材料分類変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxAllSetMaterialClassification_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if ((this._isInitializing == true) || (this._isModify == true))
+            {
+                return;
+            }
+            string text = comboBoxAllSetMaterialClassification.Text;
+            this._comboboxMaterialListAllSetFilterdList.Clear();
+            if (string.Equals(text, "すべて") == true)
+            {
+                _comboboxMaterialListAllSetFilterdList = new List<COMBOBOX_MATERIAL>(_comboboxMaterialListAllSetList);
+            }
+            else
+            {
+                _comboboxMaterialListAllSetFilterdList.AddRange(_comboboxMaterialListAllSetList.Where(a => a.classification == text).ToList());
+            }
+            this._isInitializing = true;
+            comboBoxAllSetMaterialValue.DataSource = null;
+            comboBoxAllSetMaterialValue.DataSource = _comboboxMaterialListAllSetFilterdList;
+            comboBoxAllSetMaterialValue.ValueMember = "value";
+            comboBoxAllSetMaterialValue.DisplayMember = "displayName";
+            this._isInitializing = false;
+            comboBoxAllSetMaterialValue.SelectedIndex = -1;
+            comboBoxAllSetMaterialValue.SelectedIndex = 0;
+        }
+
+
+        /// <summary>
+        /// 一括設定の材料変更イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxAllSetMaterialValue_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if ((this._isInitializing == true) || (this._isModify == true))
+            {
+                return;
+            }
+            if (comboBoxAllSetMaterialValue.SelectedIndex < 0)
+            {
+                textBoxMassDensity.Text = "0";
+                return;
+            }
+            COMBOBOX_MATERIAL materialData = comboBoxAllSetMaterialValue.Items[comboBoxAllSetMaterialValue.SelectedIndex] as COMBOBOX_MATERIAL;
+            textBoxMassDensity.Text = materialData.density.ToString();
+        }
+
+        /// <summary>
+        /// キー押下イベント 数字と.(ドット)とバックスペースのみ許可する
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBoxMassDensity_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar < '0' || '9' < e.KeyChar) &&
+               (e.KeyChar != '.') &&
+               (e.KeyChar != '\b'))
+            {
+                //押されたキーが 0～9でない場合は、イベントをキャンセルする
+                e.Handled = true;
+            }
+        }
         #endregion イベント
+
+
+        private void ShowAssemblyOnly(bool assemblyOnly)
+        {
+            if (assemblyOnly == true)
+            {
+                for (int i = 0; i < treeGridViewScene.Rows.Count; i++)
+                {
+                    string dataType = treeGridViewScene["DataType", i].Value.ToString();
+                    switch (dataType)
+                    {
+                        case icapiCommon.SCENE_DATATYPE_SCENE:
+                        case icapiCommon.SCENE_DATATYPE_ASSEMBLY:
+                        case icapiCommon.SCENE_DATATYPE_LINKED_ASSEMBLY:
+                            treeGridViewScene.Rows[i].Visible = true;
+                            break;
+                        default:
+                            treeGridViewScene.Rows[i].Visible = false;
+                            break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < treeGridViewScene.Rows.Count; i++)
+                {
+                    treeGridViewScene.Rows[i].Visible = true;
+                }
+            }
+        }
+
 
     }
 }
