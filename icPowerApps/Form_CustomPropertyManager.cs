@@ -22,6 +22,19 @@ namespace ICApiAddin.icPowerApps
         private IZSceneDoc _sceneDoc = null;
         private string _userId = "dummyUser";
 
+        public class ListBoxSortItem
+        {
+            public string disp { get; set; }
+            public string propertyName { get; set; }
+            public bool isShared { get; set; }
+            public ListBoxSortItem(string disp, string propertyName, bool isShared)
+            {
+                this.disp = disp;
+                this.propertyName = propertyName;
+                this.isShared = isShared;
+            }
+        }
+
         /// <summary>
         /// バルク削除のラベル(選択しているパーツ名)を更新する
         /// </summary>
@@ -274,7 +287,72 @@ namespace ICApiAddin.icPowerApps
                     treeGridViewScene[columnName, rowIndex].Value = value;
                 }
             }
+            reloadCustomPropertyDisplayOrder();
+
         }
+
+
+        /// <summary>
+        /// カスタムプロパティの表示順を設定する
+        /// </summary>
+        private void reloadCustomPropertyDisplayOrder()
+        {
+            int displayIndex = -1;
+            string settingFilePath = getCustomPropertyDisplayOrderSettingFilePath();
+            if (File.Exists(settingFilePath) == true)
+            {
+                /* 並び替えの設定値を取得 */
+                List<string> orderList = new List<string>();
+                ReadCustomPropertyDisplayOrderSetting(settingFilePath, ref orderList);
+                if(orderList.Count <= 0)
+                {
+                    return;
+                }
+
+                /* 並び変える */
+                for (int columnIndex = 0; columnIndex < treeGridViewScene.Columns.Count; columnIndex++)
+                {
+                    treeGridViewScene.Columns[columnIndex].DisplayIndex = (treeGridViewScene.Columns.Count - 1);
+                }
+
+                /* カスタムプロパティ以外の列の設定 */
+                List<string> deleteColumns = new List<string>();
+                for (int columnIndex = 0; columnIndex < treeGridViewScene.Columns.Count; columnIndex++)
+                {
+                    /* Tag情報をチェック */
+                    if (treeGridViewScene.Columns[columnIndex].Tag == null)
+                    {
+                        /* Tagがない */
+                        treeGridViewScene.Columns[columnIndex].DisplayIndex = ++displayIndex;
+                        continue;
+                    }
+                    /* タグの値を取得 */
+                    string tagName = treeGridViewScene.Columns[columnIndex].Tag.ToString();
+                    if (tagName.Contains("CustomProperty") == true)
+                    {
+                        /* 処理なし */
+                    }
+                    else
+                    {
+                        /* タグがCustomPropertyでない */
+                        treeGridViewScene.Columns[columnIndex].DisplayIndex = ++displayIndex;
+                    }
+                }
+
+                foreach (string order in orderList)
+                {
+                    for (int columnIndex = 0; columnIndex < treeGridViewScene.Columns.Count; columnIndex++)
+                    {
+                        string headerName = treeGridViewScene.Columns[columnIndex].HeaderText;
+                        if (string.Equals(headerName, order) == true)
+                        {
+                            treeGridViewScene.Columns[columnIndex].DisplayIndex = ++displayIndex;
+                        }
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// 範囲情報を含んだプロパティ列名を作成する
@@ -311,7 +389,6 @@ namespace ICApiAddin.icPowerApps
             int depth = 1;
 
             icapiCommon.GetSceneTreeInfo(icapiCommon.CREATE_TREE_MODE.CHECK_IN, TreeNodeHeight, sceneDoc.GetTopElement(), ref topNode, ref depth);
-            
             return;
         }
 
@@ -965,6 +1042,7 @@ namespace ICApiAddin.icPowerApps
             return isShared;
         }
 
+
         /// <summary>
         /// 削除を実行ボタンクリック イベント
         /// </summary>
@@ -1066,6 +1144,7 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
+
         /// <summary>
         /// 列ヘッダの色を再設定する
         /// </summary>
@@ -1088,6 +1167,7 @@ namespace ICApiAddin.icPowerApps
                 }
             }
         }
+
 
         /// <summary>
         /// 新規追加/変更ボタンのクリック イベント
@@ -1155,6 +1235,7 @@ namespace ICApiAddin.icPowerApps
             setLabelBulkDelete(e.ColumnIndex, -1);
         }
 
+
         /// <summary>
         /// TreeGridViewSceneの列ヘッダクリック イベント(列選択の情報を設定する)
         /// </summary>
@@ -1164,6 +1245,7 @@ namespace ICApiAddin.icPowerApps
         {
             setLabelBulkDelete(e.ColumnIndex, -1);
         }
+
 
         /// <summary>
         /// テンプレートを表示のボタンクリック イベント
@@ -1183,6 +1265,7 @@ namespace ICApiAddin.icPowerApps
                 buttonCustomPropertyCollectiveSetting.Text = "テンプレートを表示";
             }
         }
+
 
         /// <summary>
         /// TreeGridViewSceneの選択している行を取得する
@@ -1275,6 +1358,7 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
+
         /// <summary>
         /// カスタムプロパティ テンプレートのデータ選択変更 イベント
         /// </summary>
@@ -1312,6 +1396,7 @@ namespace ICApiAddin.icPowerApps
             labelCustomPropertyScope.ForeColor = fontColor;
 
         }
+
 
         /// <summary>
         /// カスタムプロパティのテンプレート選択 テキスト変更 イベント
@@ -1390,6 +1475,7 @@ namespace ICApiAddin.icPowerApps
         }
 
 
+
         /// <summary>
         /// PictureBoxReload(テンプレートデータの再読み込み)のクリック イベント
         /// </summary>
@@ -1423,6 +1509,19 @@ namespace ICApiAddin.icPowerApps
             string prgName = assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
             string companyName = assembly.GetCustomAttribute<AssemblyCompanyAttribute>().Company;
             return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), companyName, prgName, "CustomPropertyTemplate.config"); ;
+        }
+
+
+        /// <summary>
+        /// カスタムプロパティの表示並び順の設定保存ファイルのパスを取得する
+        /// </summary>
+        /// <returns></returns>
+        private string getCustomPropertyDisplayOrderSettingFilePath()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            string prgName = assembly.GetCustomAttribute<AssemblyTitleAttribute>().Title;
+            string companyName = assembly.GetCustomAttribute<AssemblyCompanyAttribute>().Company;
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), companyName, prgName, "CustomPropertyDisplayOrder.config"); ;
         }
 
 
@@ -1483,6 +1582,35 @@ namespace ICApiAddin.icPowerApps
             return true;
         }
 
+
+        /// <summary>
+        /// カスタムプロパティ 表示並び順の設定ファイルを読み込む
+        /// </summary>
+        /// <param name="filePath">設定ファイルのパス</param>
+        /// <param name="config">読み込んだ設定データ</param>
+        public static bool ReadCustomPropertyDisplayOrderSetting(string filePath, ref List<string> orderList)
+        {
+            if (File.Exists(filePath) != true)
+            {
+                orderList = new List<string>();
+                return false;
+            }
+
+            string[] allLines = File.ReadAllLines(filePath);
+            for (int i = 0; i < allLines.Count(); i++)
+            {
+                string line = allLines[i];
+                /* コメントアウト行かチェックする */
+                if (line.StartsWith("/*") == true)
+                {
+                    continue;
+                }
+                orderList.Add(line.Trim());
+            }
+            return true;
+        }
+
+
         /// <summary>
         /// 初期化中のProgressBarを設定する
         /// </summary>
@@ -1503,6 +1631,90 @@ namespace ICApiAddin.icPowerApps
                 progressBarWaitProgress.Enabled = false;
                 progressBarWaitProgress.Visible = false;
             }
+        }
+
+
+        /// <summary>
+        /// リンクラベル:表示順の設定のクリック イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabelDisplayOrder_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string settingFilePath = getCustomPropertyDisplayOrderSettingFilePath();
+
+            /* テンプレートファイルがあるかチェックする */
+            if (File.Exists(settingFilePath) != true)
+            {
+                MessageBox.Show("並び順の設定ファイルが見つかりませんでした。初期値ファイルを作成します。");
+
+                /* 既存のカスタムプロパティ名を取得 */
+                List<string> customPropNameList = new List<string>();
+                for (int columnIndex = 0; columnIndex < treeGridViewScene.Columns.Count; columnIndex++)
+                {
+                    /* Tag情報をチェック */
+                    if (treeGridViewScene.Columns[columnIndex].Tag == null)
+                    {
+                        continue;
+                    }
+                    /* タグの値を取得 */
+                    string tagName = treeGridViewScene.Columns[columnIndex].Tag.ToString();
+                    if (tagName.Contains("CustomProperty") == true)
+                    {
+                        string headerName = treeGridViewScene.Columns[columnIndex].HeaderText;
+                        if (customPropNameList.Contains(headerName) != true)
+                        {
+                            customPropNameList.Add(headerName);
+                        }
+                    }
+                }
+
+
+                /* ファイルがない場合はサンプルのテンプレートファイルを作成する */
+                string parentDir = Path.GetDirectoryName(settingFilePath);
+                if (Directory.Exists(parentDir) != true)
+                {
+                    /* 格納先ディレクトリが無いので作成する */
+                    Directory.CreateDirectory(parentDir);
+                }
+                StreamWriter sw = new StreamWriter(settingFilePath);
+                sw.WriteLine("/******************************************************************************************/");
+                sw.WriteLine("/*  カスタムプロパティ 表示並び順の設定ファイル                                           */");
+                sw.WriteLine("/******************************************************************************************/");
+                sw.WriteLine("/*  入力フォーマット (カスタムプロパティ名を改行区切りで羅列します。)                     */");
+                sw.WriteLine("/*  入力したカスタムプロパティ名の順(左→右)で表示されます。                              */");
+                sw.WriteLine("/*  設定したカスタムプロパティ名がない場合は無視されます。                                */");
+                sw.WriteLine("/******************************************************************************************/");
+                if(customPropNameList.Count > 0)
+                {
+                    foreach(string propName in customPropNameList)
+                    {
+                        sw.WriteLine(propName);
+                    }
+                }
+                else
+                {
+                    sw.WriteLine("作成日");
+                    sw.WriteLine("変更日");
+                    sw.WriteLine("メーカー");
+                    sw.WriteLine("品番");
+                    sw.WriteLine("個数");
+                    sw.WriteLine("廃版");
+                }
+                sw.Close();
+            }
+            /* テンプレート設定ファイルを開く */
+            Process.Start("notepad.exe", settingFilePath);
+        }
+
+        /// <summary>
+        /// 表示順の再読み込みボタン クリック イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void pictureBoxDisplayOrder_Click(object sender, EventArgs e)
+        {
+            reloadCustomPropertyDisplayOrder();
         }
     }
 }

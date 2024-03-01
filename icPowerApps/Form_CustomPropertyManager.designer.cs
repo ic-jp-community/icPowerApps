@@ -41,7 +41,6 @@
             this.ExternLinkFilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tree = new AdvancedDataGridView.TreeGridColumn();
             this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.CheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.buttonAddEdit = new System.Windows.Forms.Button();
             this.comboBoxDataType = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -59,7 +58,6 @@
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.labelDeleteCustomProperty = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.comboBoxScope = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -102,6 +100,19 @@
             this.labelCustomPropertyScope = new System.Windows.Forms.Label();
             this.labelCustomPropertyDataType = new System.Windows.Forms.Label();
             this.buttonSetTemplate = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.Scene2 = new AdvancedDataGridView.TreeGridColumn();
+            this.AssemblyPartsSystemName2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ElementID2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DataType2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Depth2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ExternLinkFilePath2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.linkLabelDisplayOrder = new System.Windows.Forms.LinkLabel();
+            this.CheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.pictureBoxDisplayOrder = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.treeGridViewScene)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -131,6 +142,10 @@
             this.tableLayoutPanel19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReloadTemplateSettingFile)).BeginInit();
             this.tableLayoutPanel18.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tableLayoutPanel25.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayOrder)).BeginInit();
             this.SuspendLayout();
             // 
             // treeGridViewScene
@@ -138,6 +153,7 @@
             this.treeGridViewScene.AllowDrop = true;
             this.treeGridViewScene.AllowUserToAddRows = false;
             this.treeGridViewScene.AllowUserToDeleteRows = false;
+            this.treeGridViewScene.AllowUserToOrderColumns = true;
             this.treeGridViewScene.BackgroundColor = System.Drawing.SystemColors.Window;
             this.treeGridViewScene.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -231,13 +247,6 @@
             resources.ApplyResources(this.dataGridViewComboBoxColumn1, "dataGridViewComboBoxColumn1");
             this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
             this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // CheckBox
-            // 
-            resources.ApplyResources(this.CheckBox, "CheckBox");
-            this.CheckBox.Name = "CheckBox";
-            this.CheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.CheckBox.ThreeState = true;
             // 
             // buttonAddEdit
             // 
@@ -358,12 +367,6 @@
             this.label8.ForeColor = System.Drawing.Color.DimGray;
             this.label8.Name = "label8";
             // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Name = "label3";
-            // 
             // comboBoxScope
             // 
             resources.ApplyResources(this.comboBoxScope, "comboBoxScope");
@@ -481,7 +484,7 @@
             // tableLayoutPanel12
             // 
             resources.ApplyResources(this.tableLayoutPanel12, "tableLayoutPanel12");
-            this.tableLayoutPanel12.Controls.Add(this.label3, 0, 1);
+            this.tableLayoutPanel12.Controls.Add(this.tableLayoutPanel25, 0, 1);
             this.tableLayoutPanel12.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             // 
@@ -659,13 +662,101 @@
             this.buttonSetTemplate.UseVisualStyleBackColor = true;
             this.buttonSetTemplate.Click += new System.EventHandler(this.buttonSetTemplate_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.tableLayoutPanelBase);
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // Scene2
+            // 
+            this.Scene2.DefaultNodeImage = null;
+            resources.ApplyResources(this.Scene2, "Scene2");
+            this.Scene2.Name = "Scene2";
+            this.Scene2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // AssemblyPartsSystemName2
+            // 
+            resources.ApplyResources(this.AssemblyPartsSystemName2, "AssemblyPartsSystemName2");
+            this.AssemblyPartsSystemName2.Name = "AssemblyPartsSystemName2";
+            this.AssemblyPartsSystemName2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ElementID2
+            // 
+            resources.ApplyResources(this.ElementID2, "ElementID2");
+            this.ElementID2.Name = "ElementID2";
+            this.ElementID2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // DataType2
+            // 
+            resources.ApplyResources(this.DataType2, "DataType2");
+            this.DataType2.Name = "DataType2";
+            this.DataType2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Depth2
+            // 
+            resources.ApplyResources(this.Depth2, "Depth2");
+            this.Depth2.Name = "Depth2";
+            this.Depth2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // ExternLinkFilePath2
+            // 
+            resources.ApplyResources(this.ExternLinkFilePath2, "ExternLinkFilePath2");
+            this.ExternLinkFilePath2.Name = "ExternLinkFilePath2";
+            this.ExternLinkFilePath2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // tableLayoutPanel25
+            // 
+            resources.ApplyResources(this.tableLayoutPanel25, "tableLayoutPanel25");
+            this.tableLayoutPanel25.Controls.Add(this.pictureBoxDisplayOrder, 0, 0);
+            this.tableLayoutPanel25.Controls.Add(this.linkLabelDisplayOrder, 0, 0);
+            this.tableLayoutPanel25.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel25.Name = "tableLayoutPanel25";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label3.Name = "label3";
+            // 
+            // linkLabelDisplayOrder
+            // 
+            resources.ApplyResources(this.linkLabelDisplayOrder, "linkLabelDisplayOrder");
+            this.linkLabelDisplayOrder.Name = "linkLabelDisplayOrder";
+            this.linkLabelDisplayOrder.TabStop = true;
+            this.linkLabelDisplayOrder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDisplayOrder_LinkClicked);
+            // 
+            // CheckBox
+            // 
+            resources.ApplyResources(this.CheckBox, "CheckBox");
+            this.CheckBox.Name = "CheckBox";
+            this.CheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.CheckBox.ThreeState = true;
+            // 
+            // pictureBoxDisplayOrder
+            // 
+            resources.ApplyResources(this.pictureBoxDisplayOrder, "pictureBoxDisplayOrder");
+            this.pictureBoxDisplayOrder.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_reload;
+            this.pictureBoxDisplayOrder.InitialImage = global::ICApiAddin.icPowerApps.Properties.Resources.icon_reload;
+            this.pictureBoxDisplayOrder.Name = "pictureBoxDisplayOrder";
+            this.pictureBoxDisplayOrder.TabStop = false;
+            this.pictureBoxDisplayOrder.Click += new System.EventHandler(this.pictureBoxDisplayOrder_Click);
+            // 
             // Form_CustomPropertyManager
             // 
             this.AllowDrop = true;
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.tableLayoutPanelBase);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Form_CustomPropertyManager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form_CustomPropertyManager_FormClosing);
             this.Load += new System.EventHandler(this.Form_CustomPropertyManager_Load);
@@ -723,8 +814,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxReloadTemplateSettingFile)).EndInit();
             this.tableLayoutPanel18.ResumeLayout(false);
             this.tableLayoutPanel18.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tableLayoutPanel25.ResumeLayout(false);
+            this.tableLayoutPanel25.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayOrder)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -742,7 +838,6 @@
         private System.Windows.Forms.RadioButton radioButtonDeleteCustomPropertyName;
         private System.Windows.Forms.Button buttonDelete;
         private System.Windows.Forms.RadioButton radioButtonDeleteAllPartsAssemblyCustomProperties;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBoxScope;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel1;
@@ -799,5 +894,17 @@
         private System.Windows.Forms.LinkLabel linkLabelEditTemplateSettingFile;
         private System.Windows.Forms.PictureBox pictureBoxReloadTemplateSettingFile;
         private System.Windows.Forms.ProgressBar progressBarWaitProgress;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private AdvancedDataGridView.TreeGridColumn Scene2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AssemblyPartsSystemName2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ElementID2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DataType2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Depth2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ExternLinkFilePath2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel25;
+        private System.Windows.Forms.LinkLabel linkLabelDisplayOrder;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.PictureBox pictureBoxDisplayOrder;
     }
 }
