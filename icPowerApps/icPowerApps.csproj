@@ -124,6 +124,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationClientsideProviders" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addin.cs" />
@@ -176,6 +180,12 @@
     </Compile>
     <Compile Include="UserControlCatalogSort.Designer.cs">
       <DependentUpon>UserControlCatalogSort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserControlDataConvertUtility.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControlDataConvertUtility.Designer.cs">
+      <DependentUpon>UserControlDataConvertUtility.cs</DependentUpon>
     </Compile>
     <Compile Include="UserControlSceneBrowserTreeSort.cs">
       <SubType>UserControl</SubType>
@@ -248,6 +258,9 @@
     <EmbeddedResource Include="UserControlCatalogSort.resx">
       <DependentUpon>UserControlCatalogSort.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UserControlDataConvertUtility.resx">
+      <DependentUpon>UserControlDataConvertUtility.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UserControlSceneBrowserTreeSort.resx">
       <DependentUpon>UserControlSceneBrowserTreeSort.cs</DependentUpon>
     </EmbeddedResource>
@@ -285,6 +298,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Icons\icon_dataConvertUtility.ico" />
+    <EmbeddedResource Include="Icons\icon_dataConvertUtility_s.png" />
+    <EmbeddedResource Include="Icons\icon_dataConvertUtility_l.png" />
     <None Include="App.config" />
     <Content Include="ElementManagerMaterial.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

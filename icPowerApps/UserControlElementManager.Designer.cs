@@ -220,7 +220,7 @@
             this.comboBoxAllSetValue.FormattingEnabled = true;
             this.comboBoxAllSetValue.Items.AddRange(new object[] {
             "Anchor"});
-            this.comboBoxAllSetValue.Location = new System.Drawing.Point(52, 7);
+            this.comboBoxAllSetValue.Location = new System.Drawing.Point(52, 6);
             this.comboBoxAllSetValue.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxAllSetValue.Name = "comboBoxAllSetValue";
             this.comboBoxAllSetValue.Size = new System.Drawing.Size(227, 23);
@@ -326,7 +326,7 @@
             this.comboBoxAllSetMaterialClassification.FormattingEnabled = true;
             this.comboBoxAllSetMaterialClassification.Items.AddRange(new object[] {
             "Anchor"});
-            this.comboBoxAllSetMaterialClassification.Location = new System.Drawing.Point(64, 22);
+            this.comboBoxAllSetMaterialClassification.Location = new System.Drawing.Point(64, 21);
             this.comboBoxAllSetMaterialClassification.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxAllSetMaterialClassification.Name = "comboBoxAllSetMaterialClassification";
             this.comboBoxAllSetMaterialClassification.Size = new System.Drawing.Size(147, 23);
@@ -350,7 +350,7 @@
             this.comboBoxAllSetMaterialValue.FormattingEnabled = true;
             this.comboBoxAllSetMaterialValue.Items.AddRange(new object[] {
             "Anchor"});
-            this.comboBoxAllSetMaterialValue.Location = new System.Drawing.Point(254, 21);
+            this.comboBoxAllSetMaterialValue.Location = new System.Drawing.Point(254, 22);
             this.comboBoxAllSetMaterialValue.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxAllSetMaterialValue.Name = "comboBoxAllSetMaterialValue";
             this.comboBoxAllSetMaterialValue.Size = new System.Drawing.Size(124, 23);
@@ -446,7 +446,7 @@
             // 
             this.comboBoxFunctionType.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.comboBoxFunctionType.FormattingEnabled = true;
-            this.comboBoxFunctionType.Location = new System.Drawing.Point(3, 7);
+            this.comboBoxFunctionType.Location = new System.Drawing.Point(3, 6);
             this.comboBoxFunctionType.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
             this.comboBoxFunctionType.Name = "comboBoxFunctionType";
             this.comboBoxFunctionType.Size = new System.Drawing.Size(215, 23);

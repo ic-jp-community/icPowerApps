@@ -43,19 +43,19 @@ namespace icPowerApps_Configuration
         public override void Install(System.Collections.IDictionary stateSaver)
         {
             base.Install(stateSaver);
-            bool ret1 = AddConfig(@"C:\Program Files\IronCAD\2020\Config\Ironcad.Addin.config",
+            bool ret1 = AddConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
                 Addin.ADDIN_GUID,
                 Addin.ADDIN_APP_NAME,
                 Addin.ADDIN_APP_DESCRIPTION);
-            bool ret2 = AddConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
+            bool ret2 = AddConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
                 Addin.ADDIN_GUID,
                 Addin.ADDIN_APP_NAME,
                 Addin.ADDIN_APP_DESCRIPTION);
-            bool ret3 = AddConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
+            bool ret3 = AddConfig(@"C:\Program Files\IronCAD\2023\Config\Ironcad.Addin.config",
                 Addin.ADDIN_GUID,
                 Addin.ADDIN_APP_NAME,
                 Addin.ADDIN_APP_DESCRIPTION);
-            bool ret4 = AddConfig(@"C:\Program Files\IronCAD\2023\Config\Ironcad.Addin.config",
+            bool ret4 = AddConfig(@"C:\Program Files\IronCAD\2024\Config\Ironcad.Addin.config",
                 Addin.ADDIN_GUID,
                 Addin.ADDIN_APP_NAME,
                 Addin.ADDIN_APP_DESCRIPTION);
@@ -80,13 +80,13 @@ namespace icPowerApps_Configuration
             base.Uninstall(savedState);
             for (int count = 0; count < 10; count++)
             {
-                int delnum =  DeleteConfig(@"C:\Program Files\IronCAD\2020\Config\Ironcad.Addin.config",
+                int delnum =  DeleteConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
                                         Addin.ADDIN_GUID);
-                delnum +=  DeleteConfig(@"C:\Program Files\IronCAD\2021\Config\Ironcad.Addin.config",
-                                        Addin.ADDIN_GUID);
-                delnum += DeleteConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
+                delnum +=  DeleteConfig(@"C:\Program Files\IronCAD\2022\Config\Ironcad.Addin.config",
                                         Addin.ADDIN_GUID);
                 delnum += DeleteConfig(@"C:\Program Files\IronCAD\2023\Config\Ironcad.Addin.config",
+                                        Addin.ADDIN_GUID);
+                delnum += DeleteConfig(@"C:\Program Files\IronCAD\2024\Config\Ironcad.Addin.config",
                                         Addin.ADDIN_GUID); if (delnum == 0)
                 {
                     break;

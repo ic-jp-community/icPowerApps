@@ -202,6 +202,11 @@ namespace ICApiAddin.icPowerApps
                                                              getIconSizeIsLarge("Element マネージャ"), getToolIsEnable("Element マネージャ"), m_buttonElementManager,
                                                                 new _IZCommandEvents_OnClickEventHandler(m_buttonElementManager_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonElementManager_OnUpdate)));
 
+                    addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_dataConvertUtility_s, Properties.Resources.icon_dataConvertUtility_l,
+                                                             "icDataConvertUtility", "データ変換 ユーティリティ", "データ変換 ユーティリティ", "データ変換 ユーティリティを表示します。",
+                                                             getIconSizeIsLarge("データ変換 ユーティリティ"), getToolIsEnable("データ変換 ユーティリティ"), m_buttonElementManager,
+                                                                new _IZCommandEvents_OnClickEventHandler(m_buttonDataConvertUtility_OnClick), new _IZCommandEvents_OnUpdateEventHandler(m_buttonDataConvertUtility_OnUpdate)));
+
                     addInToolDataList.Add(new AddInToolData(Properties.Resources.icon_setting_s, Properties.Resources.icon_setting_l,
                                         "icPowerAppsSetting", "設定", "設定", "設定を表示します。",
                                          getIconSizeIsLarge("設定"), getToolIsEnable("設定"), m_buttonSetting,
@@ -310,6 +315,11 @@ namespace ICApiAddin.icPowerApps
             tool.button.Enabled = true;
         }
 
+        private void m_buttonDataConvertUtility_OnUpdate()
+        {
+            AddInToolData tool = addInToolDataList.Where(a => a.uniqueName == "icDataConvertUtility").FirstOrDefault();
+            tool.button.Enabled = true;
+        }        
 
         private void m_buttonSetting_OnUpdate()
         {
@@ -346,6 +356,7 @@ namespace ICApiAddin.icPowerApps
 
         private UserControlSuppressManager ucSuppressManager = null;
         private UserControlElementManager ucElementManager = null;
+        private UserControlDataConvertUtility ucDataConvertUtility = null;
         private UserControlExternalLinkManager ucExternalLinkManager = null;
         private UserControlSceneBrowserTreeSort ucSceneBrowserTreeSort = null;
         private UserControlWebBrowser ucIcWebBrowser = null;
@@ -517,6 +528,27 @@ namespace ICApiAddin.icPowerApps
             frm.Show(cWin32HWNDWrapper);
         }
 
+        private void m_buttonDataConvertUtility_OnClick()
+        {
+            IZAddinSite addinSite = m_izAddinSite;
+            IZEnvironmentMgr envMgr = GetEnvironmentMgr();
+            IZEnvironment env = envMgr.ActiveEnvironment;
+            System.IntPtr iHwnd = (IntPtr)this.IronCADApp.Frame.HWND;
+            Win32HWNDWrapper cWin32HWNDWrapper = new Win32HWNDWrapper(iHwnd);
+            /* ElementManagerを作成 */
+            ucDataConvertUtility = new UserControlDataConvertUtility(IronCADApp);
+            Form frm = new Form();
+            frm.Width = ucDataConvertUtility.Width + 20;
+            frm.Height = ucDataConvertUtility.Height;
+            frm.Controls.Add(ucDataConvertUtility);
+            frm.Icon = Properties.Resources.icon_dataConvertUtility;
+            frm.Text = UserControlDataConvertUtility.title;
+            frm.TopMost = false;
+            frm.StartPosition = FormStartPosition.CenterScreen;
+            frm.Show(cWin32HWNDWrapper);
+        }
+        
+
         private void m_buttonSetting_OnClick()
         {
             IZDoc doc = GetActiveDoc();
@@ -545,7 +577,7 @@ namespace ICApiAddin.icPowerApps
 
 #endregion
 
-#region [Internal Methods]
+        #region [Internal Methods]
 
         internal static List<IZElement> ConvertObjectToElementArray(object varElements)
         {

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_CustomPropertyManager));
             this.treeGridViewScene = new AdvancedDataGridView.TreeGridView();
             this.Scene = new AdvancedDataGridView.TreeGridColumn();
@@ -75,6 +75,10 @@
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
+            this.pictureBoxDisplayOrder = new System.Windows.Forms.PictureBox();
+            this.linkLabelDisplayOrder = new System.Windows.Forms.LinkLabel();
+            this.label3 = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
@@ -108,11 +112,7 @@
             this.DataType2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Depth2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ExternLinkFilePath2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tableLayoutPanel25 = new System.Windows.Forms.TableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.linkLabelDisplayOrder = new System.Windows.Forms.LinkLabel();
             this.CheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.pictureBoxDisplayOrder = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.treeGridViewScene)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -127,6 +127,8 @@
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
+            this.tableLayoutPanel25.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayOrder)).BeginInit();
             this.tableLayoutPanel4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.tableLayoutPanel13.SuspendLayout();
@@ -144,8 +146,6 @@
             this.tableLayoutPanel18.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tableLayoutPanel25.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayOrder)).BeginInit();
             this.SuspendLayout();
             // 
             // treeGridViewScene
@@ -156,14 +156,14 @@
             this.treeGridViewScene.AllowUserToOrderColumns = true;
             this.treeGridViewScene.BackgroundColor = System.Drawing.SystemColors.Window;
             this.treeGridViewScene.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Meiryo UI", 9F);
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.treeGridViewScene.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 9F);
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.treeGridViewScene.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.treeGridViewScene.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Scene,
             this.AssemblyPartsSystemName,
@@ -171,14 +171,14 @@
             this.DataType,
             this.Depth,
             this.ExternLinkFilePath});
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Meiryo UI", 9F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.treeGridViewScene.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Meiryo UI", 9F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.treeGridViewScene.DefaultCellStyle = dataGridViewCellStyle2;
             resources.ApplyResources(this.treeGridViewScene, "treeGridViewScene");
             this.treeGridViewScene.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.treeGridViewScene.EnableHeadersVisualStyles = false;
@@ -488,6 +488,36 @@
             this.tableLayoutPanel12.Controls.Add(this.tableLayoutPanel4, 0, 0);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
             // 
+            // tableLayoutPanel25
+            // 
+            resources.ApplyResources(this.tableLayoutPanel25, "tableLayoutPanel25");
+            this.tableLayoutPanel25.Controls.Add(this.pictureBoxDisplayOrder, 0, 0);
+            this.tableLayoutPanel25.Controls.Add(this.linkLabelDisplayOrder, 0, 0);
+            this.tableLayoutPanel25.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel25.Name = "tableLayoutPanel25";
+            // 
+            // pictureBoxDisplayOrder
+            // 
+            resources.ApplyResources(this.pictureBoxDisplayOrder, "pictureBoxDisplayOrder");
+            this.pictureBoxDisplayOrder.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_reload;
+            this.pictureBoxDisplayOrder.InitialImage = global::ICApiAddin.icPowerApps.Properties.Resources.icon_reload;
+            this.pictureBoxDisplayOrder.Name = "pictureBoxDisplayOrder";
+            this.pictureBoxDisplayOrder.TabStop = false;
+            this.pictureBoxDisplayOrder.Click += new System.EventHandler(this.pictureBoxDisplayOrder_Click);
+            // 
+            // linkLabelDisplayOrder
+            // 
+            resources.ApplyResources(this.linkLabelDisplayOrder, "linkLabelDisplayOrder");
+            this.linkLabelDisplayOrder.Name = "linkLabelDisplayOrder";
+            this.linkLabelDisplayOrder.TabStop = true;
+            this.linkLabelDisplayOrder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDisplayOrder_LinkClicked);
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.label3.Name = "label3";
+            // 
             // tableLayoutPanel4
             // 
             resources.ApplyResources(this.tableLayoutPanel4, "tableLayoutPanel4");
@@ -713,42 +743,12 @@
             this.ExternLinkFilePath2.Name = "ExternLinkFilePath2";
             this.ExternLinkFilePath2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // tableLayoutPanel25
-            // 
-            resources.ApplyResources(this.tableLayoutPanel25, "tableLayoutPanel25");
-            this.tableLayoutPanel25.Controls.Add(this.pictureBoxDisplayOrder, 0, 0);
-            this.tableLayoutPanel25.Controls.Add(this.linkLabelDisplayOrder, 0, 0);
-            this.tableLayoutPanel25.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel25.Name = "tableLayoutPanel25";
-            // 
-            // label3
-            // 
-            resources.ApplyResources(this.label3, "label3");
-            this.label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label3.Name = "label3";
-            // 
-            // linkLabelDisplayOrder
-            // 
-            resources.ApplyResources(this.linkLabelDisplayOrder, "linkLabelDisplayOrder");
-            this.linkLabelDisplayOrder.Name = "linkLabelDisplayOrder";
-            this.linkLabelDisplayOrder.TabStop = true;
-            this.linkLabelDisplayOrder.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelDisplayOrder_LinkClicked);
-            // 
             // CheckBox
             // 
             resources.ApplyResources(this.CheckBox, "CheckBox");
             this.CheckBox.Name = "CheckBox";
             this.CheckBox.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.CheckBox.ThreeState = true;
-            // 
-            // pictureBoxDisplayOrder
-            // 
-            resources.ApplyResources(this.pictureBoxDisplayOrder, "pictureBoxDisplayOrder");
-            this.pictureBoxDisplayOrder.Image = global::ICApiAddin.icPowerApps.Properties.Resources.icon_reload;
-            this.pictureBoxDisplayOrder.InitialImage = global::ICApiAddin.icPowerApps.Properties.Resources.icon_reload;
-            this.pictureBoxDisplayOrder.Name = "pictureBoxDisplayOrder";
-            this.pictureBoxDisplayOrder.TabStop = false;
-            this.pictureBoxDisplayOrder.Click += new System.EventHandler(this.pictureBoxDisplayOrder_Click);
             // 
             // Form_CustomPropertyManager
             // 
@@ -788,6 +788,9 @@
             this.tableLayoutPanel11.PerformLayout();
             this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanel12.PerformLayout();
+            this.tableLayoutPanel25.ResumeLayout(false);
+            this.tableLayoutPanel25.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayOrder)).EndInit();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -817,9 +820,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tableLayoutPanel25.ResumeLayout(false);
-            this.tableLayoutPanel25.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxDisplayOrder)).EndInit();
             this.ResumeLayout(false);
 
         }
