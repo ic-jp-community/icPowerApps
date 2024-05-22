@@ -27,6 +27,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
+        "OwnerKey" = "8:_11864D3DED034F4D8D3EF67FB64F40F7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
+        "OwnerKey" = "8:_8A94FC137F524E68AE51A9242223AE81"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_366ADF9050784558BB0D7C1BA178680C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -46,7 +58,7 @@
         "Entry"
         {
         "MsmKey" = "8:_652E2F6A099533553638AF28C167955E"
-        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -58,25 +70,25 @@
         "Entry"
         {
         "MsmKey" = "8:_652E2F6A099533553638AF28C167955E"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6B293C702832F0CFB06F23A8ECCCA1E5"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6B293C702832F0CFB06F23A8ECCCA1E5"
         "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_6B293C702832F0CFB06F23A8ECCCA1E5"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6B293C702832F0CFB06F23A8ECCCA1E5"
         "OwnerKey" = "8:_8A94FC137F524E68AE51A9242223AE81"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6B293C702832F0CFB06F23A8ECCCA1E5"
+        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -89,6 +101,18 @@
         {
         "MsmKey" = "8:_6B293C702832F0CFB06F23A8ECCCA1E5"
         "OwnerKey" = "8:_CCA866AA0F7458D63652B09D3A987FEB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6E5C44D5158338B377328D4E03A26449"
+        "OwnerKey" = "8:_7B686CCBA4BC4C99A5ED5E97A6C6D4D6"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6E5C44D5158338B377328D4E03A26449"
+        "OwnerKey" = "8:_C724DE7ADB33489CBFFDBE37080700A2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -118,7 +142,7 @@
         "Entry"
         {
         "MsmKey" = "8:_7EDCA5B02247460BA82C6CE919A18E18"
-        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,7 +154,7 @@
         "Entry"
         {
         "MsmKey" = "8:_7EDCA5B02247460BA82C6CE919A18E18"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
+        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -172,31 +196,19 @@
         "Entry"
         {
         "MsmKey" = "8:_92DA2FF58C963B22245C3BA742D68751"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92DA2FF58C963B22245C3BA742D68751"
+        "OwnerKey" = "8:_8A94FC137F524E68AE51A9242223AE81"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_92DA2FF58C963B22245C3BA742D68751"
         "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_92DA2FF58C963B22245C3BA742D68751"
-        "OwnerKey" = "8:_8A94FC137F524E68AE51A9242223AE81"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_92DA2FF58C963B22245C3BA742D68751"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
-        "OwnerKey" = "8:_11864D3DED034F4D8D3EF67FB64F40F7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
-        "OwnerKey" = "8:_8A94FC137F524E68AE51A9242223AE81"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -220,19 +232,19 @@
         "Entry"
         {
         "MsmKey" = "8:_CCA866AA0F7458D63652B09D3A987FEB"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CCA866AA0F7458D63652B09D3A987FEB"
-        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_CCA866AA0F7458D63652B09D3A987FEB"
         "OwnerKey" = "8:_8A94FC137F524E68AE51A9242223AE81"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CCA866AA0F7458D63652B09D3A987FEB"
+        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -280,7 +292,7 @@
         "Entry"
         {
         "MsmKey" = "8:_FEF7DFA4EB39A91A3B67ED61DD16ED3F"
-        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -292,7 +304,7 @@
         "Entry"
         {
         "MsmKey" = "8:_FEF7DFA4EB39A91A3B67ED61DD16ED3F"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
+        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -304,7 +316,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
+        "OwnerKey" = "8:_35876D27BC6A7E6655F7FE0E86B56844"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -316,7 +328,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9CD798E9448BC78DABBBAFA0A698E363"
+        "OwnerKey" = "8:_33D2E85AB9B7491BA3B557DABAA94EA2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -483,6 +495,37 @@
         }
         "File"
         {
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_35876D27BC6A7E6655F7FE0E86B56844"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:icPowerApps, Version=0.0.0.15, Culture=neutral, PublicKeyToken=a2b0442fc83d6b2c, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_35876D27BC6A7E6655F7FE0E86B56844"
+                    {
+                    "Name" = "8:icPowerApps.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:icPowerApps.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_366ADF9050784558BB0D7C1BA178680C"
             {
             "SourcePath" = "8:..\\icPowerApps\\ExternDLL\\WebView2Loader.dll"
@@ -569,6 +612,26 @@
                 }
             "SourcePath" = "8:Microsoft.Web.WebView2.Core.dll"
             "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_6E5C44D5158338B377328D4E03A26449"
+            {
+            "SourcePath" = "8:oledlg.dll"
+            "TargetName" = "8:oledlg.dll"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
             "Condition" = "8:"
@@ -690,37 +753,6 @@
                     }
                 }
             "SourcePath" = "8:ExpandableGridView.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9CD798E9448BC78DABBBAFA0A698E363"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:icPowerApps, Version=0.0.0.13, Culture=neutral, PublicKeyToken=a2b0442fc83d6b2c, processorArchitecture=AMD64"
-                "ScatterAssemblies"
-                {
-                    "_9CD798E9448BC78DABBBAFA0A698E363"
-                    {
-                    "Name" = "8:icPowerApps.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:icPowerApps.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
@@ -947,8 +979,8 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:icPowerApps"
-        "ProductCode" = "8:{E1241858-DFEC-4E2E-A3EA-4C0CC9FAEC18}"
-        "PackageCode" = "8:{FDD6CAEF-158E-48B4-88F3-DD099C1F3773}"
+        "ProductCode" = "8:{3DEEC55D-E5DB-4371-898D-F8B9F70DF1EB}"
+        "PackageCode" = "8:{4581E8CD-F0AB-4788-B517-18125EF8AB61}"
         "UpgradeCode" = "8:{353B92EC-01E7-46D0-96D3-55DB1E32A816}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1488,7 +1520,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_11864D3DED034F4D8D3EF67FB64F40F7"
             {
-            "SourcePath" = "8:..\\icPowerApps_Application\\obj\\x64\\Release\\icPowerApps_Application.exe"
+            "SourcePath" = "8:..\\icPowerApps_Application\\obj\\x64\\Debug\\icPowerApps_Application.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
@@ -1516,7 +1548,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_33D2E85AB9B7491BA3B557DABAA94EA2"
             {
-            "SourcePath" = "8:..\\icPowerApps\\obj\\x64\\Release\\icPowerApps.dll"
+            "SourcePath" = "8:..\\icPowerApps\\obj\\x64\\Debug\\icPowerApps.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
@@ -1544,7 +1576,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7B686CCBA4BC4C99A5ED5E97A6C6D4D6"
             {
-            "SourcePath" = "8:..\\x64\\Release\\icAPI_CppWrapper.dll"
+            "SourcePath" = "8:..\\icAPI_CppWrapper\\x64\\Debug\\icAPI_CppWrapper.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
@@ -1572,7 +1604,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_8A94FC137F524E68AE51A9242223AE81"
             {
-            "SourcePath" = "8:..\\icPowerApps_Configuration\\obj\\Release\\icPowerApps_Configuration.dll"
+            "SourcePath" = "8:..\\icPowerApps_Configuration\\obj\\Debug\\icPowerApps_Configuration.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"
@@ -1600,7 +1632,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C724DE7ADB33489CBFFDBE37080700A2"
             {
-            "SourcePath" = "8:..\\x64\\Release\\icAPI_CppWrapper.dll"
+            "SourcePath" = "8:..\\icAPI_CppWrapper\\x64\\Debug\\icAPI_CppWrapper.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_63D6B68AA8944334B143819022A0F121"

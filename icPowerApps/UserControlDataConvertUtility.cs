@@ -259,11 +259,11 @@ namespace ICApiAddin.icPowerApps
             System.IO.FileInfo[] files = null;
             if (includeChildFolder == true)
             {
-                files = di.GetFiles("*.exb", System.IO.SearchOption.AllDirectories);
+                files = di.GetFiles("*.ics", System.IO.SearchOption.AllDirectories);
             }
             else
             {
-                files = di.GetFiles("*.exb", System.IO.SearchOption.TopDirectoryOnly);
+                files = di.GetFiles("*.ics", System.IO.SearchOption.TopDirectoryOnly);
             }
             foreach (FileInfo fi in files)
             {
@@ -425,6 +425,7 @@ namespace ICApiAddin.icPowerApps
                 if (doc == null)
                 {
                     dataGridViewFileList["ConvertResult", rowIndex].Value = "ファイルを開けませんでした。";
+                    dataGridViewFileList["ConvertResult", rowIndex].Style.ForeColor = Color.Red;
                     continue;
                 }
 
@@ -439,6 +440,7 @@ namespace ICApiAddin.icPowerApps
                     /* データがない */
                     doc.Close();
                     dataGridViewFileList["ConvertResult", rowIndex].Value = "エラー: 変換するデータが見つかりませんでした。";
+                    dataGridViewFileList["ConvertResult", rowIndex].Style.ForeColor = Color.Red;
                     continue;
                 }
 
@@ -487,8 +489,9 @@ namespace ICApiAddin.icPowerApps
                 /* ドキュメントを閉じる */
                 doc.Close();
                 dataGridViewFileList["ConvertResult", rowIndex].Value = "変換済";
+                dataGridViewFileList["ConvertResult", rowIndex].Style.ForeColor = Color.SteelBlue;
             }
-            if(convertCount > 0)
+            if (convertCount > 0)
             {
                 MessageBox.Show("データ変換が完了しました。");
             }

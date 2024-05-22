@@ -34,8 +34,10 @@
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonSelectFiles = new System.Windows.Forms.Button();
             this.buttonSelectFolder = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.checkBoxAddChildFolder = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.linkLabelClearList = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridViewFileList = new System.Windows.Forms.DataGridView();
             this.ConvertResult = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,12 +64,11 @@
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.buttonExecute = new System.Windows.Forms.Button();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.linkLabelClearList = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel11.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFileList)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -76,7 +77,6 @@
             this.tableLayoutPanelOptionExportIges.SuspendLayout();
             this.tableLayoutPanelOptionExportCatia.SuspendLayout();
             this.tableLayoutPanel12.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelBase
@@ -183,17 +183,6 @@
             this.buttonSelectFolder.UseVisualStyleBackColor = true;
             this.buttonSelectFolder.Click += new System.EventHandler(this.buttonSelectFolder_Click);
             // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 16);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(132, 15);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "一括変換するファイル一覧";
-            // 
             // checkBoxAddChildFolder
             // 
             this.checkBoxAddChildFolder.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -205,6 +194,46 @@
             this.checkBoxAddChildFolder.TabIndex = 4;
             this.checkBoxAddChildFolder.Text = "配下のフォルダも追加する";
             this.checkBoxAddChildFolder.UseVisualStyleBackColor = true;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.AutoSize = true;
+            this.tableLayoutPanel6.ColumnCount = 3;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.linkLabelClearList, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(615, 31);
+            this.tableLayoutPanel6.TabIndex = 10;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 16);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(132, 15);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "一括変換するファイル一覧";
+            // 
+            // linkLabelClearList
+            // 
+            this.linkLabelClearList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkLabelClearList.AutoSize = true;
+            this.linkLabelClearList.Location = new System.Drawing.Point(143, 16);
+            this.linkLabelClearList.Name = "linkLabelClearList";
+            this.linkLabelClearList.Size = new System.Drawing.Size(64, 15);
+            this.linkLabelClearList.TabIndex = 2;
+            this.linkLabelClearList.TabStop = true;
+            this.linkLabelClearList.Text = "一覧をクリア";
+            this.linkLabelClearList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClearList_LinkClicked);
             // 
             // tableLayoutPanel5
             // 
@@ -583,35 +612,6 @@
             this.tableLayoutPanel4.Size = new System.Drawing.Size(1033, 14);
             this.tableLayoutPanel4.TabIndex = 0;
             // 
-            // tableLayoutPanel6
-            // 
-            this.tableLayoutPanel6.AutoSize = true;
-            this.tableLayoutPanel6.ColumnCount = 3;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Controls.Add(this.label3, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.linkLabelClearList, 1, 0);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 1;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(615, 31);
-            this.tableLayoutPanel6.TabIndex = 10;
-            // 
-            // linkLabelClearList
-            // 
-            this.linkLabelClearList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.linkLabelClearList.AutoSize = true;
-            this.linkLabelClearList.Location = new System.Drawing.Point(143, 16);
-            this.linkLabelClearList.Name = "linkLabelClearList";
-            this.linkLabelClearList.Size = new System.Drawing.Size(64, 15);
-            this.linkLabelClearList.TabIndex = 2;
-            this.linkLabelClearList.TabStop = true;
-            this.linkLabelClearList.Text = "一覧をクリア";
-            this.linkLabelClearList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClearList_LinkClicked);
-            // 
             // UserControlDataConvertUtility
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -632,6 +632,8 @@
             this.tableLayoutPanel2.PerformLayout();
             this.tableLayoutPanel11.ResumeLayout(false);
             this.tableLayoutPanel11.PerformLayout();
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFileList)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -645,8 +647,6 @@
             this.tableLayoutPanelOptionExportCatia.ResumeLayout(false);
             this.tableLayoutPanelOptionExportCatia.PerformLayout();
             this.tableLayoutPanel12.ResumeLayout(false);
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
