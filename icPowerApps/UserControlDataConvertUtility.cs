@@ -82,6 +82,14 @@ namespace ICApiAddin.icPowerApps
             this._ironcadApp = ironcadApp;
         }
 
+
+        /// <summary>
+        /// 変換後フォーマットの文字列からeZModelTypeに変換する(拡張子も取得する)
+        /// </summary>
+        /// <param name="exportStr"></param>
+        /// <param name="exportType"></param>
+        /// <param name="ext"></param>
+        /// <returns></returns>
         private bool convertStringToExportType(string exportStr, ref eZModelType exportType, ref string ext)
         {
             exportType = eZModelType.Z_MODEL_STEP214;
@@ -149,6 +157,7 @@ namespace ICApiAddin.icPowerApps
             return true;
         }
 
+
         /// <summary>
         /// ページ表示状態変更イベント(ページ表示イベントとして利用)
         /// </summary>
@@ -182,6 +191,13 @@ namespace ICApiAddin.icPowerApps
 
         #endregion イベント
 
+
+        /// <summary>
+        /// フォルダを開くのダイアログを表示する
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="directoryPath"></param>
+        /// <returns></returns>
         public bool OpenDirectoryDialog(string title, ref string directoryPath)
         {
             /* 保存先のダイアログを表示する */
@@ -201,6 +217,13 @@ namespace ICApiAddin.icPowerApps
             return true;
         }
 
+
+        /// <summary>
+        /// ファイルを開くのダイアログを表示する
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="selectFiles"></param>
+        /// <returns></returns>
         public bool OpenSelectFileDialog(string title, ref List<string> selectFiles)
         {
             /* 保存先のダイアログを表示する */
@@ -221,6 +244,13 @@ namespace ICApiAddin.icPowerApps
             return true;
         }
 
+
+        /// <summary>
+        /// 選択したディレクトリのファイルを取得する
+        /// </summary>
+        /// <param name="DirPath"></param>
+        /// <param name="includeChildFolder">子ディレクトリも含めるか否か</param>
+        /// <returns></returns>
         public static List<String> GetAllFiles(String DirPath, bool includeChildFolder)
         {
             List<String> fileList = new List<String>();    // 取得したファイル名を格納するためのリスト
@@ -243,6 +273,10 @@ namespace ICApiAddin.icPowerApps
 
         }
 
+        /// <summary>
+        /// ファイルをdataGridViewFileListに追加する
+        /// </summary>
+        /// <param name="filePathList"></param>
         private void addDataGridViewFileList(List<string> filePathList)
         {
             foreach (string filePath in filePathList)
@@ -258,6 +292,12 @@ namespace ICApiAddin.icPowerApps
             }
         }
 
+
+        /// <summary>
+        /// 既にファイルが追加されているかチェックする
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         private bool CheckAlreadyAddedFilePath(string filePath)
         {
             for (int i = 0; i < dataGridViewFileList.Rows.Count; i++)
@@ -272,6 +312,11 @@ namespace ICApiAddin.icPowerApps
         }
 
 
+        /// <summary>
+        /// ファイルを選択のボタンクリック イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSelectFiles_Click(object sender, EventArgs e)
         {
             List<string> filePathList = new List<string>();
@@ -283,6 +328,12 @@ namespace ICApiAddin.icPowerApps
             addDataGridViewFileList(filePathList);
         }
 
+
+        /// <summary>
+        /// フォルダを選択のボタン クリック イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonSelectFolder_Click(object sender, EventArgs e)
         {
             List<string> filePathList = new List<string>();
@@ -296,6 +347,21 @@ namespace ICApiAddin.icPowerApps
             addDataGridViewFileList(filePathList);
         }
 
+        /// <summary>
+        /// 一覧をクリアのリンクラベル クリック イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void linkLabelClearList_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            dataGridViewFileList.Rows.Clear();
+        }
+
+        /// <summary>
+        /// 実行ボタン クリック イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonExecute_Click(object sender, EventArgs e)
         {
             eZModelType exportModelType = eZModelType.Z_MODEL_STEP214;
@@ -836,6 +902,7 @@ namespace ICApiAddin.icPowerApps
                 tableLayoutPanelOptionExportCatia.Visible = false;
             }
         }
+
 
     }
 }

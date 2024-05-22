@@ -54,14 +54,16 @@
             this.comboBoxIgesType = new System.Windows.Forms.ComboBox();
             this.comboBoxIgesFormat = new System.Windows.Forms.ComboBox();
             this.checkBoxIgesNurbs = new System.Windows.Forms.CheckBox();
-            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
-            this.buttonExecute = new System.Windows.Forms.Button();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanelOptionExportCatia = new System.Windows.Forms.TableLayoutPanel();
+            this.checkBoxCatiaNotConfirmNextSession = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.comboBoxCatiaVersion = new System.Windows.Forms.ComboBox();
             this.checkBoxCatiaExport3dCurve = new System.Windows.Forms.CheckBox();
-            this.checkBoxCatiaNotConfirmNextSession = new System.Windows.Forms.CheckBox();
+            this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
+            this.buttonExecute = new System.Windows.Forms.Button();
+            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.linkLabelClearList = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanelBase.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -72,8 +74,9 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanelOptionExportStep.SuspendLayout();
             this.tableLayoutPanelOptionExportIges.SuspendLayout();
-            this.tableLayoutPanel12.SuspendLayout();
             this.tableLayoutPanelOptionExportCatia.SuspendLayout();
+            this.tableLayoutPanel12.SuspendLayout();
+            this.tableLayoutPanel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanelBase
@@ -108,7 +111,7 @@
             this.tableLayoutPanel1.Padding = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 560F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 657F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1031, 665);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
@@ -145,8 +148,8 @@
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel11.Controls.Add(this.buttonSelectFiles, 1, 0);
             this.tableLayoutPanel11.Controls.Add(this.buttonSelectFolder, 2, 0);
-            this.tableLayoutPanel11.Controls.Add(this.label3, 0, 0);
             this.tableLayoutPanel11.Controls.Add(this.checkBoxAddChildFolder, 3, 0);
+            this.tableLayoutPanel11.Controls.Add(this.tableLayoutPanel6, 0, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel11.Margin = new System.Windows.Forms.Padding(0);
@@ -184,7 +187,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 22);
+            this.label3.Location = new System.Drawing.Point(4, 16);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(132, 15);
@@ -457,50 +460,6 @@
             this.checkBoxIgesNurbs.Text = "すべてのサーフェスを NURBS としてエクスポートする";
             this.checkBoxIgesNurbs.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel12
-            // 
-            this.tableLayoutPanel12.AutoSize = true;
-            this.tableLayoutPanel12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel12.ColumnCount = 3;
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableLayoutPanel12.Controls.Add(this.buttonExecute, 2, 0);
-            this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel12.Location = new System.Drawing.Point(4, 606);
-            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(4);
-            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
-            this.tableLayoutPanel12.RowCount = 1;
-            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel12.Size = new System.Drawing.Size(1007, 39);
-            this.tableLayoutPanel12.TabIndex = 2;
-            // 
-            // buttonExecute
-            // 
-            this.buttonExecute.Location = new System.Drawing.Point(899, 4);
-            this.buttonExecute.Margin = new System.Windows.Forms.Padding(23, 4, 4, 4);
-            this.buttonExecute.Name = "buttonExecute";
-            this.buttonExecute.Size = new System.Drawing.Size(104, 31);
-            this.buttonExecute.TabIndex = 0;
-            this.buttonExecute.Text = "実行";
-            this.buttonExecute.UseVisualStyleBackColor = true;
-            this.buttonExecute.Click += new System.EventHandler(this.buttonExecute_Click);
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.AutoSize = true;
-            this.tableLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.tableLayoutPanel4.ColumnCount = 1;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1033, 14);
-            this.tableLayoutPanel4.TabIndex = 0;
-            // 
             // tableLayoutPanelOptionExportCatia
             // 
             this.tableLayoutPanelOptionExportCatia.AutoSize = true;
@@ -521,6 +480,17 @@
             this.tableLayoutPanelOptionExportCatia.Size = new System.Drawing.Size(273, 79);
             this.tableLayoutPanelOptionExportCatia.TabIndex = 9;
             this.tableLayoutPanelOptionExportCatia.Visible = false;
+            // 
+            // checkBoxCatiaNotConfirmNextSession
+            // 
+            this.checkBoxCatiaNotConfirmNextSession.AutoSize = true;
+            this.tableLayoutPanelOptionExportCatia.SetColumnSpan(this.checkBoxCatiaNotConfirmNextSession, 2);
+            this.checkBoxCatiaNotConfirmNextSession.Location = new System.Drawing.Point(3, 57);
+            this.checkBoxCatiaNotConfirmNextSession.Name = "checkBoxCatiaNotConfirmNextSession";
+            this.checkBoxCatiaNotConfirmNextSession.Size = new System.Drawing.Size(162, 19);
+            this.checkBoxCatiaNotConfirmNextSession.TabIndex = 4;
+            this.checkBoxCatiaNotConfirmNextSession.Text = "次のセッションまで確認しない";
+            this.checkBoxCatiaNotConfirmNextSession.UseVisualStyleBackColor = true;
             // 
             // label4
             // 
@@ -569,16 +539,78 @@
             this.checkBoxCatiaExport3dCurve.Text = "3D曲線をエクスポートする";
             this.checkBoxCatiaExport3dCurve.UseVisualStyleBackColor = true;
             // 
-            // checkBoxCatiaNotConfirmNextSession
+            // tableLayoutPanel12
             // 
-            this.checkBoxCatiaNotConfirmNextSession.AutoSize = true;
-            this.tableLayoutPanelOptionExportCatia.SetColumnSpan(this.checkBoxCatiaNotConfirmNextSession, 2);
-            this.checkBoxCatiaNotConfirmNextSession.Location = new System.Drawing.Point(3, 57);
-            this.checkBoxCatiaNotConfirmNextSession.Name = "checkBoxCatiaNotConfirmNextSession";
-            this.checkBoxCatiaNotConfirmNextSession.Size = new System.Drawing.Size(162, 19);
-            this.checkBoxCatiaNotConfirmNextSession.TabIndex = 4;
-            this.checkBoxCatiaNotConfirmNextSession.Text = "次のセッションまで確認しない";
-            this.checkBoxCatiaNotConfirmNextSession.UseVisualStyleBackColor = true;
+            this.tableLayoutPanel12.AutoSize = true;
+            this.tableLayoutPanel12.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel12.ColumnCount = 3;
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel12.Controls.Add(this.buttonExecute, 2, 0);
+            this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel12.Location = new System.Drawing.Point(4, 606);
+            this.tableLayoutPanel12.Margin = new System.Windows.Forms.Padding(4);
+            this.tableLayoutPanel12.Name = "tableLayoutPanel12";
+            this.tableLayoutPanel12.RowCount = 1;
+            this.tableLayoutPanel12.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel12.Size = new System.Drawing.Size(1007, 39);
+            this.tableLayoutPanel12.TabIndex = 2;
+            // 
+            // buttonExecute
+            // 
+            this.buttonExecute.Location = new System.Drawing.Point(899, 4);
+            this.buttonExecute.Margin = new System.Windows.Forms.Padding(23, 4, 4, 4);
+            this.buttonExecute.Name = "buttonExecute";
+            this.buttonExecute.Size = new System.Drawing.Size(104, 31);
+            this.buttonExecute.TabIndex = 0;
+            this.buttonExecute.Text = "実行";
+            this.buttonExecute.UseVisualStyleBackColor = true;
+            this.buttonExecute.Click += new System.EventHandler(this.buttonExecute_Click);
+            // 
+            // tableLayoutPanel4
+            // 
+            this.tableLayoutPanel4.AutoSize = true;
+            this.tableLayoutPanel4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.tableLayoutPanel4.ColumnCount = 1;
+            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel4.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
+            this.tableLayoutPanel4.RowCount = 1;
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1033, 14);
+            this.tableLayoutPanel4.TabIndex = 0;
+            // 
+            // tableLayoutPanel6
+            // 
+            this.tableLayoutPanel6.AutoSize = true;
+            this.tableLayoutPanel6.ColumnCount = 3;
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel6.Controls.Add(this.label3, 0, 0);
+            this.tableLayoutPanel6.Controls.Add(this.linkLabelClearList, 1, 0);
+            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
+            this.tableLayoutPanel6.RowCount = 1;
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(615, 31);
+            this.tableLayoutPanel6.TabIndex = 10;
+            // 
+            // linkLabelClearList
+            // 
+            this.linkLabelClearList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.linkLabelClearList.AutoSize = true;
+            this.linkLabelClearList.Location = new System.Drawing.Point(143, 16);
+            this.linkLabelClearList.Name = "linkLabelClearList";
+            this.linkLabelClearList.Size = new System.Drawing.Size(64, 15);
+            this.linkLabelClearList.TabIndex = 2;
+            this.linkLabelClearList.TabStop = true;
+            this.linkLabelClearList.Text = "一覧をクリア";
+            this.linkLabelClearList.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelClearList_LinkClicked);
             // 
             // UserControlDataConvertUtility
             // 
@@ -610,9 +642,11 @@
             this.tableLayoutPanelOptionExportStep.PerformLayout();
             this.tableLayoutPanelOptionExportIges.ResumeLayout(false);
             this.tableLayoutPanelOptionExportIges.PerformLayout();
-            this.tableLayoutPanel12.ResumeLayout(false);
             this.tableLayoutPanelOptionExportCatia.ResumeLayout(false);
             this.tableLayoutPanelOptionExportCatia.PerformLayout();
+            this.tableLayoutPanel12.ResumeLayout(false);
+            this.tableLayoutPanel6.ResumeLayout(false);
+            this.tableLayoutPanel6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -653,5 +687,7 @@
         private System.Windows.Forms.ComboBox comboBoxCatiaVersion;
         private System.Windows.Forms.CheckBox checkBoxCatiaNotConfirmNextSession;
         private System.Windows.Forms.CheckBox checkBoxCatiaExport3dCurve;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.LinkLabel linkLabelClearList;
     }
 }
